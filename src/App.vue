@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// App root
+// The router view handles rendering the matched component (Auth or User pages)
 </script>
 
 <template>
-	<router-view />
+  <router-view />
 </template>
