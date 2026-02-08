@@ -1,4 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
+import { ROUTES } from '@/constants/routes'
+import { getRelativeRoute } from '@/utils/route.utils'
 
 export const authRoutes: RouteRecordRaw[] = [
 	{
@@ -6,23 +8,23 @@ export const authRoutes: RouteRecordRaw[] = [
 		component: () => import('../layouts/AuthLayout.vue'),
 		children: [
 			{
-				path: 'login',
+				path: getRelativeRoute(ROUTES.AUTH.LOGIN, '/auth/'),
 				component: () => import('../pages/LoginPage.vue'),
 			},
 			{
-				path: 'signup',
+				path: getRelativeRoute(ROUTES.AUTH.SIGNUP, '/auth/'),
 				component: () => import('../pages/SignupPage.vue'),
 			},
 			{
-				path: 'forgot-password',
+				path: getRelativeRoute(ROUTES.AUTH.FORGOT_PASSWORD, '/auth/'),
 				component: () => import('../pages/ForgotPasswordPage.vue'),
 			},
 			{
-				path: 'reset-password',
+				path: getRelativeRoute(ROUTES.AUTH.RESET_PASSWORD, '/auth/'),
 				component: () => import('../pages/ResetPasswordPage.vue'),
 			},
 			{
-				path: 'verify-otp',
+				path: getRelativeRoute(ROUTES.AUTH.VERIFY_OTP, '/auth/'),
 				component: () => import('../pages/VerifyOtpPage.vue'),
 			},
 		],
