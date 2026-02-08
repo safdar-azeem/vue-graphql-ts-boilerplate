@@ -32,8 +32,8 @@ mutation ResetPassword($token: String!, $password: String!) {
 	resetPassword(token: $token, password: $password)
 }
 
-mutation Verify2FA($token: String!) {
-	verify2FA(token: $token) {
+mutation Verify2FA($otp: String!, $token: String!) {
+	verify2FA(otp: $otp, token: $token) {
 		token
 		user {
 			id
@@ -51,8 +51,8 @@ mutation Init2faEnrollment($method: TwoFactorMethod!) {
 	}
 }
 
-mutation Confirm2faEnrollment($token: String!) {
-	confirm2faEnrollment(token: $token)
+mutation Confirm2faEnrollment($otp: String!) {
+	confirm2faEnrollment(otp: $otp)
 }
 
 mutation Disable2fa($password: String!) {
