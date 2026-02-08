@@ -18,18 +18,11 @@ const handleLogin = async (payload: any) => {
 	})
 
 	if (data?.login?.token) {
-		// Check for 2FA requirement (if backend returns a temp token for 2FA)
-		// Note: Backend logic determines if token is full access or temp.
-		// If user.mfaSettings.isEnabled is true, the token might be a partial one.
-
 		setToken(data.login.token)
 
 		if (data.login.user.mfaSettings?.isEnabled) {
-			// If your backend flow requires a separate 2FA step even with a token:
-			// router.push(ROUTES.AUTH.VERIFY_OTP)
-			// However, based on your schema, if the token is returned, the user is authenticated.
-			// If using the temp-token flow described in backend resolver, verify-otp is needed.
-			// Assuming standard JWT flow for now unless specific 2FA flag is present.
+			router.push(ROUTES.AUTH.VERIFY_OTP)
+			return
 		}
 
 		router.push(ROUTES.USER.DASHBOARD)
