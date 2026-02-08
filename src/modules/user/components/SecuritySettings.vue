@@ -258,13 +258,6 @@ const cancelEnrollment = () => {
 								alt="QR Code"
 								class="w-48 h-48 object-contain" />
 						</div>
-						<div class="text-center">
-							<p class="text-sm text-gray-500 mb-1">Secret Key</p>
-							<code
-								class="bg-gray-100 px-3 py-1.5 rounded text-sm font-mono border select-all"
-								>{{ secret }}</code
-							>
-						</div>
 					</div>
 				</div>
 
