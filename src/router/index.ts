@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { authRoutes } from '../modules/auth/routes'
-import { userRoutes } from '../modules/user/user.routes'
+import { userRoutes } from '../modules/user/routes'
 import { getToken } from 'vue-apollo-client'
 
 const routes = [
@@ -23,7 +23,7 @@ const router = createRouter({
 
 // Navigation Guard
 router.beforeEach((to, _from, next) => {
-	const isAuthenticated = !!getToken('auth_token')
+	const isAuthenticated = !!getToken()
 	const requiresAuth = to.meta.requiresAuth
 
 	if (requiresAuth && !isAuthenticated) {
