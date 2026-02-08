@@ -10,6 +10,7 @@ import { useLoginMutation } from '@/graphql/generated'
 
 const router = useRouter()
 const showOTP = ref(false)
+const token = ref('')
 const { mutate: login, error, loading } = useLoginMutation()
 
 const handleLogin = async (payload: any) => {
@@ -21,12 +22,12 @@ const handleLogin = async (payload: any) => {
 	})
 
 	if (data?.login?.token) {
-		setToken(data.login.token)
-
 		if (data.login.user.mfaSettings?.isEnabled) {
+			token.value = data?.login?.token
 			showOTP.value = true
 			return
 		}
+		setToken(data.login.token)
 
 		router.push(ROUTES.USER.DASHBOARD)
 	}
@@ -80,5 +81,7 @@ const handleLogin = async (payload: any) => {
 			</div>
 		</div>
 	</div>
-	<VerifyOtp v-else />
+	<VerifyOtp
+		v-else
+		:token="token" />
 </template>
