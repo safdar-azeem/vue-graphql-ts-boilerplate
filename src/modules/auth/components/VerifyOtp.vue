@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { OTPInput, Button } from 'vlite3'
+import { OTPInput, Button, useNotifications } from 'vlite3'
 import { ROUTES } from '@/constants/routes'
 import { setToken } from 'vue-apollo-client'
 import { useVerify2FaMutation } from '@/graphql/generated'
@@ -12,6 +12,7 @@ const props = defineProps<{
 
 const router = useRouter()
 const otpCode = ref('')
+const { showToast } = useNotifications()
 const { mutate: verify2Fa, loading, error } = useVerify2FaMutation()
 
 const handleVerify = async () => {
@@ -23,6 +24,7 @@ const handleVerify = async () => {
 		})
 		if (data?.verify2FA?.token) {
 			setToken(data.verify2FA.token)
+			showToast('login succesfully')
 			router.push(ROUTES.USER.DASHBOARD)
 		}
 	} catch (e) {
