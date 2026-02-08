@@ -1,0 +1,13 @@
+query Me {
+	me {
+		id
+		email
+		username
+		createdAt
+		updatedAt
+		mfaSettings {
+			isEnabled
+			method
+		}
+	}
+}
