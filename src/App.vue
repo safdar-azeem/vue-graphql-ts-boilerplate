@@ -1,7 +1,17 @@
 <script setup lang="ts">
-// The router view handles rendering the matched component (Auth or User pages)
+import { ToastNotification, useNotifications } from 'vlite3'
+import { onMounted } from 'vue'
+
+const { configure } = useNotifications()
+
+onMounted(() => {
+	configure({
+		position: 'top-right',
+	})
+})
 </script>
 
 <template>
-  <router-view />
+	<router-view />
+	<toast-notification />
 </template>
