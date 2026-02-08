@@ -2,17 +2,18 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { authRoutes } from '../modules/auth/routes'
 import { userRoutes } from '../modules/user/routes'
 import { getToken } from 'vue-apollo-client'
+import { ROUTES } from '@/constants/routes'
 
 const routes = [
 	{
-		path: '/',
-		redirect: '/user/dashboard',
+		path: ROUTES.HOME,
+		redirect: ROUTES.USER.DASHBOARD,
 	},
 	...authRoutes,
 	...userRoutes,
 	{
 		path: '/:pathMatch(.*)*',
-		redirect: '/auth/login',
+		redirect: ROUTES.AUTH.LOGIN,
 	},
 ]
 
@@ -27,9 +28,9 @@ router.beforeEach((to, _from, next) => {
 	const requiresAuth = to.meta.requiresAuth
 
 	if (requiresAuth && !isAuthenticated) {
-		next('/auth/login')
+		next(ROUTES.AUTH.LOGIN)
 	} else if (to.path.startsWith('/auth') && isAuthenticated) {
-		next('/user/dashboard')
+		next(ROUTES.USER.DASHBOARD)
 	} else {
 		next()
 	}
