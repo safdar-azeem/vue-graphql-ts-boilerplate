@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Form, Button } from 'vlite3'
-import { loginSchema } from '../auth.schemas'
+import { loginSchema } from '../schema/login.schema'
 import { useLoginMutation } from '@/graphql/generated'
 import { useRouter } from 'vue-router'
 import { setToken } from 'vue-apollo-client'
