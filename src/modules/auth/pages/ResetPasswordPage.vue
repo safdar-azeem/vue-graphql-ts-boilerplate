@@ -4,6 +4,7 @@ import { resetPasswordSchema } from '../schema/reset-forget-password.schema'
 import { useResetPasswordMutation } from '@/graphql/generated'
 import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { ROUTES } from '@/constants/routes'
 
 const route = useRoute()
 const router = useRouter()
@@ -20,7 +21,7 @@ const handleReset = async (payload: any) => {
 		})
 		if (data?.resetPassword) {
 			success.value = true
-			setTimeout(() => router.push('/auth/login'), 3000)
+			setTimeout(() => router.push(ROUTES.AUTH.LOGIN), 3000)
 		}
 	} catch (e) {
 		console.error(e)
