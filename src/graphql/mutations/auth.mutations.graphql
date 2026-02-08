@@ -42,3 +42,19 @@ mutation Verify2FA($token: String!) {
 		}
 	}
 }
+
+mutation Init2faEnrollment($method: TwoFactorMethod!) {
+	init2faEnrollment(method: $method) {
+		secret
+		qrCode
+		backupCodes
+	}
+}
+
+mutation Confirm2faEnrollment($token: String!) {
+	confirm2faEnrollment(token: $token)
+}
+
+mutation Disable2fa($password: String!) {
+	disable2fa(password: $password)
+}
