@@ -1,4 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
+import { ROUTES } from '@/constants/routes'
+import { getRelativeRoute } from '@/utils/route.utils'
 
 export const userRoutes: RouteRecordRaw[] = [
 	{
@@ -7,7 +9,7 @@ export const userRoutes: RouteRecordRaw[] = [
 		meta: { requiresAuth: true },
 		children: [
 			{
-				path: 'dashboard',
+				path: getRelativeRoute(ROUTES.USER.DASHBOARD, '/user/'),
 				component: () => import('../pages/DashboardPage.vue'),
 			},
 		],
