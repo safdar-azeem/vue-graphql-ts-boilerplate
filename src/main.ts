@@ -1,20 +1,10 @@
-import { createApp } from 'vue'
 import './style.css'
-import 'vlite3/style.css' // Import vlite3 styles
 import App from './App.vue'
-import { createApollo } from 'vue-apollo-client'
 import router from './router'
+import { createApp } from 'vue'
+import { apollo } from './config/apollo.config'
 
-const env = import.meta.env
 const app = createApp(App)
-
-const apollo = createApollo({
-  endPoints: {
-    default: `${env.VITE_API_URL}/graphql`,
-  },
-  tokenKey: 'auth_token',
-  allowOffline: true,
-})
 
 app.use(router)
 app.use(apollo)
