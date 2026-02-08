@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { Form, Button } from 'vlite3'
-import { forgotPasswordSchema } from '../schema/reset-forget-password.schema'
-import { useForgotPasswordMutation } from '@/graphql/generated'
 import { ref } from 'vue'
+import { Form } from 'vlite3'
 import { ROUTES } from '@/constants/routes'
+import { useForgotPasswordMutation } from '@/graphql/generated'
+import { forgotPasswordSchema } from '../schema/reset-forget-password.schema'
 
 const { mutate: forgotPassword, loading, error } = useForgotPasswordMutation()
 const successMessage = ref('')
