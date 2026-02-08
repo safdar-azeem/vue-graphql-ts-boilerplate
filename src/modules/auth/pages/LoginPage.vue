@@ -4,7 +4,7 @@ import { loginSchema } from '../schema/login.schema'
 import { useLoginMutation } from '@/graphql/generated'
 import { useRouter } from 'vue-router'
 import { setToken } from 'vue-apollo-client'
-import { ref } from 'vue'
+import { ROUTES } from '@/constants/routes'
 
 const router = useRouter()
 const { mutate: login, error, loading } = useLoginMutation()
@@ -26,13 +26,13 @@ const handleLogin = async (payload: any) => {
 
 		if (data.login.user.mfaSettings?.isEnabled) {
 			// If your backend flow requires a separate 2FA step even with a token:
-			// router.push('/auth/verify-otp')
+			// router.push(ROUTES.AUTH.VERIFY_OTP)
 			// However, based on your schema, if the token is returned, the user is authenticated.
 			// If using the temp-token flow described in backend resolver, verify-otp is needed.
 			// Assuming standard JWT flow for now unless specific 2FA flag is present.
 		}
 
-		router.push('/user/dashboard')
+		router.push(ROUTES.USER.DASHBOARD)
 	}
 }
 </script>
@@ -68,14 +68,14 @@ const handleLogin = async (payload: any) => {
 
 		<div class="flex items-center justify-between text-sm mt-4">
 			<router-link
-				to="/auth/forgot-password"
+				:to="ROUTES.AUTH.FORGOT_PASSWORD"
 				class="text-primary hover:underline"
 				>Forgot password?</router-link
 			>
 			<div class="text-gray-500">
 				No account?
 				<router-link
-					to="/auth/signup"
+					:to="ROUTES.AUTH.SIGNUP"
 					class="text-primary font-medium hover:underline"
 					>Sign up</router-link
 				>
