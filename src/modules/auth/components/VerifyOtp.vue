@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { OTPInput, Button } from 'vlite3'
-import { useVerify2FaMutation } from '@/graphql/generated'
-import { useRouter } from 'vue-router'
-import { setToken } from 'vue-apollo-client'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { OTPInput, Button } from 'vlite3'
 import { ROUTES } from '@/constants/routes'
+import { setToken } from 'vue-apollo-client'
+import { useVerify2FaMutation } from '@/graphql/generated'
+
+const props = defineProps<{
+	token: string
+}>()
 
 const router = useRouter()
 const otpCode = ref('')
@@ -13,7 +17,10 @@ const { mutate: verify2Fa, loading, error } = useVerify2FaMutation()
 const handleVerify = async () => {
 	if (otpCode.value.length < 6) return
 	try {
-		const { data } = await verify2Fa({ token: otpCode.value })
+		const { data } = await verify2Fa({
+			otp: otpCode.value,
+			token: props?.token,
+		})
 		if (data?.verify2FA?.token) {
 			setToken(data.verify2FA.token)
 			router.push(ROUTES.USER.DASHBOARD)
