@@ -23,10 +23,6 @@ export const authRoutes: RouteRecordRaw[] = [
 				path: getRelativeRoute(ROUTES.AUTH.RESET_PASSWORD, '/auth/'),
 				component: () => import('../pages/ResetPasswordPage.vue'),
 			},
-			{
-				path: getRelativeRoute(ROUTES.AUTH.VERIFY_OTP, '/auth/'),
-				component: () => import('../pages/VerifyOtpPage.vue'),
-			},
 		],
 	},
 ]
