@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form } from 'vlite3'
+import { Button, Form } from 'vlite3'
 import { signupSchema } from '../schema/signup.schema'
 import { useSignupMutation } from '@/graphql/generated'
 import { useRouter } from 'vue-router'
