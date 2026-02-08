@@ -62,7 +62,7 @@ const finishEnrollment = async () => {
 	if (otpCode.value.length < 6) return
 	try {
 		await confirmEnrollment({
-			token: otpCode?.value,
+			otp: otpCode?.value,
 		})
 		await refetch()
 		isEnrolling.value = false
