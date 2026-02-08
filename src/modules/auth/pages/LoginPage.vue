@@ -1,12 +1,15 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { Form, Button } from 'vlite3'
+import { useRouter } from 'vue-router'
+import { ROUTES } from '@/constants/routes'
+import { setToken } from 'vue-apollo-client'
+import VerifyOtp from '../components/VerifyOtp.vue'
 import { loginSchema } from '../schema/login.schema'
 import { useLoginMutation } from '@/graphql/generated'
-import { useRouter } from 'vue-router'
-import { setToken } from 'vue-apollo-client'
-import { ROUTES } from '@/constants/routes'
 
 const router = useRouter()
+const showOTP = ref(false)
 const { mutate: login, error, loading } = useLoginMutation()
 
 const handleLogin = async (payload: any) => {
@@ -21,7 +24,7 @@ const handleLogin = async (payload: any) => {
 		setToken(data.login.token)
 
 		if (data.login.user.mfaSettings?.isEnabled) {
-			router.push(ROUTES.AUTH.VERIFY_OTP)
+			showOTP.value = true
 			return
 		}
 
@@ -31,7 +34,9 @@ const handleLogin = async (payload: any) => {
 </script>
 
 <template>
-	<div class="space-y-6">
+	<div
+		class="space-y-6"
+		v-if="!showOTP">
 		<div class="text-center space-y-1">
 			<h1 class="text-2xl font-bold">Welcome Back</h1>
 			<p class="text-sm text-gray-500">
@@ -75,4 +80,5 @@ const handleLogin = async (payload: any) => {
 			</div>
 		</div>
 	</div>
+	<VerifyOtp v-else />
 </template>
