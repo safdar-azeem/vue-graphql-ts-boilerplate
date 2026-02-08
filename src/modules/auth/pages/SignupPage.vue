@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button, Form } from 'vlite3'
+import { Button, Form, useNotifications } from 'vlite3'
 import { useRouter } from 'vue-router'
 import { ROUTES } from '@/constants/routes'
 import { setToken } from 'vue-apollo-client'
@@ -8,6 +8,7 @@ import { useSignupMutation } from '@/graphql/generated'
 
 const router = useRouter()
 const { mutate: signup, error, loading } = useSignupMutation()
+const { showToast } = useNotifications()
 
 const handleSignup = async (payload: any) => {
 	const { data } = await signup({
@@ -20,6 +21,7 @@ const handleSignup = async (payload: any) => {
 
 	if (data?.signup?.token) {
 		setToken(data.signup.token)
+		showToast('Account Created..', 'success')
 		router.push(ROUTES.USER.DASHBOARD)
 	}
 }
