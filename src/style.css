@@ -1,15 +1,2 @@
 @import 'vlite3/style.css';
 @source "../node_modules/vlite3";
-
-
-html {
-  font-size: 15px;
-  font-family: "Roboto", sans-serif !important;
-
-}
-
-body {
-  font-family: "Roboto", sans-serif !important;
-  font-optical-sizing: auto;
-  font-style: normal;
-}
