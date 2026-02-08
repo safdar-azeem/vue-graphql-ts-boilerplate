@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Form } from 'vlite3'
-import { resetPasswordSchema } from '../schema/reset-forget-password.schema'
-import { useResetPasswordMutation } from '@/graphql/generated'
-import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { Form } from 'vlite3'
 import { ROUTES } from '@/constants/routes'
+import { useRoute, useRouter } from 'vue-router'
+import { useResetPasswordMutation } from '@/graphql/generated'
+import { resetPasswordSchema } from '../schema/reset-forget-password.schema'
 
 const route = useRoute()
 const router = useRouter()
