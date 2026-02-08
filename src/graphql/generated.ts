@@ -148,7 +148,7 @@ export type MutationCancelUploadArgs = {
 
 
 export type MutationConfirm2faEnrollmentArgs = {
-  token: Scalars['String']['input'];
+  otp: Scalars['String']['input'];
 };
 
 
@@ -241,6 +241,7 @@ export type MutationToggleFilePublicArgs = {
 
 
 export type MutationVerify2FaArgs = {
+  otp: Scalars['String']['input'];
   token: Scalars['String']['input'];
 };
 
@@ -390,6 +391,7 @@ export type ResetPasswordMutationVariables = Exact<{
 export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: boolean };
 
 export type Verify2FaMutationVariables = Exact<{
+  otp: Scalars['String']['input'];
   token: Scalars['String']['input'];
 }>;
 
@@ -404,7 +406,7 @@ export type Init2faEnrollmentMutationVariables = Exact<{
 export type Init2faEnrollmentMutation = { __typename?: 'Mutation', init2faEnrollment: { __typename?: 'Init2faResponse', secret: string, qrCode: string, backupCodes: Array<string> } };
 
 export type Confirm2faEnrollmentMutationVariables = Exact<{
-  token: Scalars['String']['input'];
+  otp: Scalars['String']['input'];
 }>;
 
 
@@ -551,8 +553,8 @@ export function useResetPasswordMutation(options: VueApolloComposable.UseMutatio
 }
 export type ResetPasswordMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const Verify2FaDocument = gql`
-    mutation Verify2FA($token: String!) {
-  verify2FA(token: $token) {
+    mutation Verify2FA($otp: String!, $token: String!) {
+  verify2FA(otp: $otp, token: $token) {
     token
     user {
       id
@@ -576,6 +578,7 @@ export const Verify2FaDocument = gql`
  * @example
  * const { mutate, loading, error, onDone } = useVerify2FaMutation({
  *   variables: {
+ *     otp: // value for 'otp'
  *     token: // value for 'token'
  *   },
  * });
@@ -616,8 +619,8 @@ export function useInit2faEnrollmentMutation(options: VueApolloComposable.UseMut
 }
 export type Init2faEnrollmentMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Init2faEnrollmentMutation, Init2faEnrollmentMutationVariables>;
 export const Confirm2faEnrollmentDocument = gql`
-    mutation Confirm2faEnrollment($token: String!) {
-  confirm2faEnrollment(token: $token)
+    mutation Confirm2faEnrollment($otp: String!) {
+  confirm2faEnrollment(otp: $otp)
 }
     `;
 
@@ -634,7 +637,7 @@ export const Confirm2faEnrollmentDocument = gql`
  * @example
  * const { mutate, loading, error, onDone } = useConfirm2faEnrollmentMutation({
  *   variables: {
- *     token: // value for 'token'
+ *     otp: // value for 'otp'
  *   },
  * });
  */
