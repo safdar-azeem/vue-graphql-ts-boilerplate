@@ -4,6 +4,7 @@ import { Button, Avatar } from 'vlite3'
 import { removeToken } from 'vue-apollo-client'
 import { useRouter } from 'vue-router'
 import { ROUTES } from '@/constants/routes'
+import SecuritySettings from '../components/SecuritySettings.vue'
 
 const router = useRouter()
 const { result, loading, error } = useMeQuery()
@@ -71,27 +72,7 @@ const handleLogout = async () => {
 						</ul>
 					</div>
 
-					<div class="p-6 bg-gray-50 rounded-lg border">
-						<h3 class="font-medium text-gray-900 mb-2">Security</h3>
-						<div class="flex items-center justify-between">
-							<span class="text-sm text-gray-600"
-								>Two-Factor Authentication</span
-							>
-							<span
-								class="px-2 py-1 rounded text-xs font-semibold"
-								:class="
-									result.me.mfaSettings?.isEnabled
-										? 'bg-green-100 text-green-700'
-										: 'bg-yellow-100 text-yellow-700'
-								">
-								{{
-									result.me.mfaSettings?.isEnabled
-										? 'Enabled'
-										: 'Disabled'
-								}}
-							</span>
-						</div>
-					</div>
+					<SecuritySettings />
 				</div>
 			</div>
 		</div>
