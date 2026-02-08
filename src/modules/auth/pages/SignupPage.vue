@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { Button, Form } from 'vlite3'
+import { useRouter } from 'vue-router'
+import { ROUTES } from '@/constants/routes'
+import { setToken } from 'vue-apollo-client'
 import { signupSchema } from '../schema/signup.schema'
 import { useSignupMutation } from '@/graphql/generated'
-import { useRouter } from 'vue-router'
-import { setToken } from 'vue-apollo-client'
-import { ROUTES } from '@/constants/routes'
 
 const router = useRouter()
 const { mutate: signup, error, loading } = useSignupMutation()
