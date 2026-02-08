@@ -148,7 +148,6 @@ export type MutationCancelUploadArgs = {
 
 
 export type MutationConfirm2faEnrollmentArgs = {
-  secret: Scalars['String']['input'];
   token: Scalars['String']['input'];
 };
 
@@ -397,6 +396,27 @@ export type Verify2FaMutationVariables = Exact<{
 
 export type Verify2FaMutation = { __typename?: 'Mutation', verify2FA: { __typename?: 'AuthPayload', token: string, user: { __typename?: 'User', id: string, username: string, email: string } } };
 
+export type Init2faEnrollmentMutationVariables = Exact<{
+  method: TwoFactorMethod;
+}>;
+
+
+export type Init2faEnrollmentMutation = { __typename?: 'Mutation', init2faEnrollment: { __typename?: 'Init2faResponse', secret: string, qrCode: string, backupCodes: Array<string> } };
+
+export type Confirm2faEnrollmentMutationVariables = Exact<{
+  token: Scalars['String']['input'];
+}>;
+
+
+export type Confirm2faEnrollmentMutation = { __typename?: 'Mutation', confirm2faEnrollment: boolean };
+
+export type Disable2faMutationVariables = Exact<{
+  password: Scalars['String']['input'];
+}>;
+
+
+export type Disable2faMutation = { __typename?: 'Mutation', disable2fa: boolean };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -564,6 +584,91 @@ export function useVerify2FaMutation(options: VueApolloComposable.UseMutationOpt
   return VueApolloComposable.useMutation<Verify2FaMutation, Verify2FaMutationVariables>(Verify2FaDocument, options);
 }
 export type Verify2FaMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Verify2FaMutation, Verify2FaMutationVariables>;
+export const Init2faEnrollmentDocument = gql`
+    mutation Init2faEnrollment($method: TwoFactorMethod!) {
+  init2faEnrollment(method: $method) {
+    secret
+    qrCode
+    backupCodes
+  }
+}
+    `;
+
+/**
+ * __useInit2faEnrollmentMutation__
+ *
+ * To run a mutation, you first call `useInit2faEnrollmentMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useInit2faEnrollmentMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useInit2faEnrollmentMutation({
+ *   variables: {
+ *     method: // value for 'method'
+ *   },
+ * });
+ */
+export function useInit2faEnrollmentMutation(options: VueApolloComposable.UseMutationOptions<Init2faEnrollmentMutation, Init2faEnrollmentMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Init2faEnrollmentMutation, Init2faEnrollmentMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<Init2faEnrollmentMutation, Init2faEnrollmentMutationVariables>(Init2faEnrollmentDocument, options);
+}
+export type Init2faEnrollmentMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Init2faEnrollmentMutation, Init2faEnrollmentMutationVariables>;
+export const Confirm2faEnrollmentDocument = gql`
+    mutation Confirm2faEnrollment($token: String!) {
+  confirm2faEnrollment(token: $token)
+}
+    `;
+
+/**
+ * __useConfirm2faEnrollmentMutation__
+ *
+ * To run a mutation, you first call `useConfirm2faEnrollmentMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useConfirm2faEnrollmentMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useConfirm2faEnrollmentMutation({
+ *   variables: {
+ *     token: // value for 'token'
+ *   },
+ * });
+ */
+export function useConfirm2faEnrollmentMutation(options: VueApolloComposable.UseMutationOptions<Confirm2faEnrollmentMutation, Confirm2faEnrollmentMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Confirm2faEnrollmentMutation, Confirm2faEnrollmentMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<Confirm2faEnrollmentMutation, Confirm2faEnrollmentMutationVariables>(Confirm2faEnrollmentDocument, options);
+}
+export type Confirm2faEnrollmentMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Confirm2faEnrollmentMutation, Confirm2faEnrollmentMutationVariables>;
+export const Disable2faDocument = gql`
+    mutation Disable2fa($password: String!) {
+  disable2fa(password: $password)
+}
+    `;
+
+/**
+ * __useDisable2faMutation__
+ *
+ * To run a mutation, you first call `useDisable2faMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useDisable2faMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useDisable2faMutation({
+ *   variables: {
+ *     password: // value for 'password'
+ *   },
+ * });
+ */
+export function useDisable2faMutation(options: VueApolloComposable.UseMutationOptions<Disable2faMutation, Disable2faMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Disable2faMutation, Disable2faMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<Disable2faMutation, Disable2faMutationVariables>(Disable2faDocument, options);
+}
+export type Disable2faMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Disable2faMutation, Disable2faMutationVariables>;
 export const MeDocument = gql`
     query Me {
   me {
