@@ -3,6 +3,7 @@ import { Form, Button } from 'vlite3'
 import { forgotPasswordSchema } from '../schema/reset-forget-password.schema'
 import { useForgotPasswordMutation } from '@/graphql/generated'
 import { ref } from 'vue'
+import { ROUTES } from '@/constants/routes'
 
 const { mutate: forgotPassword, loading, error } = useForgotPasswordMutation()
 const successMessage = ref('')
@@ -51,7 +52,7 @@ const handleSubmit = async (payload: any) => {
 
 		<div class="text-center">
 			<router-link
-				to="/auth/login"
+				:to="ROUTES.AUTH.LOGIN"
 				class="text-sm text-gray-500 hover:text-gray-900">
 				&larr; Back to Login
 			</router-link>
