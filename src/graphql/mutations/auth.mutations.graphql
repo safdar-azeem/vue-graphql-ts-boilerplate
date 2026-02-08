@@ -1,0 +1,44 @@
+mutation Login($data: LoginInput!) {
+	login(data: $data) {
+		token
+		user {
+			id
+			username
+			email
+			mfaSettings {
+				isEnabled
+				method
+			}
+		}
+	}
+}
+
+mutation Signup($data: SignupInput!) {
+	signup(data: $data) {
+		token
+		user {
+			id
+			username
+			email
+		}
+	}
+}
+
+mutation ForgotPassword($email: String!) {
+	forgotPassword(email: $email)
+}
+
+mutation ResetPassword($token: String!, $password: String!) {
+	resetPassword(token: $token, password: $password)
+}
+
+mutation Verify2FA($token: String!) {
+	verify2FA(token: $token) {
+		token
+		user {
+			id
+			username
+			email
+		}
+	}
+}
