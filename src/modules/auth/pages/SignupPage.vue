@@ -4,7 +4,7 @@ import { signupSchema } from '../schema/signup.schema'
 import { useSignupMutation } from '@/graphql/generated'
 import { useRouter } from 'vue-router'
 import { setToken } from 'vue-apollo-client'
-import { ref } from 'vue'
+import { ROUTES } from '@/constants/routes'
 
 const router = useRouter()
 const { mutate: signup, error, loading } = useSignupMutation()
@@ -20,7 +20,7 @@ const handleSignup = async (payload: any) => {
 
 	if (data?.signup?.token) {
 		setToken(data.signup.token)
-		router.push('/user/dashboard')
+		router.push(ROUTES.USER.DASHBOARD)
 	}
 }
 </script>
@@ -56,7 +56,7 @@ const handleSignup = async (payload: any) => {
 		<div class="text-center text-sm text-gray-500">
 			Already have an account?
 			<router-link
-				to="/auth/login"
+				:to="ROUTES.AUTH.LOGIN"
 				class="text-primary font-medium hover:underline"
 				>Log in</router-link
 			>
