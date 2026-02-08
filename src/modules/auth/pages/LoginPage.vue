@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Form, Button } from 'vlite3'
+import { Form, Button, useNotifications } from 'vlite3'
 import { useRouter } from 'vue-router'
 import { ROUTES } from '@/constants/routes'
 import { setToken } from 'vue-apollo-client'
@@ -11,6 +11,7 @@ import { useLoginMutation } from '@/graphql/generated'
 const router = useRouter()
 const showOTP = ref(false)
 const token = ref('')
+const { showToast } = useNotifications()
 const { mutate: login, error, loading } = useLoginMutation()
 
 const handleLogin = async (payload: any) => {
@@ -28,6 +29,7 @@ const handleLogin = async (payload: any) => {
 			return
 		}
 		setToken(data.login.token)
+		showToast('login succesfully')
 
 		router.push(ROUTES.USER.DASHBOARD)
 	}
