@@ -1,0 +1,14 @@
+mutation CreateFolder($input: CreateFolderInput!) {
+	createFolder(input: $input) {
+		id
+		name
+	}
+}
+
+mutation DeleteFolder($id: ID!) {
+	deleteFolder(id: $id)
+}
+
+mutation DeleteFiles($ids: [String!]!) {
+	deleteFiles(ids: $ids)
+}
