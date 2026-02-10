@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import {
 	Button,
 	DataTable,
@@ -8,6 +8,7 @@ import {
 	Form,
 	useNotifications,
 	FilePicker,
+	type TableHeader,
 } from 'vlite3'
 import {
 	useGetFilesQuery,
@@ -15,9 +16,9 @@ import {
 	useCreateFolderMutation,
 	useDeleteFolderMutation,
 	useDeleteFilesMutation,
-	useConfirmUploadMutation,
 } from '@/graphql/generated'
 import { uploadHandler } from '@/services/upload.service'
+import ShareModal from '../components/ShareModal.vue'
 
 const { showToast } = useNotifications()
 
@@ -26,32 +27,39 @@ const currentFolderId = ref<string | null>(null)
 const searchQuery = ref('')
 const showCreateFolderModal = ref(false)
 const showUploadModal = ref(false)
+const showShareModal = ref(false)
+const shareItem = ref<{
+	id: string
+	name: string
+	type: 'file' | 'folder'
+} | null>(null)
 const uploadFiles = ref<any[]>([])
 const uploading = ref(false)
-const viewMode = ref<'grid' | 'list'>('list')
 
 // --- Queries ---
+// FIX: Pass a function to make variables reactive and unwrap .value
 const {
 	result: filesResult,
 	refetch: refetchFiles,
 	loading: filesLoading,
-} = useGetFilesQuery({
+} = useGetFilesQuery(() => ({
 	filter: {
-		folderId: computed(() => currentFolderId.value),
-		search: computed(() => searchQuery.value),
+		folderId: currentFolderId.value,
+		search: searchQuery.value,
 	},
-})
+}))
 
+// FIX: Pass a function to make variables reactive and unwrap .value
 const {
 	result: foldersResult,
 	refetch: refetchFolders,
 	loading: foldersLoading,
-} = useGetFoldersQuery({
+} = useGetFoldersQuery(() => ({
 	filter: {
-		parentId: computed(() => currentFolderId.value),
-		search: computed(() => searchQuery.value),
+		parentId: currentFolderId.value,
+		search: searchQuery.value,
 	},
-})
+}))
 
 const { mutate: createFolder, loading: creatingFolder } =
 	useCreateFolderMutation()
@@ -108,7 +116,6 @@ const handleUpload = async () => {
 	uploading.value = true
 
 	try {
-		// Process files one by one or parallel
 		const promises = uploadFiles.value.map((fileVal) =>
 			uploadHandler(fileVal.file, currentFolderId.value),
 		)
@@ -138,7 +145,6 @@ const handleDelete = async (itemsToDelete: any[]) => {
 
 	try {
 		if (fileIds.length) await deleteFiles({ ids: fileIds })
-		// Note: Folder delete usually needs individual calls or a batch endpoint
 		for (const fid of folderIds) {
 			await deleteFolder({ id: fid })
 		}
@@ -150,6 +156,15 @@ const handleDelete = async (itemsToDelete: any[]) => {
 	}
 }
 
+const handleShare = (item: any) => {
+	shareItem.value = {
+		id: item.id,
+		name: item.name || item.originalName,
+		type: item.type,
+	}
+	showShareModal.value = true
+}
+
 const getFileIcon = (mimeType: string) => {
 	if (mimeType?.startsWith('image')) return 'lucide:image'
 	if (mimeType?.includes('pdf')) return 'lucide:file-text'
@@ -157,11 +172,11 @@ const getFileIcon = (mimeType: string) => {
 }
 
 // --- Table Config ---
-const headers = [
+const headers: TableHeader[] = [
 	{ field: 'name', title: 'Name', sortable: true },
 	{ field: 'size', title: 'Size', sortable: true },
 	{ field: 'updatedAt', title: 'Last Modified', sortable: true },
-	{ field: 'action', title: 'Action', align: 'center' },
+	{ field: 'action', title: 'Action', align: 'center', width: '150px' },
 ]
 
 const formatSize = (bytes: number) => {
@@ -276,7 +291,13 @@ const formatSize = (bytes: number) => {
 				</template>
 
 				<template #action="{ value: row }">
-					<div class="flex justify-center gap-2">
+					<div class="flex justify-center gap-1">
+						<Button
+							variant="ghost"
+							size="xs"
+							icon="lucide:share-2"
+							title="Share"
+							@click.stop="handleShare(row)" />
 						<Button
 							v-if="row.type === 'file'"
 							variant="ghost"
@@ -339,5 +360,9 @@ const formatSize = (bytes: number) => {
 				</div>
 			</div>
 		</Modal>
+
+		<ShareModal
+			v-model:show="showShareModal"
+			:item="shareItem" />
 	</div>
 </template>
