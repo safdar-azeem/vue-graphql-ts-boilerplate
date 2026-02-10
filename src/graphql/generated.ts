@@ -138,6 +138,7 @@ export type Mutation = {
   resetPassword: Scalars['Boolean']['output'];
   signup: AuthPayload;
   toggleFilePublic: File;
+  updateUserProfile: User;
   verify2FA: AuthPayload;
 };
 
@@ -237,6 +238,11 @@ export type MutationSignupArgs = {
 
 export type MutationToggleFilePublicArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateUserProfileArgs = {
+  data: UpdateUserProfileInput;
 };
 
 
@@ -351,8 +357,14 @@ export enum TwoFactorMethod {
   Email = 'EMAIL'
 }
 
+export type UpdateUserProfileInput = {
+  avatar?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type User = {
   __typename?: 'User';
+  avatar?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -419,10 +431,31 @@ export type Disable2faMutationVariables = Exact<{
 
 export type Disable2faMutation = { __typename?: 'Mutation', disable2fa: boolean };
 
+export type RequestUploadUrlMutationVariables = Exact<{
+  input: RequestUploadInput;
+}>;
+
+
+export type RequestUploadUrlMutation = { __typename?: 'Mutation', requestUploadUrl: { __typename?: 'SignedUploadUrl', signedUrl: string, fileId: string, publicUrl: string, storageKey: string, expiresAt: any } };
+
+export type ConfirmUploadMutationVariables = Exact<{
+  fileId: Scalars['ID']['input'];
+}>;
+
+
+export type ConfirmUploadMutation = { __typename?: 'Mutation', confirmUpload: { __typename?: 'File', id: string, filename: string, mimeType: string, size: number, status: FileStatus, url?: string | null, isPublic: boolean } };
+
+export type UpdateUserProfileMutationVariables = Exact<{
+  data: UpdateUserProfileInput;
+}>;
+
+
+export type UpdateUserProfileMutation = { __typename?: 'Mutation', updateUserProfile: { __typename?: 'User', id: string, username: string, avatar?: string | null, email: string } };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, email: string, username: string, createdAt: any, updatedAt: any, mfaSettings?: { __typename?: 'MfaSettings', isEnabled: boolean, method?: TwoFactorMethod | null } | null } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, email: string, username: string, createdAt: any, updatedAt: any, avatar?: string | null, mfaSettings?: { __typename?: 'MfaSettings', isEnabled: boolean, method?: TwoFactorMethod | null } | null } | null };
 
 
 export const LoginDocument = gql`
@@ -672,6 +705,106 @@ export function useDisable2faMutation(options: VueApolloComposable.UseMutationOp
   return VueApolloComposable.useMutation<Disable2faMutation, Disable2faMutationVariables>(Disable2faDocument, options);
 }
 export type Disable2faMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Disable2faMutation, Disable2faMutationVariables>;
+export const RequestUploadUrlDocument = gql`
+    mutation RequestUploadUrl($input: RequestUploadInput!) {
+  requestUploadUrl(input: $input) {
+    signedUrl
+    fileId
+    publicUrl
+    storageKey
+    expiresAt
+  }
+}
+    `;
+
+/**
+ * __useRequestUploadUrlMutation__
+ *
+ * To run a mutation, you first call `useRequestUploadUrlMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useRequestUploadUrlMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useRequestUploadUrlMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRequestUploadUrlMutation(options: VueApolloComposable.UseMutationOptions<RequestUploadUrlMutation, RequestUploadUrlMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<RequestUploadUrlMutation, RequestUploadUrlMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<RequestUploadUrlMutation, RequestUploadUrlMutationVariables>(RequestUploadUrlDocument, options);
+}
+export type RequestUploadUrlMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<RequestUploadUrlMutation, RequestUploadUrlMutationVariables>;
+export const ConfirmUploadDocument = gql`
+    mutation ConfirmUpload($fileId: ID!) {
+  confirmUpload(fileId: $fileId) {
+    id
+    filename
+    mimeType
+    size
+    status
+    url
+    isPublic
+  }
+}
+    `;
+
+/**
+ * __useConfirmUploadMutation__
+ *
+ * To run a mutation, you first call `useConfirmUploadMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useConfirmUploadMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useConfirmUploadMutation({
+ *   variables: {
+ *     fileId: // value for 'fileId'
+ *   },
+ * });
+ */
+export function useConfirmUploadMutation(options: VueApolloComposable.UseMutationOptions<ConfirmUploadMutation, ConfirmUploadMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<ConfirmUploadMutation, ConfirmUploadMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<ConfirmUploadMutation, ConfirmUploadMutationVariables>(ConfirmUploadDocument, options);
+}
+export type ConfirmUploadMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<ConfirmUploadMutation, ConfirmUploadMutationVariables>;
+export const UpdateUserProfileDocument = gql`
+    mutation UpdateUserProfile($data: UpdateUserProfileInput!) {
+  updateUserProfile(data: $data) {
+    id
+    username
+    avatar
+    email
+  }
+}
+    `;
+
+/**
+ * __useUpdateUserProfileMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserProfileMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserProfileMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useUpdateUserProfileMutation({
+ *   variables: {
+ *     data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdateUserProfileMutation(options: VueApolloComposable.UseMutationOptions<UpdateUserProfileMutation, UpdateUserProfileMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>(UpdateUserProfileDocument, options);
+}
+export type UpdateUserProfileMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>;
 export const MeDocument = gql`
     query Me {
   me {
@@ -680,6 +813,7 @@ export const MeDocument = gql`
     username
     createdAt
     updatedAt
+    avatar
     mfaSettings {
       isEnabled
       method
