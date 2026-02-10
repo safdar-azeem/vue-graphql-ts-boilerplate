@@ -26,3 +26,23 @@ query GetFolders($filter: FolderFilterInput, $pagination: PaginationInput) {
 		}
 	}
 }
+
+query GetFileShareLinks($fileId: ID!) {
+	getFileShareLinks(fileId: $fileId) {
+		id
+		token
+		url
+		expiresAt
+		createdAt
+	}
+}
+
+query GetFolderShareLinks($folderId: ID!) {
+	getFolderShareLinks(folderId: $folderId) {
+		id
+		token
+		url
+		expiresAt
+		createdAt
+	}
+}
