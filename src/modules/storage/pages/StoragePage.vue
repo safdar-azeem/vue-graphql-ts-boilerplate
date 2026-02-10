@@ -4,40 +4,29 @@ import {
 	Button,
 	DataTable,
 	Icon,
-	Modal,
-	Form,
 	useNotifications,
-	FilePicker,
 	type TableHeader,
+	ConfirmationModal,
 } from 'vlite3'
 import {
 	useGetFilesQuery,
 	useGetFoldersQuery,
-	useCreateFolderMutation,
 	useDeleteFolderMutation,
 	useDeleteFilesMutation,
 } from '@/graphql/generated'
-import { uploadHandler } from '@/services/upload.service'
 import ShareModal from '../components/ShareModal.vue'
+import CreateFolderModal from '../components/CreateFolderModal.vue'
+import UploadModal from '../components/UploadModal.vue'
 
 const { showToast } = useNotifications()
 
 // --- State ---
 const currentFolderId = ref<string | null>(null)
 const searchQuery = ref('')
-const showCreateFolderModal = ref(false)
-const showUploadModal = ref(false)
 const showShareModal = ref(false)
-const shareItem = ref<{
-	id: string
-	name: string
-	type: 'file' | 'folder'
-} | null>(null)
-const uploadFiles = ref<any[]>([])
-const uploading = ref(false)
+const showDeleteConfirm = ref(false)
 
 // --- Queries ---
-// FIX: Pass a function to make variables reactive and unwrap .value
 const {
 	result: filesResult,
 	refetch: refetchFiles,
@@ -49,7 +38,6 @@ const {
 	},
 }))
 
-// FIX: Pass a function to make variables reactive and unwrap .value
 const {
 	result: foldersResult,
 	refetch: refetchFolders,
@@ -61,10 +49,9 @@ const {
 	},
 }))
 
-const { mutate: createFolder, loading: creatingFolder } =
-	useCreateFolderMutation()
-const { mutate: deleteFolder } = useDeleteFolderMutation()
-const { mutate: deleteFiles } = useDeleteFilesMutation()
+const { mutate: deleteFolder, loading: deletingFolder } =
+	useDeleteFolderMutation()
+const { mutate: deleteFiles, loading: deletingFiles } = useDeleteFilesMutation()
 
 // --- Computed ---
 const items = computed(() => {
@@ -83,7 +70,11 @@ const breadcrumbs = ref<{ id: string | null; name: string }[]>([
 	{ id: null, name: 'Home' },
 ])
 
-// --- Actions ---
+const refreshData = () => {
+	refetchFiles()
+	refetchFolders()
+}
+
 const handleFolderClick = (folder: any) => {
 	currentFolderId.value = folder.id
 	breadcrumbs.value.push({ id: folder.id, name: folder.name })
@@ -95,47 +86,7 @@ const handleBreadcrumbClick = (index: number) => {
 	breadcrumbs.value = breadcrumbs.value.slice(0, index + 1)
 }
 
-const handleCreateFolder = async (payload: any) => {
-	try {
-		await createFolder({
-			input: {
-				name: payload.values.name,
-				parentId: currentFolderId.value,
-			},
-		})
-		showToast('Folder created', 'success')
-		showCreateFolderModal.value = false
-		refetchFolders()
-	} catch (e: any) {
-		showToast(e.message, 'error')
-	}
-}
-
-const handleUpload = async () => {
-	if (!uploadFiles.value.length) return
-	uploading.value = true
-
-	try {
-		const promises = uploadFiles.value.map((fileVal) =>
-			uploadHandler(fileVal.file, currentFolderId.value),
-		)
-
-		await Promise.all(promises)
-
-		showToast('Files uploaded successfully', 'success')
-		showUploadModal.value = false
-		uploadFiles.value = []
-		refetchFiles()
-	} catch (e: any) {
-		showToast(e.message, 'error')
-	} finally {
-		uploading.value = false
-	}
-}
-
-const handleDelete = async (itemsToDelete: any[]) => {
-	if (!confirm(`Delete ${itemsToDelete.length} items?`)) return
-
+const executeDelete = async (itemsToDelete: any[]) => {
 	const fileIds = itemsToDelete
 		.filter((i) => i.type === 'file')
 		.map((i) => i.id)
@@ -149,20 +100,11 @@ const handleDelete = async (itemsToDelete: any[]) => {
 			await deleteFolder({ id: fid })
 		}
 		showToast('Deleted successfully', 'success')
-		refetchFiles()
-		refetchFolders()
+		refreshData()
+		showDeleteConfirm.value = false
 	} catch (e: any) {
 		showToast(e.message, 'error')
 	}
-}
-
-const handleShare = (item: any) => {
-	shareItem.value = {
-		id: item.id,
-		name: item.name || item.originalName,
-		type: item.type,
-	}
-	showShareModal.value = true
 }
 
 const getFileIcon = (mimeType: string) => {
@@ -218,30 +160,42 @@ const formatSize = (bytes: number) => {
 			</div>
 
 			<div class="flex items-center gap-3">
-				<Button
-					variant="outline"
-					icon="lucide:folder-plus"
-					@click="showCreateFolderModal = true">
-					New Folder
-				</Button>
-				<Button
-					variant="primary"
-					icon="lucide:upload"
-					@click="showUploadModal = true">
-					Upload
-				</Button>
+				<CreateFolderModal
+					:parent-id="currentFolderId"
+					@created="refreshData">
+					<Button
+						variant="outline"
+						icon="lucide:folder-plus">
+						New Folder
+					</Button>
+				</CreateFolderModal>
+
+				<UploadModal
+					:folder-id="currentFolderId"
+					@uploaded="refreshData">
+					<Button
+						variant="primary"
+						icon="lucide:upload">
+						Upload
+					</Button>
+				</UploadModal>
 			</div>
 		</div>
 
 		<div
-			class="bg-white rounded-xl border shadow-sm flex-1 overflow-hidden flex flex-col">
+			class="bg-background rounded-xl border shadow-sm flex-1 overflow-hidden flex flex-col p-5">
 			<DataTable
 				:rows="items"
 				:headers="headers"
 				:loading="filesLoading || foldersLoading"
 				selectable
 				hoverable
-				@delete="handleDelete">
+				key-field="id"
+				@delete="executeDelete">
+				<template #toolbar-right>
+					<div class=""></div>
+				</template>
+
 				<template #name="{ value: row }">
 					<div
 						class="flex items-center gap-3 cursor-pointer"
@@ -292,12 +246,13 @@ const formatSize = (bytes: number) => {
 
 				<template #action="{ value: row }">
 					<div class="flex justify-center gap-1">
-						<Button
-							variant="ghost"
-							size="xs"
-							icon="lucide:share-2"
-							title="Share"
-							@click.stop="handleShare(row)" />
+						<ShareModal :item="row">
+							<Button
+								variant="ghost"
+								size="xs"
+								icon="lucide:share-2"
+								title="Share" />
+						</ShareModal>
 						<Button
 							v-if="row.type === 'file'"
 							variant="ghost"
@@ -306,63 +261,19 @@ const formatSize = (bytes: number) => {
 							component="a"
 							:href="row.url"
 							download />
-						<Button
-							variant="ghost"
-							size="xs"
-							icon="lucide:trash-2"
-							class="text-red-500 hover:text-red-600 hover:bg-red-50"
-							@click.stop="handleDelete([row])" />
+						<ConfirmationModal
+							title="Delete Item"
+							description="Are you sure?"
+							@confirm="executeDelete(row.id)">
+							<Button
+								variant="ghost"
+								size="xs"
+								icon="lucide:trash-2"
+								class="text-red-500 hover:text-red-600 hover:bg-red-50" />
+						</ConfirmationModal>
 					</div>
 				</template>
 			</DataTable>
 		</div>
-
-		<Modal
-			v-model:show="showCreateFolderModal"
-			title="Create New Folder"
-			max-width="max-w-md">
-			<Form
-				:schema="[
-					{
-						name: 'name',
-						label: 'Folder Name',
-						type: 'text',
-						required: true,
-						placeholder: 'My Documents',
-					},
-				]"
-				:loading="creatingFolder"
-				submit-text="Create Folder"
-				@on-submit="handleCreateFolder" />
-		</Modal>
-
-		<Modal
-			v-model:show="showUploadModal"
-			title="Upload Files"
-			max-width="max-w-lg">
-			<div class="space-y-4 py-4">
-				<FilePicker
-					v-model="uploadFiles"
-					multi-select
-					class="w-full" />
-				<div class="flex justify-end gap-2 mt-4">
-					<Button
-						variant="outline"
-						@click="showUploadModal = false"
-						>Cancel</Button
-					>
-					<Button
-						:disabled="!uploadFiles.length"
-						:loading="uploading"
-						@click="handleUpload">
-						Upload {{ uploadFiles.length }} File(s)
-					</Button>
-				</div>
-			</div>
-		</Modal>
-
-		<ShareModal
-			v-model:show="showShareModal"
-			:item="shareItem" />
 	</div>
 </template>
