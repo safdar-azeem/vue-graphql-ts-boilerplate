@@ -494,6 +494,34 @@ export type GetFoldersQueryVariables = Exact<{
 
 export type GetFoldersQuery = { __typename?: 'Query', getFolders: { __typename?: 'FolderConnection', items: Array<{ __typename?: 'Folder', id: string, name: string, path: string, updatedAt: any }> } };
 
+export type CreateShareLinkMutationVariables = Exact<{
+  input: ShareLinkInput;
+}>;
+
+
+export type CreateShareLinkMutation = { __typename?: 'Mutation', createShareLink: { __typename?: 'ResourceShareLink', id: string, token: string, url: string, expiresAt: any } };
+
+export type DeleteShareLinkMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteShareLinkMutation = { __typename?: 'Mutation', deleteShareLink: boolean };
+
+export type GetFileShareLinksQueryVariables = Exact<{
+  fileId: Scalars['ID']['input'];
+}>;
+
+
+export type GetFileShareLinksQuery = { __typename?: 'Query', getFileShareLinks: Array<{ __typename?: 'ResourceShareLink', id: string, token: string, url: string, expiresAt: any, createdAt: any }> };
+
+export type GetFolderShareLinksQueryVariables = Exact<{
+  folderId: Scalars['ID']['input'];
+}>;
+
+
+export type GetFolderShareLinksQuery = { __typename?: 'Query', getFolderShareLinks: Array<{ __typename?: 'ResourceShareLink', id: string, token: string, url: string, expiresAt: any, createdAt: any }> };
+
 
 export const LoginDocument = gql`
     mutation Login($data: LoginInput!) {
@@ -1041,3 +1069,130 @@ export function useGetFoldersLazyQuery(variables: GetFoldersQueryVariables | Vue
   return VueApolloComposable.useLazyQuery<GetFoldersQuery, GetFoldersQueryVariables>(GetFoldersDocument, variables, options);
 }
 export type GetFoldersQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetFoldersQuery, GetFoldersQueryVariables>;
+export const CreateShareLinkDocument = gql`
+    mutation CreateShareLink($input: ShareLinkInput!) {
+  createShareLink(input: $input) {
+    id
+    token
+    url
+    expiresAt
+  }
+}
+    `;
+
+/**
+ * __useCreateShareLinkMutation__
+ *
+ * To run a mutation, you first call `useCreateShareLinkMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCreateShareLinkMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCreateShareLinkMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateShareLinkMutation(options: VueApolloComposable.UseMutationOptions<CreateShareLinkMutation, CreateShareLinkMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateShareLinkMutation, CreateShareLinkMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CreateShareLinkMutation, CreateShareLinkMutationVariables>(CreateShareLinkDocument, options);
+}
+export type CreateShareLinkMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateShareLinkMutation, CreateShareLinkMutationVariables>;
+export const DeleteShareLinkDocument = gql`
+    mutation DeleteShareLink($id: ID!) {
+  deleteShareLink(id: $id)
+}
+    `;
+
+/**
+ * __useDeleteShareLinkMutation__
+ *
+ * To run a mutation, you first call `useDeleteShareLinkMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteShareLinkMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useDeleteShareLinkMutation({
+ *   variables: {
+ *     id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteShareLinkMutation(options: VueApolloComposable.UseMutationOptions<DeleteShareLinkMutation, DeleteShareLinkMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteShareLinkMutation, DeleteShareLinkMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<DeleteShareLinkMutation, DeleteShareLinkMutationVariables>(DeleteShareLinkDocument, options);
+}
+export type DeleteShareLinkMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteShareLinkMutation, DeleteShareLinkMutationVariables>;
+export const GetFileShareLinksDocument = gql`
+    query GetFileShareLinks($fileId: ID!) {
+  getFileShareLinks(fileId: $fileId) {
+    id
+    token
+    url
+    expiresAt
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useGetFileShareLinksQuery__
+ *
+ * To run a query within a Vue component, call `useGetFileShareLinksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFileShareLinksQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useGetFileShareLinksQuery({
+ *   fileId: // value for 'fileId'
+ * });
+ */
+export function useGetFileShareLinksQuery(variables: GetFileShareLinksQueryVariables | VueCompositionApi.Ref<GetFileShareLinksQueryVariables> | ReactiveFunction<GetFileShareLinksQueryVariables>, options: VueApolloComposable.UseQueryOptions<GetFileShareLinksQuery, GetFileShareLinksQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetFileShareLinksQuery, GetFileShareLinksQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetFileShareLinksQuery, GetFileShareLinksQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<GetFileShareLinksQuery, GetFileShareLinksQueryVariables>(GetFileShareLinksDocument, variables, options);
+}
+export function useGetFileShareLinksLazyQuery(variables?: GetFileShareLinksQueryVariables | VueCompositionApi.Ref<GetFileShareLinksQueryVariables> | ReactiveFunction<GetFileShareLinksQueryVariables>, options: VueApolloComposable.UseQueryOptions<GetFileShareLinksQuery, GetFileShareLinksQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetFileShareLinksQuery, GetFileShareLinksQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetFileShareLinksQuery, GetFileShareLinksQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<GetFileShareLinksQuery, GetFileShareLinksQueryVariables>(GetFileShareLinksDocument, variables, options);
+}
+export type GetFileShareLinksQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetFileShareLinksQuery, GetFileShareLinksQueryVariables>;
+export const GetFolderShareLinksDocument = gql`
+    query GetFolderShareLinks($folderId: ID!) {
+  getFolderShareLinks(folderId: $folderId) {
+    id
+    token
+    url
+    expiresAt
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useGetFolderShareLinksQuery__
+ *
+ * To run a query within a Vue component, call `useGetFolderShareLinksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFolderShareLinksQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useGetFolderShareLinksQuery({
+ *   folderId: // value for 'folderId'
+ * });
+ */
+export function useGetFolderShareLinksQuery(variables: GetFolderShareLinksQueryVariables | VueCompositionApi.Ref<GetFolderShareLinksQueryVariables> | ReactiveFunction<GetFolderShareLinksQueryVariables>, options: VueApolloComposable.UseQueryOptions<GetFolderShareLinksQuery, GetFolderShareLinksQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetFolderShareLinksQuery, GetFolderShareLinksQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetFolderShareLinksQuery, GetFolderShareLinksQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<GetFolderShareLinksQuery, GetFolderShareLinksQueryVariables>(GetFolderShareLinksDocument, variables, options);
+}
+export function useGetFolderShareLinksLazyQuery(variables?: GetFolderShareLinksQueryVariables | VueCompositionApi.Ref<GetFolderShareLinksQueryVariables> | ReactiveFunction<GetFolderShareLinksQueryVariables>, options: VueApolloComposable.UseQueryOptions<GetFolderShareLinksQuery, GetFolderShareLinksQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetFolderShareLinksQuery, GetFolderShareLinksQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetFolderShareLinksQuery, GetFolderShareLinksQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<GetFolderShareLinksQuery, GetFolderShareLinksQueryVariables>(GetFolderShareLinksDocument, variables, options);
+}
+export type GetFolderShareLinksQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetFolderShareLinksQuery, GetFolderShareLinksQueryVariables>;
