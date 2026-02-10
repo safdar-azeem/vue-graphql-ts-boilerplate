@@ -457,6 +457,43 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, email: string, username: string, createdAt: any, updatedAt: any, avatar?: string | null, mfaSettings?: { __typename?: 'MfaSettings', isEnabled: boolean, method?: TwoFactorMethod | null } | null } | null };
 
+export type CreateFolderMutationVariables = Exact<{
+  input: CreateFolderInput;
+}>;
+
+
+export type CreateFolderMutation = { __typename?: 'Mutation', createFolder: { __typename?: 'Folder', id: string, name: string } };
+
+export type DeleteFolderMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteFolderMutation = { __typename?: 'Mutation', deleteFolder: boolean };
+
+export type DeleteFilesMutationVariables = Exact<{
+  ids: Array<Scalars['String']['input']> | Scalars['String']['input'];
+}>;
+
+
+export type DeleteFilesMutation = { __typename?: 'Mutation', deleteFiles: string };
+
+export type GetFilesQueryVariables = Exact<{
+  filter?: InputMaybe<FilesFilterInput>;
+  pagination?: InputMaybe<PaginationInput>;
+}>;
+
+
+export type GetFilesQuery = { __typename?: 'Query', getFiles: { __typename?: 'FileConnection', items: Array<{ __typename?: 'File', id: string, originalName: string, mimeType: string, size: number, url?: string | null, updatedAt: any, isPublic: boolean }>, pageInfo: { __typename?: 'PaginationInfo', totalItems: number, totalPages: number } } };
+
+export type GetFoldersQueryVariables = Exact<{
+  filter?: InputMaybe<FolderFilterInput>;
+  pagination?: InputMaybe<PaginationInput>;
+}>;
+
+
+export type GetFoldersQuery = { __typename?: 'Query', getFolders: { __typename?: 'FolderConnection', items: Array<{ __typename?: 'Folder', id: string, name: string, path: string, updatedAt: any }> } };
+
 
 export const LoginDocument = gql`
     mutation Login($data: LoginInput!) {
@@ -841,3 +878,166 @@ export function useMeLazyQuery(options: VueApolloComposable.UseQueryOptions<MeQu
   return VueApolloComposable.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, {}, options);
 }
 export type MeQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<MeQuery, MeQueryVariables>;
+export const CreateFolderDocument = gql`
+    mutation CreateFolder($input: CreateFolderInput!) {
+  createFolder(input: $input) {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useCreateFolderMutation__
+ *
+ * To run a mutation, you first call `useCreateFolderMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCreateFolderMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCreateFolderMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateFolderMutation(options: VueApolloComposable.UseMutationOptions<CreateFolderMutation, CreateFolderMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateFolderMutation, CreateFolderMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CreateFolderMutation, CreateFolderMutationVariables>(CreateFolderDocument, options);
+}
+export type CreateFolderMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateFolderMutation, CreateFolderMutationVariables>;
+export const DeleteFolderDocument = gql`
+    mutation DeleteFolder($id: ID!) {
+  deleteFolder(id: $id)
+}
+    `;
+
+/**
+ * __useDeleteFolderMutation__
+ *
+ * To run a mutation, you first call `useDeleteFolderMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteFolderMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useDeleteFolderMutation({
+ *   variables: {
+ *     id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteFolderMutation(options: VueApolloComposable.UseMutationOptions<DeleteFolderMutation, DeleteFolderMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteFolderMutation, DeleteFolderMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<DeleteFolderMutation, DeleteFolderMutationVariables>(DeleteFolderDocument, options);
+}
+export type DeleteFolderMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteFolderMutation, DeleteFolderMutationVariables>;
+export const DeleteFilesDocument = gql`
+    mutation DeleteFiles($ids: [String!]!) {
+  deleteFiles(ids: $ids)
+}
+    `;
+
+/**
+ * __useDeleteFilesMutation__
+ *
+ * To run a mutation, you first call `useDeleteFilesMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteFilesMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useDeleteFilesMutation({
+ *   variables: {
+ *     ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function useDeleteFilesMutation(options: VueApolloComposable.UseMutationOptions<DeleteFilesMutation, DeleteFilesMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteFilesMutation, DeleteFilesMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<DeleteFilesMutation, DeleteFilesMutationVariables>(DeleteFilesDocument, options);
+}
+export type DeleteFilesMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteFilesMutation, DeleteFilesMutationVariables>;
+export const GetFilesDocument = gql`
+    query GetFiles($filter: FilesFilterInput, $pagination: PaginationInput) {
+  getFiles(filter: $filter, pagination: $pagination) {
+    items {
+      id
+      originalName
+      mimeType
+      size
+      url
+      updatedAt
+      isPublic
+    }
+    pageInfo {
+      totalItems
+      totalPages
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetFilesQuery__
+ *
+ * To run a query within a Vue component, call `useGetFilesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFilesQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useGetFilesQuery({
+ *   filter: // value for 'filter'
+ *   pagination: // value for 'pagination'
+ * });
+ */
+export function useGetFilesQuery(variables: GetFilesQueryVariables | VueCompositionApi.Ref<GetFilesQueryVariables> | ReactiveFunction<GetFilesQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<GetFilesQuery, GetFilesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetFilesQuery, GetFilesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetFilesQuery, GetFilesQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<GetFilesQuery, GetFilesQueryVariables>(GetFilesDocument, variables, options);
+}
+export function useGetFilesLazyQuery(variables: GetFilesQueryVariables | VueCompositionApi.Ref<GetFilesQueryVariables> | ReactiveFunction<GetFilesQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<GetFilesQuery, GetFilesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetFilesQuery, GetFilesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetFilesQuery, GetFilesQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<GetFilesQuery, GetFilesQueryVariables>(GetFilesDocument, variables, options);
+}
+export type GetFilesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetFilesQuery, GetFilesQueryVariables>;
+export const GetFoldersDocument = gql`
+    query GetFolders($filter: FolderFilterInput, $pagination: PaginationInput) {
+  getFolders(filter: $filter, pagination: $pagination) {
+    items {
+      id
+      name
+      path
+      updatedAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetFoldersQuery__
+ *
+ * To run a query within a Vue component, call `useGetFoldersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFoldersQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useGetFoldersQuery({
+ *   filter: // value for 'filter'
+ *   pagination: // value for 'pagination'
+ * });
+ */
+export function useGetFoldersQuery(variables: GetFoldersQueryVariables | VueCompositionApi.Ref<GetFoldersQueryVariables> | ReactiveFunction<GetFoldersQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<GetFoldersQuery, GetFoldersQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetFoldersQuery, GetFoldersQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetFoldersQuery, GetFoldersQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<GetFoldersQuery, GetFoldersQueryVariables>(GetFoldersDocument, variables, options);
+}
+export function useGetFoldersLazyQuery(variables: GetFoldersQueryVariables | VueCompositionApi.Ref<GetFoldersQueryVariables> | ReactiveFunction<GetFoldersQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<GetFoldersQuery, GetFoldersQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetFoldersQuery, GetFoldersQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetFoldersQuery, GetFoldersQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<GetFoldersQuery, GetFoldersQueryVariables>(GetFoldersDocument, variables, options);
+}
+export type GetFoldersQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetFoldersQuery, GetFoldersQueryVariables>;
