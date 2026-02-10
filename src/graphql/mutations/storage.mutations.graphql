@@ -12,3 +12,16 @@ mutation DeleteFolder($id: ID!) {
 mutation DeleteFiles($ids: [String!]!) {
 	deleteFiles(ids: $ids)
 }
+
+mutation CreateShareLink($input: ShareLinkInput!) {
+	createShareLink(input: $input) {
+		id
+		token
+		url
+		expiresAt
+	}
+}
+
+mutation DeleteShareLink($id: ID!) {
+	deleteShareLink(id: $id)
+}
