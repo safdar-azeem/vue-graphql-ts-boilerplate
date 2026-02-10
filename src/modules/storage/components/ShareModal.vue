@@ -9,7 +9,6 @@ import {
 } from '@/graphql/generated'
 
 interface Props {
-	show: boolean
 	item: { id: string; name: string; type: 'file' | 'folder' } | null
 }
 
@@ -28,11 +27,11 @@ const expiryOptions = [
 
 // --- Computed Enabled States ---
 const fileLinksEnabled = computed(
-	() => props.show && props.item?.type === 'file' && !!props.item?.id,
+	() => props.item?.type === 'file' && !!props.item?.id,
 )
 
 const folderLinksEnabled = computed(
-	() => props.show && props.item?.type === 'folder' && !!props.item?.id,
+	() => props.item?.type === 'folder' && !!props.item?.id,
 )
 
 // --- Queries ---
@@ -128,10 +127,13 @@ const isExpired = (date: string) => {
 
 <template>
 	<Modal
-		:show="show"
 		:title="`Share ${item?.name || 'Item'}`"
 		max-width="max-w-xl"
 		@update:show="close">
+		<template #trigger>
+			<slot />
+		</template>
+
 		<div class="space-y-6 py-2">
 			<div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
 				<h4 class="text-sm font-medium text-gray-900 mb-3">
