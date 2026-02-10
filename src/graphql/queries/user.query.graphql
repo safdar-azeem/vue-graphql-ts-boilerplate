@@ -5,6 +5,7 @@ query Me {
 		username
 		createdAt
 		updatedAt
+		avatar
 		mfaSettings {
 			isEnabled
 			method
