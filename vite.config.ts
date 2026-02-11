@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
 			},
 		},
 		server: {
-			port: 4004,
+			port: 4202,
 		},
 	}
 })
