@@ -1,0 +1,85 @@
+<script setup lang="ts">
+import { SidebarMenu, Button, Icon } from 'vlite3'
+import { useRouter } from 'vue-router'
+import { ROUTES } from '@/constants/routes'
+import { removeToken } from 'vue-apollo-client'
+
+const router = useRouter()
+
+const menuItems = [
+	{
+		label: 'Dashboard',
+		icon: 'lucide:layout-dashboard',
+		to: ROUTES.USER.DASHBOARD,
+	},
+	{
+		label: 'Storage',
+		icon: 'lucide:hard-drive',
+		to: ROUTES.STORAGE,
+	},
+]
+
+const handleLogout = () => {
+	removeToken()
+	router.push(ROUTES.AUTH.LOGIN)
+}
+</script>
+
+<template>
+	<div class="flex h-screen bg-gray-50 overflow-hidden">
+		<aside
+			class="w-64 bg-white border-r border-gray-200 flex flex-col flex-shrink-0 z-20">
+			<div
+				class="h-16 flex items-center gap-3 px-6 border-b border-gray-100">
+				<div
+					class="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center shadow-sm">
+					<Icon
+						icon="lucide:box"
+						class="w-5 h-5" />
+				</div>
+				<span class="font-bold text-lg text-gray-900 tracking-tight"
+					>Builto</span
+				>
+			</div>
+
+			<div class="flex-1 overflow-y-auto py-6 px-3">
+				<SidebarMenu :items="menuItems" />
+			</div>
+
+			<div class="p-4 border-t border-gray-100 bg-gray-50/50">
+				<Button
+					variant="ghost"
+					class="w-full justify-start text-gray-600 hover:text-red-600 hover:bg-red-50"
+					icon="lucide:log-out"
+					@click="handleLogout">
+					Logout
+				</Button>
+			</div>
+		</aside>
+
+		<main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+			<div class="flex-1 overflow-y-auto">
+				<router-view v-slot="{ Component }">
+					<transition
+						name="fade"
+						mode="out-in">
+						<component :is="Component" />
+					</transition>
+				</router-view>
+			</div>
+		</main>
+	</div>
+</template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.15s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+	opacity: 0;
+}
+</style>
+
