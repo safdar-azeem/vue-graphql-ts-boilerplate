@@ -3973,10 +3973,10 @@ vite@^7.2.4:
   optionalDependencies:
     fsevents "~2.3.3"
 
-vlite3@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/vlite3/-/vlite3-0.1.4.tgz#6d8cac9c78f7068ae3a4d107fd03ea46a6a14d54"
-  integrity sha512-1oTFmLT6zKzRgD//cXu8DofzO87+phRzbavibmG+jz6jRZe4/WKVOIWB/GIZew4GSZFU4I4lDhozqb7BYO/61A==
+vlite3@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/vlite3/-/vlite3-0.1.8.tgz#064bf31c4e4ab45bbea805f4b7f7301890ce9fb3"
+  integrity sha512-xBJde3nsR2bTfdDLiHmwTBOfq2Qx0OuK4yiFAMM+yQM/3FM3GJweowJ3JOV3PgSrz7ICI1H2pc1Wrq3i9yYQuQ==
   dependencies:
     "@formkit/drag-and-drop" "^0.5.3"
     "@iconify/vue" "5.0.0"
