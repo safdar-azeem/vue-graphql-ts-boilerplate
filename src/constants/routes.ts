@@ -8,5 +8,7 @@ export const ROUTES = {
 	USER: {
 		DASHBOARD: '/user/dashboard',
 	},
+	STORAGE: '/storage',
 	HOME: '/',
 }
+
