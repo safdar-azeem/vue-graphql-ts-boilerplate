@@ -5,7 +5,7 @@ import { getRelativeRoute } from '@/utils/route.utils'
 export const userRoutes: RouteRecordRaw[] = [
 	{
 		path: '/user',
-		component: () => import('@/App.vue'),
+		component: () => import('@/layouts/MainLayout.vue'),
 		meta: { requiresAuth: true },
 		children: [
 			{
@@ -15,3 +15,4 @@ export const userRoutes: RouteRecordRaw[] = [
 		],
 	},
 ]
+
