@@ -7,6 +7,7 @@ import {
 	useNotifications,
 	type TableHeader,
 	ConfirmationModal,
+	Modal,
 } from 'vlite3'
 import {
 	useGetFilesQuery,
@@ -15,16 +16,14 @@ import {
 	useDeleteFilesMutation,
 } from '@/graphql/generated'
 import ShareModal from '../components/ShareModal.vue'
-import CreateFolderModal from '../components/CreateFolderModal.vue'
-import UploadModal from '../components/UploadModal.vue'
+import CreateFolder from '../components/CreateFolder.vue'
+import UploadForm from '../components/UploadForm.vue'
 
 const { showToast } = useNotifications()
 
 // --- State ---
 const currentFolderId = ref<string | null>(null)
 const searchQuery = ref('')
-const showShareModal = ref(false)
-const showDeleteConfirm = ref(false)
 
 // --- Queries ---
 const {
@@ -101,7 +100,6 @@ const executeDelete = async (itemsToDelete: any[]) => {
 		}
 		showToast('Deleted successfully', 'success')
 		refreshData()
-		showDeleteConfirm.value = false
 	} catch (e: any) {
 		showToast(e.message, 'error')
 	}
@@ -160,25 +158,29 @@ const formatSize = (bytes: number) => {
 			</div>
 
 			<div class="flex items-center gap-3">
-				<CreateFolderModal
-					:parent-id="currentFolderId"
-					@created="refreshData">
+				<Modal
+					:body="CreateFolder"
+					title="Create New Folder"
+					max-width="max-w-md"
+					:parentId="currentFolderId">
 					<Button
 						variant="outline"
 						icon="lucide:folder-plus">
 						New Folder
 					</Button>
-				</CreateFolderModal>
+				</Modal>
 
-				<UploadModal
-					:folder-id="currentFolderId"
-					@uploaded="refreshData">
+				<Modal
+					:body="UploadForm"
+					title="Upload Files"
+					:folderId="currentFolderId"
+					:refresh="refreshData">
 					<Button
 						variant="primary"
 						icon="lucide:upload">
 						Upload
 					</Button>
-				</UploadModal>
+				</Modal>
 			</div>
 		</div>
 
@@ -245,14 +247,18 @@ const formatSize = (bytes: number) => {
 				</template>
 
 				<template #action="{ value: row }">
-					<div class="flex justify-center gap-1">
-						<ShareModal :item="row">
+					<div class="flex justify-end pr-4 gap-1">
+						<Modal
+							:body="ShareModal"
+							max-width="max-w-xl"
+							:title="`Share ${row?.name || 'Item'}`"
+							:item="row">
 							<Button
 								variant="ghost"
 								size="xs"
 								icon="lucide:share-2"
 								title="Share" />
-						</ShareModal>
+						</Modal>
 						<Button
 							v-if="row.type === 'file'"
 							variant="ghost"
@@ -263,8 +269,8 @@ const formatSize = (bytes: number) => {
 							download />
 						<ConfirmationModal
 							title="Delete Item"
-							description="Are you sure?"
-							@confirm="executeDelete(row.id)">
+							description="Are you sure you want to delete this item?"
+							@confirm="executeDelete([row])">
 							<Button
 								variant="ghost"
 								size="xs"
