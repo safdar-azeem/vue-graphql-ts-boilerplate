@@ -21,6 +21,7 @@ export const uploadHandler = async (
 	fileInput: File | { file: File; fileName?: string },
 	folderId?: string | null,
 ): Promise<string | null | undefined> => {
+	console.log('folderId :>> ', folderId)
 	// 1. Resolve File Object
 	const file = fileInput instanceof File ? fileInput : fileInput.file
 
