@@ -247,7 +247,7 @@ const formatSize = (bytes: number) => {
 				</template>
 
 				<template #action="{ value: row }">
-					<div class="flex justify-end pr-4 gap-1">
+					<div class="flex justify-end gap-1">
 						<Modal
 							:body="ShareModal"
 							max-width="max-w-xl"
@@ -255,14 +255,14 @@ const formatSize = (bytes: number) => {
 							:item="row">
 							<Button
 								variant="ghost"
-								size="xs"
+								size="sm"
 								icon="lucide:share-2"
 								title="Share" />
 						</Modal>
 						<Button
 							v-if="row.type === 'file'"
 							variant="ghost"
-							size="xs"
+							size="sm"
 							icon="lucide:download"
 							component="a"
 							:href="row.url"
