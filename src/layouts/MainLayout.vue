@@ -53,8 +53,8 @@ const handleLogout = () => {
 				</div>
 			</template>
 
-			<template #footer>
-				<div class="p-4 border-t border-gray-100 bg-gray-50/50 mt-auto">
+			<template #right>
+				<div class="border-t border-gray-100 bg-gray-50/50">
 					<Button
 						variant="ghost"
 						class="w-full justify-start text-gray-600 hover:text-red-600 hover:bg-red-50"
