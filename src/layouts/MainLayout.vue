@@ -26,12 +26,12 @@ const handleLogout = () => {
 </script>
 
 <template>
-	<div class="flex max-md:flex-col h-screen bg-gray-50 overflow-hidden">
+	<div class="flex max-md:flex-col h-screen overflow-hidden bg-gray-50">
 		<Navbar
 			variant="sidebar"
 			mobile-breakpoint="md"
 			width="w-52"
-			class="bg-white border-r border-gray-200 flex flex-col z-30 md:h-full">
+			class="border-r border-gray-200 flex flex-col z-30 md:h-full">
 			<template #logo>
 				<div
 					class="flex items-center gap-3 px-2 font-bold text-xl text-gray-900 tracking-tight">
@@ -54,7 +54,7 @@ const handleLogout = () => {
 			</template>
 
 			<template #right>
-				<div class="border-t border-gray-100 bg-gray-50/50">
+				<div>
 					<Button
 						variant="ghost"
 						class="w-full justify-start text-gray-600 hover:text-red-600 hover:bg-red-50"
@@ -67,7 +67,8 @@ const handleLogout = () => {
 		</Navbar>
 
 		<main class="flex-1 flex flex-col min-w-0 overflow-hidden relative">
-			<div class="flex-1 overflow-y-auto w-full">
+			<div
+				class="flex-1 overflow-y-auto w-full max-w-7xl mx-auto px-10 py-6">
 				<router-view v-slot="{ Component }">
 					<transition
 						name="fade"
