@@ -141,8 +141,7 @@ const formatSize = (bytes: number) => {
 </script>
 
 <template>
-	<div
-		class="p-4 md:p-6 h-full flex flex-col bg-gray-50 min-h-[calc(100vh-64px)] md:min-h-screen">
+	<div class="">
 		<div
 			class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
 			<div class="w-full sm:w-auto">
