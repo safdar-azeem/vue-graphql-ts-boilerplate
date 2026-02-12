@@ -145,6 +145,7 @@ const isExpired = (date: string) => {
 				]"
 				:loading="creating"
 				submit-text="Generate Link"
+				footer-class="bg-transparent!"
 				@on-submit="handleCreate">
 				<template #submit="{ loading }">
 					<Button
