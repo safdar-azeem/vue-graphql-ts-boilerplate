@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useMeQuery } from '@/graphql/generated'
-import { Button, Avatar } from 'vlite3'
-import { removeToken } from 'vue-apollo-client'
 import { useRouter } from 'vue-router'
+import { Button, Avatar } from 'vlite3'
 import { ROUTES } from '@/constants/routes'
-import SecuritySettings from '../components/SecuritySettings.vue'
+import { removeToken } from 'vue-apollo-client'
+import { useMeQuery } from '@/graphql/generated'
 import ProfileUpdate from '../components/ProfileUpdate.vue'
+import SecuritySettings from '../components/SecuritySettings.vue'
 
 const router = useRouter()
 const { result, loading, error } = useMeQuery()
