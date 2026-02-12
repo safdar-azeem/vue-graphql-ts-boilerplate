@@ -12,6 +12,7 @@ const { showToast } = useNotifications()
 
 const handleUpload = async (_, close) => {
 	try {
+		console.log('folderId :>> ', props.folderId)
 		showToast('Files uploaded successfully', 'success')
 		close?.()
 		props?.refresh?.()
