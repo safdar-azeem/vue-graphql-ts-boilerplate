@@ -28,14 +28,7 @@ const handleSignup = async (payload: any) => {
 </script>
 
 <template>
-	<div class="space-y-6">
-		<div class="text-center space-y-1">
-			<h1 class="text-2xl font-bold">Create Account</h1>
-			<p class="text-sm text-gray-500">
-				Join us and start building today
-			</p>
-		</div>
-
+	<div>
 		<div
 			v-if="error"
 			class="p-3 rounded-md bg-red-50 text-red-600 text-sm text-center">
@@ -55,7 +48,7 @@ const handleSignup = async (payload: any) => {
 			</template>
 		</Form>
 
-		<div class="text-center text-sm text-gray-500">
+		<div class="text-center text-sm text-gray-500 mt-4">
 			Already have an account?
 			<router-link
 				:to="ROUTES.AUTH.LOGIN"
