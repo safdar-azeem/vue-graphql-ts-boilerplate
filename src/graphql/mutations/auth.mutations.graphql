@@ -1,6 +1,7 @@
 mutation Login($data: LoginInput!) {
 	login(data: $data) {
 		token
+		refreshToken
 		user {
 			id
 			username
@@ -58,4 +59,3 @@ mutation Confirm2faEnrollment($otp: String!) {
 mutation Disable2fa($password: String!) {
 	disable2fa(password: $password)
 }
-
