@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { Form, Button, useNotifications } from 'vlite3'
 import { useRouter } from 'vue-router'
 import { ROUTES } from '@/constants/routes'
-import { setToken } from 'vue-apollo-client'
+import { getRefreshToken, setToken } from 'vue-apollo-client'
 import VerifyOtp from '../components/VerifyOtp.vue'
 import { loginSchema } from '../schema/login.schema'
 import { useLoginMutation } from '@/graphql/generated'
@@ -32,6 +32,7 @@ const handleLogin = async (payload: any) => {
 			token: data.login.token,
 			refreshToken: (data.login as any).refreshToken,
 		})
+
 		showToast('login succesfully')
 
 		router.push(ROUTES.USER.DASHBOARD)
