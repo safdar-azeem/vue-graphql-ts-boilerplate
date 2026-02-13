@@ -28,7 +28,10 @@ const handleLogin = async (payload: any) => {
 			showOTP.value = true
 			return
 		}
-		setToken(data.login.token)
+		setToken({
+			token: data.login.token,
+			refreshToken: (data.login as any).refreshToken,
+		})
 		showToast('login succesfully')
 
 		router.push(ROUTES.USER.DASHBOARD)
