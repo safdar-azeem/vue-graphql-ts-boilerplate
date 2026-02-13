@@ -6,5 +6,9 @@ query Me {
 		createdAt
 		updatedAt
 		avatar
+		mfaSettings {
+			isEnabled
+			method
+		}
 	}
 }
