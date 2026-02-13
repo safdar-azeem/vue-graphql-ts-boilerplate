@@ -387,7 +387,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'AuthPayload', token: string, user: { __typename?: 'User', id: string, username: string, email: string, mfaSettings?: { __typename?: 'MfaSettings', isEnabled: boolean, method?: TwoFactorMethod | null } | null } } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'AuthPayload', token: string, refreshToken: string, user: { __typename?: 'User', id: string, username: string, email: string, mfaSettings?: { __typename?: 'MfaSettings', isEnabled: boolean, method?: TwoFactorMethod | null } | null } } };
 
 export type SignupMutationVariables = Exact<{
   data: SignupInput;
@@ -536,6 +536,7 @@ export const LoginDocument = gql`
     mutation Login($data: LoginInput!) {
   login(data: $data) {
     token
+    refreshToken
     user {
       id
       username
