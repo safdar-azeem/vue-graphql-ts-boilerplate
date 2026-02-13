@@ -19,6 +19,11 @@ export const resetPasswordSchema: IForm[] = [
 		placeholder: 'Enter new password',
 		required: true,
 		icon: 'lucide:lock',
+		validation: ({ value }) => {
+			if (!value) return 'Password is required'
+			if (value.length < 6) return 'Password must be at least 6 characters'
+			return ''
+		}
 	},
 	{
 		name: 'confirmPassword',
@@ -28,8 +33,10 @@ export const resetPasswordSchema: IForm[] = [
 		required: true,
 		icon: 'lucide:check',
 		validation: ({ value, values }) => {
+			if (!value) return 'Please confirm your password'
 			if (value !== values.password) return 'Passwords do not match'
 			return ''
 		},
 	},
 ]
+
