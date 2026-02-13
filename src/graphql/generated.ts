@@ -25,6 +25,7 @@ export type Scalars = {
 
 export type AuthPayload = {
   __typename?: 'AuthPayload';
+  refreshToken: Scalars['String']['output'];
   token: Scalars['String']['output'];
   user: User;
 };
@@ -132,7 +133,10 @@ export type Mutation = {
   googleLogin: AuthPayload;
   init2faEnrollment: Init2faResponse;
   login: AuthPayload;
+  logout: Scalars['Boolean']['output'];
+  logoutAll: Scalars['Boolean']['output'];
   moveFolder: Folder;
+  refreshTokens: AuthPayload;
   renameFolder: Folder;
   requestUploadUrl: SignedUploadUrl;
   resetPassword: Scalars['Boolean']['output'];
@@ -211,6 +215,11 @@ export type MutationLoginArgs = {
 export type MutationMoveFolderArgs = {
   id: Scalars['ID']['input'];
   parentId?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationRefreshTokensArgs = {
+  refreshToken: Scalars['String']['input'];
 };
 
 
