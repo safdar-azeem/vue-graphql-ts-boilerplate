@@ -78,8 +78,8 @@ export const uploadHandler = async (
 			throw new Error('Failed to confirm upload status')
 		}
 
-		// Return the final public URL for the UI
-		return publicUrl
+		// Return the final URL for the UI (resolved by the server based on FILE_PROXY_MODE)
+		return confirmData.confirmUpload.url
 	} catch (error) {
 		console.error('[Upload Service] Error:', error)
 		// Throwing ensures vlite3 catches the error and updates UI state
