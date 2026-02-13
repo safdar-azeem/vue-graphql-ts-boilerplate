@@ -22,14 +22,7 @@ const handleSubmit = async (payload: any) => {
 </script>
 
 <template>
-	<div class="space-y-6">
-		<div class="text-center space-y-1">
-			<h1 class="text-2xl font-bold">Forgot Password</h1>
-			<p class="text-sm text-gray-500">
-				Enter your email to receive a reset link
-			</p>
-		</div>
-
+	<div>
 		<div
 			v-if="successMessage"
 			class="p-4 rounded-md bg-green-50 text-green-700 text-sm text-center">
@@ -47,13 +40,16 @@ const handleSubmit = async (payload: any) => {
 				:schema="forgotPasswordSchema"
 				submit-text="Send Reset Link"
 				:loading="loading"
-				@on-submit="handleSubmit" />
+				@on-submit="handleSubmit"
+				:submit-props="{
+					class: 'w-full',
+				}" />
 		</div>
 
-		<div class="text-center">
+		<div class="text-center mt-3">
 			<router-link
 				:to="ROUTES.AUTH.LOGIN"
-				class="text-sm text-gray-500 hover:text-gray-900">
+				class="text-sm text-muted hover:text-gray-900">
 				&larr; Back to Login
 			</router-link>
 		</div>
