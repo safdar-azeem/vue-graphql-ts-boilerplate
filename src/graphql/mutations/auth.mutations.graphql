@@ -58,3 +58,4 @@ mutation Confirm2faEnrollment($otp: String!) {
 mutation Disable2fa($password: String!) {
 	disable2fa(password: $password)
 }
+
