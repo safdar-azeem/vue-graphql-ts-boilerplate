@@ -43,13 +43,6 @@ const handleLogin = async (payload: any) => {
 	<div
 		class="space-y-6"
 		v-if="!showOTP">
-		<div class="text-center space-y-1">
-			<h1 class="text-2xl font-bold">Welcome Back</h1>
-			<p class="text-sm text-gray-500">
-				Sign in to your account to continue
-			</p>
-		</div>
-
 		<div
 			v-if="error"
 			class="p-3 rounded-md bg-red-50 text-red-600 text-sm text-center">
