@@ -440,32 +440,6 @@ export type Disable2faMutationVariables = Exact<{
 
 export type Disable2faMutation = { __typename?: 'Mutation', disable2fa: boolean };
 
-export type RequestUploadUrlMutationVariables = Exact<{
-  input: RequestUploadInput;
-}>;
-
-
-export type RequestUploadUrlMutation = { __typename?: 'Mutation', requestUploadUrl: { __typename?: 'SignedUploadUrl', signedUrl: string, fileId: string, publicUrl: string, storageKey: string, expiresAt: any } };
-
-export type ConfirmUploadMutationVariables = Exact<{
-  fileId: Scalars['ID']['input'];
-}>;
-
-
-export type ConfirmUploadMutation = { __typename?: 'Mutation', confirmUpload: { __typename?: 'File', id: string, filename: string, mimeType: string, size: number, status: FileStatus, url?: string | null, isPublic: boolean } };
-
-export type UpdateUserProfileMutationVariables = Exact<{
-  data: UpdateUserProfileInput;
-}>;
-
-
-export type UpdateUserProfileMutation = { __typename?: 'Mutation', updateUserProfile: { __typename?: 'User', id: string, username: string, avatar?: string | null, email: string } };
-
-export type MeQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, email: string, username: string, createdAt: any, updatedAt: any, avatar?: string | null, mfaSettings?: { __typename?: 'MfaSettings', isEnabled: boolean, method?: TwoFactorMethod | null } | null } | null };
-
 export type CreateFolderMutationVariables = Exact<{
   input: CreateFolderInput;
 }>;
@@ -487,6 +461,41 @@ export type DeleteFilesMutationVariables = Exact<{
 
 export type DeleteFilesMutation = { __typename?: 'Mutation', deleteFiles: string };
 
+export type CreateShareLinkMutationVariables = Exact<{
+  input: ShareLinkInput;
+}>;
+
+
+export type CreateShareLinkMutation = { __typename?: 'Mutation', createShareLink: { __typename?: 'ResourceShareLink', id: string, token: string, url: string, expiresAt: any } };
+
+export type DeleteShareLinkMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteShareLinkMutation = { __typename?: 'Mutation', deleteShareLink: boolean };
+
+export type RequestUploadUrlMutationVariables = Exact<{
+  input: RequestUploadInput;
+}>;
+
+
+export type RequestUploadUrlMutation = { __typename?: 'Mutation', requestUploadUrl: { __typename?: 'SignedUploadUrl', signedUrl: string, fileId: string, publicUrl: string, storageKey: string, expiresAt: any } };
+
+export type ConfirmUploadMutationVariables = Exact<{
+  fileId: Scalars['ID']['input'];
+}>;
+
+
+export type ConfirmUploadMutation = { __typename?: 'Mutation', confirmUpload: { __typename?: 'File', id: string, filename: string, mimeType: string, size: number, status: FileStatus, url?: string | null, isPublic: boolean } };
+
+export type UpdateUserProfileMutationVariables = Exact<{
+  data: UpdateUserProfileInput;
+}>;
+
+
+export type UpdateUserProfileMutation = { __typename?: 'Mutation', updateUserProfile: { __typename?: 'User', id: string, username: string, avatar?: string | null, email: string } };
+
 export type GetFilesQueryVariables = Exact<{
   filter?: InputMaybe<FilesFilterInput>;
   pagination?: InputMaybe<PaginationInput>;
@@ -503,20 +512,6 @@ export type GetFoldersQueryVariables = Exact<{
 
 export type GetFoldersQuery = { __typename?: 'Query', getFolders: { __typename?: 'FolderConnection', items: Array<{ __typename?: 'Folder', id: string, name: string, path: string, updatedAt: any }> } };
 
-export type CreateShareLinkMutationVariables = Exact<{
-  input: ShareLinkInput;
-}>;
-
-
-export type CreateShareLinkMutation = { __typename?: 'Mutation', createShareLink: { __typename?: 'ResourceShareLink', id: string, token: string, url: string, expiresAt: any } };
-
-export type DeleteShareLinkMutationVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type DeleteShareLinkMutation = { __typename?: 'Mutation', deleteShareLink: boolean };
-
 export type GetFileShareLinksQueryVariables = Exact<{
   fileId: Scalars['ID']['input'];
 }>;
@@ -530,6 +525,11 @@ export type GetFolderShareLinksQueryVariables = Exact<{
 
 
 export type GetFolderShareLinksQuery = { __typename?: 'Query', getFolderShareLinks: Array<{ __typename?: 'ResourceShareLink', id: string, token: string, url: string, expiresAt: any, createdAt: any }> };
+
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, email: string, username: string, createdAt: any, updatedAt: any, avatar?: string | null, mfaSettings?: { __typename?: 'MfaSettings', isEnabled: boolean, method?: TwoFactorMethod | null } | null } | null };
 
 
 export const LoginDocument = gql`
@@ -779,6 +779,149 @@ export function useDisable2faMutation(options: VueApolloComposable.UseMutationOp
   return VueApolloComposable.useMutation<Disable2faMutation, Disable2faMutationVariables>(Disable2faDocument, options);
 }
 export type Disable2faMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Disable2faMutation, Disable2faMutationVariables>;
+export const CreateFolderDocument = gql`
+    mutation CreateFolder($input: CreateFolderInput!) {
+  createFolder(input: $input) {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useCreateFolderMutation__
+ *
+ * To run a mutation, you first call `useCreateFolderMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCreateFolderMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCreateFolderMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateFolderMutation(options: VueApolloComposable.UseMutationOptions<CreateFolderMutation, CreateFolderMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateFolderMutation, CreateFolderMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CreateFolderMutation, CreateFolderMutationVariables>(CreateFolderDocument, options);
+}
+export type CreateFolderMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateFolderMutation, CreateFolderMutationVariables>;
+export const DeleteFolderDocument = gql`
+    mutation DeleteFolder($id: ID!) {
+  deleteFolder(id: $id)
+}
+    `;
+
+/**
+ * __useDeleteFolderMutation__
+ *
+ * To run a mutation, you first call `useDeleteFolderMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteFolderMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useDeleteFolderMutation({
+ *   variables: {
+ *     id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteFolderMutation(options: VueApolloComposable.UseMutationOptions<DeleteFolderMutation, DeleteFolderMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteFolderMutation, DeleteFolderMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<DeleteFolderMutation, DeleteFolderMutationVariables>(DeleteFolderDocument, options);
+}
+export type DeleteFolderMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteFolderMutation, DeleteFolderMutationVariables>;
+export const DeleteFilesDocument = gql`
+    mutation DeleteFiles($ids: [String!]!) {
+  deleteFiles(ids: $ids)
+}
+    `;
+
+/**
+ * __useDeleteFilesMutation__
+ *
+ * To run a mutation, you first call `useDeleteFilesMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteFilesMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useDeleteFilesMutation({
+ *   variables: {
+ *     ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function useDeleteFilesMutation(options: VueApolloComposable.UseMutationOptions<DeleteFilesMutation, DeleteFilesMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteFilesMutation, DeleteFilesMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<DeleteFilesMutation, DeleteFilesMutationVariables>(DeleteFilesDocument, options);
+}
+export type DeleteFilesMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteFilesMutation, DeleteFilesMutationVariables>;
+export const CreateShareLinkDocument = gql`
+    mutation CreateShareLink($input: ShareLinkInput!) {
+  createShareLink(input: $input) {
+    id
+    token
+    url
+    expiresAt
+  }
+}
+    `;
+
+/**
+ * __useCreateShareLinkMutation__
+ *
+ * To run a mutation, you first call `useCreateShareLinkMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCreateShareLinkMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCreateShareLinkMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateShareLinkMutation(options: VueApolloComposable.UseMutationOptions<CreateShareLinkMutation, CreateShareLinkMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateShareLinkMutation, CreateShareLinkMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CreateShareLinkMutation, CreateShareLinkMutationVariables>(CreateShareLinkDocument, options);
+}
+export type CreateShareLinkMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateShareLinkMutation, CreateShareLinkMutationVariables>;
+export const DeleteShareLinkDocument = gql`
+    mutation DeleteShareLink($id: ID!) {
+  deleteShareLink(id: $id)
+}
+    `;
+
+/**
+ * __useDeleteShareLinkMutation__
+ *
+ * To run a mutation, you first call `useDeleteShareLinkMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteShareLinkMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useDeleteShareLinkMutation({
+ *   variables: {
+ *     id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteShareLinkMutation(options: VueApolloComposable.UseMutationOptions<DeleteShareLinkMutation, DeleteShareLinkMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteShareLinkMutation, DeleteShareLinkMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<DeleteShareLinkMutation, DeleteShareLinkMutationVariables>(DeleteShareLinkDocument, options);
+}
+export type DeleteShareLinkMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteShareLinkMutation, DeleteShareLinkMutationVariables>;
 export const RequestUploadUrlDocument = gql`
     mutation RequestUploadUrl($input: RequestUploadInput!) {
   requestUploadUrl(input: $input) {
@@ -879,126 +1022,6 @@ export function useUpdateUserProfileMutation(options: VueApolloComposable.UseMut
   return VueApolloComposable.useMutation<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>(UpdateUserProfileDocument, options);
 }
 export type UpdateUserProfileMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>;
-export const MeDocument = gql`
-    query Me {
-  me {
-    id
-    email
-    username
-    createdAt
-    updatedAt
-    avatar
-    mfaSettings {
-      isEnabled
-      method
-    }
-  }
-}
-    `;
-
-/**
- * __useMeQuery__
- *
- * To run a query within a Vue component, call `useMeQuery` and pass it any options that fit your needs.
- * When your component renders, `useMeQuery` returns an object from Apollo Client that contains result, loading and error properties
- * you can use to render your UI.
- *
- * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
- *
- * @example
- * const { result, loading, error } = useMeQuery();
- */
-export function useMeQuery(options: VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<MeQuery, MeQueryVariables>(MeDocument, {}, options);
-}
-export function useMeLazyQuery(options: VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, {}, options);
-}
-export type MeQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<MeQuery, MeQueryVariables>;
-export const CreateFolderDocument = gql`
-    mutation CreateFolder($input: CreateFolderInput!) {
-  createFolder(input: $input) {
-    id
-    name
-  }
-}
-    `;
-
-/**
- * __useCreateFolderMutation__
- *
- * To run a mutation, you first call `useCreateFolderMutation` within a Vue component and pass it any options that fit your needs.
- * When your component renders, `useCreateFolderMutation` returns an object that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
- *
- * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
- *
- * @example
- * const { mutate, loading, error, onDone } = useCreateFolderMutation({
- *   variables: {
- *     input: // value for 'input'
- *   },
- * });
- */
-export function useCreateFolderMutation(options: VueApolloComposable.UseMutationOptions<CreateFolderMutation, CreateFolderMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateFolderMutation, CreateFolderMutationVariables>> = {}) {
-  return VueApolloComposable.useMutation<CreateFolderMutation, CreateFolderMutationVariables>(CreateFolderDocument, options);
-}
-export type CreateFolderMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateFolderMutation, CreateFolderMutationVariables>;
-export const DeleteFolderDocument = gql`
-    mutation DeleteFolder($id: ID!) {
-  deleteFolder(id: $id)
-}
-    `;
-
-/**
- * __useDeleteFolderMutation__
- *
- * To run a mutation, you first call `useDeleteFolderMutation` within a Vue component and pass it any options that fit your needs.
- * When your component renders, `useDeleteFolderMutation` returns an object that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
- *
- * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
- *
- * @example
- * const { mutate, loading, error, onDone } = useDeleteFolderMutation({
- *   variables: {
- *     id: // value for 'id'
- *   },
- * });
- */
-export function useDeleteFolderMutation(options: VueApolloComposable.UseMutationOptions<DeleteFolderMutation, DeleteFolderMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteFolderMutation, DeleteFolderMutationVariables>> = {}) {
-  return VueApolloComposable.useMutation<DeleteFolderMutation, DeleteFolderMutationVariables>(DeleteFolderDocument, options);
-}
-export type DeleteFolderMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteFolderMutation, DeleteFolderMutationVariables>;
-export const DeleteFilesDocument = gql`
-    mutation DeleteFiles($ids: [String!]!) {
-  deleteFiles(ids: $ids)
-}
-    `;
-
-/**
- * __useDeleteFilesMutation__
- *
- * To run a mutation, you first call `useDeleteFilesMutation` within a Vue component and pass it any options that fit your needs.
- * When your component renders, `useDeleteFilesMutation` returns an object that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
- *
- * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
- *
- * @example
- * const { mutate, loading, error, onDone } = useDeleteFilesMutation({
- *   variables: {
- *     ids: // value for 'ids'
- *   },
- * });
- */
-export function useDeleteFilesMutation(options: VueApolloComposable.UseMutationOptions<DeleteFilesMutation, DeleteFilesMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteFilesMutation, DeleteFilesMutationVariables>> = {}) {
-  return VueApolloComposable.useMutation<DeleteFilesMutation, DeleteFilesMutationVariables>(DeleteFilesDocument, options);
-}
-export type DeleteFilesMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteFilesMutation, DeleteFilesMutationVariables>;
 export const GetFilesDocument = gql`
     query GetFiles($filter: FilesFilterInput, $pagination: PaginationInput) {
   getFiles(filter: $filter, pagination: $pagination) {
@@ -1078,65 +1101,6 @@ export function useGetFoldersLazyQuery(variables: GetFoldersQueryVariables | Vue
   return VueApolloComposable.useLazyQuery<GetFoldersQuery, GetFoldersQueryVariables>(GetFoldersDocument, variables, options);
 }
 export type GetFoldersQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetFoldersQuery, GetFoldersQueryVariables>;
-export const CreateShareLinkDocument = gql`
-    mutation CreateShareLink($input: ShareLinkInput!) {
-  createShareLink(input: $input) {
-    id
-    token
-    url
-    expiresAt
-  }
-}
-    `;
-
-/**
- * __useCreateShareLinkMutation__
- *
- * To run a mutation, you first call `useCreateShareLinkMutation` within a Vue component and pass it any options that fit your needs.
- * When your component renders, `useCreateShareLinkMutation` returns an object that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
- *
- * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
- *
- * @example
- * const { mutate, loading, error, onDone } = useCreateShareLinkMutation({
- *   variables: {
- *     input: // value for 'input'
- *   },
- * });
- */
-export function useCreateShareLinkMutation(options: VueApolloComposable.UseMutationOptions<CreateShareLinkMutation, CreateShareLinkMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateShareLinkMutation, CreateShareLinkMutationVariables>> = {}) {
-  return VueApolloComposable.useMutation<CreateShareLinkMutation, CreateShareLinkMutationVariables>(CreateShareLinkDocument, options);
-}
-export type CreateShareLinkMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateShareLinkMutation, CreateShareLinkMutationVariables>;
-export const DeleteShareLinkDocument = gql`
-    mutation DeleteShareLink($id: ID!) {
-  deleteShareLink(id: $id)
-}
-    `;
-
-/**
- * __useDeleteShareLinkMutation__
- *
- * To run a mutation, you first call `useDeleteShareLinkMutation` within a Vue component and pass it any options that fit your needs.
- * When your component renders, `useDeleteShareLinkMutation` returns an object that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
- *
- * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
- *
- * @example
- * const { mutate, loading, error, onDone } = useDeleteShareLinkMutation({
- *   variables: {
- *     id: // value for 'id'
- *   },
- * });
- */
-export function useDeleteShareLinkMutation(options: VueApolloComposable.UseMutationOptions<DeleteShareLinkMutation, DeleteShareLinkMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteShareLinkMutation, DeleteShareLinkMutationVariables>> = {}) {
-  return VueApolloComposable.useMutation<DeleteShareLinkMutation, DeleteShareLinkMutationVariables>(DeleteShareLinkDocument, options);
-}
-export type DeleteShareLinkMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteShareLinkMutation, DeleteShareLinkMutationVariables>;
 export const GetFileShareLinksDocument = gql`
     query GetFileShareLinks($fileId: ID!) {
   getFileShareLinks(fileId: $fileId) {
@@ -1205,3 +1169,39 @@ export function useGetFolderShareLinksLazyQuery(variables?: GetFolderShareLinksQ
   return VueApolloComposable.useLazyQuery<GetFolderShareLinksQuery, GetFolderShareLinksQueryVariables>(GetFolderShareLinksDocument, variables, options);
 }
 export type GetFolderShareLinksQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetFolderShareLinksQuery, GetFolderShareLinksQueryVariables>;
+export const MeDocument = gql`
+    query Me {
+  me {
+    id
+    email
+    username
+    createdAt
+    updatedAt
+    avatar
+    mfaSettings {
+      isEnabled
+      method
+    }
+  }
+}
+    `;
+
+/**
+ * __useMeQuery__
+ *
+ * To run a query within a Vue component, call `useMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useMeQuery();
+ */
+export function useMeQuery(options: VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<MeQuery, MeQueryVariables>(MeDocument, {}, options);
+}
+export function useMeLazyQuery(options: VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, {}, options);
+}
+export type MeQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<MeQuery, MeQueryVariables>;
