@@ -529,7 +529,7 @@ export type GetFolderShareLinksQuery = { __typename?: 'Query', getFolderShareLin
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, email: string, username: string, createdAt: any, updatedAt: any, avatar?: string | null, mfaSettings?: { __typename?: 'MfaSettings', isEnabled: boolean, method?: TwoFactorMethod | null } | null } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, email: string, username: string, createdAt: any, updatedAt: any, avatar?: string | null } | null };
 
 
 export const LoginDocument = gql`
@@ -1178,10 +1178,6 @@ export const MeDocument = gql`
     createdAt
     updatedAt
     avatar
-    mfaSettings {
-      isEnabled
-      method
-    }
   }
 }
     `;
