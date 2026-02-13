@@ -13,6 +13,7 @@ export const apollo = createApollo({
 	},
 	refreshToken: async () => {
 		const refreshToken = getRefreshToken()
+		console.log('refreshToken :>> ', refreshToken)
 		if (!refreshToken) {
 			return null
 		}
