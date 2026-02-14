@@ -510,7 +510,7 @@ export type GetFoldersQueryVariables = Exact<{
 }>;
 
 
-export type GetFoldersQuery = { __typename?: 'Query', getFolders: { __typename?: 'FolderConnection', items: Array<{ __typename?: 'Folder', id: string, name: string, path: string, updatedAt: any }> } };
+export type GetFoldersQuery = { __typename?: 'Query', getFolders: { __typename?: 'FolderConnection', items: Array<{ __typename?: 'Folder', id: string, name: string, path: string, updatedAt: any }>, pageInfo: { __typename?: 'PaginationInfo', totalItems: number, totalPages: number } } };
 
 export type GetFileShareLinksQueryVariables = Exact<{
   fileId: Scalars['ID']['input'];
@@ -1074,6 +1074,10 @@ export const GetFoldersDocument = gql`
       name
       path
       updatedAt
+    }
+    pageInfo {
+      totalItems
+      totalPages
     }
   }
 }
