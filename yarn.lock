@@ -3994,10 +3994,10 @@ vscode-uri@^3.0.8:
   resolved "https://registry.npmjs.org/vscode-uri/-/vscode-uri-3.1.0.tgz"
   integrity sha512-/BpdSx+yCQGnCvecbyXdxHDkuk55/G3xwnC0GqY4gmQ3j+A+g8kzzgB4Nk/SINjqn6+waqw3EgbVF2QKExkRxQ==
 
-vue-apollo-client@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/vue-apollo-client/-/vue-apollo-client-1.0.4.tgz#69b78c37c9537596172d06a837480c056deb1e06"
-  integrity sha512-flwhE///HVnc6Qe0FsFt5hEaY79unjWFi59qsBodhnvPIwqw8++Cvrp1fbr4bIPOChmaFQN8h57MsRWyHMbi6Q==
+vue-apollo-client@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/vue-apollo-client/-/vue-apollo-client-1.0.5.tgz#b46f475cdc55bd2bb79aa445ff7050e15f08c8f6"
+  integrity sha512-neHEW5unkkYY1f5MTL2wLInclmQQzJ7q5QCJj1ALxYhGaWD1kOvHX2VFcwneez5zZGHXgn92G/2l/DAptnIgAw==
   dependencies:
     "@apollo/client" "^3.10.8"
     "@graphql-codegen/cli" "^5.0.2"
