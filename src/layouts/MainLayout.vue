@@ -30,7 +30,7 @@ const handleLogout = () => {
 		<Navbar
 			variant="sidebar"
 			mobile-breakpoint="md"
-			width="w-52"
+			width="w-56"
 			class="border-r border-gray-200 flex flex-col z-30 md:h-full">
 			<template #logo>
 				<div
@@ -67,15 +67,16 @@ const handleLogout = () => {
 		</Navbar>
 
 		<main class="flex-1 flex flex-col min-w-0 overflow-hidden relative">
-			<div
-				class="flex-1 overflow-y-auto w-full max-w-7xl mx-auto px-10 py-6">
-				<router-view v-slot="{ Component }">
-					<transition
-						name="fade"
-						mode="out-in">
-						<component :is="Component" />
-					</transition>
-				</router-view>
+			<div class="flex-1 overflow-y-auto w-full">
+				<div class="max-w-6xl mx-auto pt-6 pb-20">
+					<router-view v-slot="{ Component }">
+						<transition
+							name="fade"
+							mode="out-in">
+							<component :is="Component" />
+						</transition>
+					</router-view>
+				</div>
 			</div>
 		</main>
 	</div>
