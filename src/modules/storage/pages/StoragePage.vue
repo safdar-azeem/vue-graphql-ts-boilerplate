@@ -28,6 +28,11 @@ const isSearching = computed(
 	() => !!searchQuery.value && searchQuery.value.trim().length > 0,
 )
 
+const paginationParams = ref({
+	page: 1,
+	limit: 10,
+})
+
 const {
 	result: filesResult,
 	refetch: refetchFiles,
@@ -36,6 +41,10 @@ const {
 	filter: {
 		folderId: currentFolderId.value,
 		search: searchQuery.value,
+	},
+	pagination: {
+		page: paginationParams.value.page,
+		limit: paginationParams.value.limit,
 	},
 }))
 
@@ -48,6 +57,10 @@ const {
 	filter: {
 		parentId: currentFolderId.value,
 		search: searchQuery.value,
+	},
+	pagination: {
+		page: paginationParams.value.page,
+		limit: paginationParams.value.limit,
 	},
 }))
 
@@ -66,6 +79,23 @@ const items = computed(() => {
 	return [...folders, ...files]
 })
 
+// Compare files and folders page info to use the one with the maximum items/pages for the table pagination
+const computedPageInfo = computed(() => {
+	const fInfo = filesResult.value?.getFiles?.pageInfo
+	const dInfo = foldersResult.value?.getFolders?.pageInfo
+
+	const fTotal = fInfo?.totalItems || 0
+	const dTotal = dInfo?.totalItems || 0
+
+	const selectedInfo = fTotal > dTotal ? fInfo : dInfo
+
+	return {
+		currentPage: paginationParams.value.page,
+		totalPages: selectedInfo?.totalPages || 1,
+		totalItems: selectedInfo?.totalItems || 0,
+	}
+})
+
 const breadcrumbs = ref<{ id: string | null; name: string }[]>([
 	{ id: null, name: 'Home' },
 ])
@@ -77,6 +107,7 @@ const refreshData = () => {
 
 const handleFolderClick = (folder: any) => {
 	searchQuery.value = ''
+	paginationParams.value.page = 1
 	currentFolderId.value = folder.id
 
 	if (isSearching.value) {
@@ -93,12 +124,17 @@ const handleBreadcrumbClick = (index: number) => {
 	const target = breadcrumbs.value[index]
 	currentFolderId.value = target.id
 	searchQuery.value = ''
+	paginationParams.value.page = 1
 	breadcrumbs.value = breadcrumbs.value.slice(0, index + 1)
 }
 
-const handleTableChange = (state: { search: string }) => {
+const handleTableChange = (state: any) => {
 	if (searchQuery.value !== state.search) {
 		searchQuery.value = state.search
+		paginationParams.value.page = 1 // Reset to first page on new search
+	} else if (state.pagination) {
+		paginationParams.value.page = state.pagination.page
+		paginationParams.value.limit = state.pagination.limit
 	}
 }
 
@@ -196,7 +232,12 @@ const formatSize = (bytes: number) => {
 						class="w-3.5 h-3.5" />
 					Global Search Results: "{{ searchQuery }}"
 					<button
-						@click="searchQuery = ''"
+						@click="
+							() => {
+								searchQuery = ''
+								paginationParams.page = 1
+							}
+						"
 						class="ml-2 text-gray-400 hover:text-red-500 text-xs underline">
 						Clear Search
 					</button>
@@ -209,8 +250,10 @@ const formatSize = (bytes: number) => {
 				<DataTable
 					:rows="items"
 					:headers="headers"
+					:page-info="computedPageInfo"
 					:loading="filesLoading || foldersLoading"
 					:search="searchQuery"
+					:show-items-per-page="false"
 					selectable
 					hoverable
 					show-search
