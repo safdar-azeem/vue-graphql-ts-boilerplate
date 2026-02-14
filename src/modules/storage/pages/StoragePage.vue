@@ -316,6 +316,7 @@ const formatSize = (bytes: number) => {
 									class="w-full h-full object-cover rounded-lg" />
 								<Icon
 									v-else
+									class="h-4.5 w-4.5"
 									:icon="
 										row.type === 'folder'
 											? 'lucide:folder'
