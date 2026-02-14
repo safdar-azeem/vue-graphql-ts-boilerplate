@@ -24,6 +24,10 @@ query GetFolders($filter: FolderFilterInput, $pagination: PaginationInput) {
 			path
 			updatedAt
 		}
+		pageInfo {
+			totalItems
+			totalPages
+		}
 	}
 }
 
@@ -46,3 +50,4 @@ query GetFolderShareLinks($folderId: ID!) {
 		createdAt
 	}
 }
+
