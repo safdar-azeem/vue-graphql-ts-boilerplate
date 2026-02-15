@@ -8,11 +8,10 @@ import { uploadHandler } from './services/upload.service'
 
 const app = createApp(App)
 
-// Initialize VLite with the global upload service
 const vlite = createVLite({
   services: {
-    upload: uploadHandler
-  }
+    upload: uploadHandler,
+  },
 })
 
 app.use(router)
