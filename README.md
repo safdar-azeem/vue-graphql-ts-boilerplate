@@ -1,282 +1,289 @@
-# Vue Apollo Client
+# Frontend Architecture
 
-A Vue 3 Apollo Client featuring smart queries with caching and refetching, SSR support, offline mutations, and **zero-config code generation**.
+Stack:
 
-## Features
+- Vue 3
+- GraphQL (vue-apollo-client)
+- Tailwind v4
+- vlite3 (UI system)
 
-- Apollo Client integration with Vue 3
-- Server-Side Rendering (SSR) support
-- GraphQL Code Generator integration
-- Offline support (mutations)
-- Multiple client support
-- File Upload support
-- Automatic token management
-- Automatic type generation for queries and mutations
-- Auto-imports for generated composables and types
-- Production-ready 📦
-
-## Installation
-
-```bash
-npm install vue-apollo-client
-# or
-yarn add vue-apollo-client
-```
-
-## Setup
-
-### 1. Vite Plugin
-
-To enable automatic codegen without manual configuration, add the Vite plugin. This will scan your `.graphql` files and generate typed composables automatically.
-
-```typescript
-// vite.config.ts
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { vueApollo } from 'vue-apollo-client/vite'
-
-export default defineConfig({
-  plugins: [
-    vue(),
-    vueApollo({
-      // Optional configuration
-      // documents: 'src/**/*.graphql',
-      // schema: 'http://localhost:4000/graphql'
-    }),
-  ],
-})
-```
-
-Now, just run `npm run dev`. The plugin will:
-
-1. Scan for `.graphql` files.
-2. Generate typed hooks in `src/graphql/generated.ts`.
-3. Watch for changes and regenerate automatically.
-
-### 2. App Initialization
-
-In your main entry file (e.g., `main.ts`), initialize the Apollo client:
-
-```typescript
-import { createApp } from 'vue'
-import { createApollo } from 'vue-apollo-client'
-import App from './App.vue'
-
-const app = createApp(App)
-
-const apollo = createApollo({
-  endPoints: {
-    default: 'http://localhost:4000/graphql',
-    // Add more endpoints as needed
-  },
-  tokenKey: 'auth_token',
-  allowOffline: true,
-})
-
-app.use(apollo)
-app.mount('#app')
-```
-
-## Usage
-
-Use auto-generated composables in your Vue component.
-
-### Server-side Query (SSR)
-
-If you are using this with SSR (e.g. `vite-ssr` or custom setup), you can await the query to fetch data on the server.
-
-```vue
-<script setup>
-import { useMeQuery } from './graphql/generated'
-
-// Await the result for SSR pre-fetching
-const { result, loading, error, refetch } = await useMeQuery()
-</script>
-
-<template>
-  <div v-if="result">Welcome, {{ result.me.name }}!</div>
-</template>
-```
-
-### Client-side Query
-
-For standard client-side fetching:
-
-```vue
-<script setup>
-import { useMeQuery } from './graphql/generated'
-
-const { result, loading, error, refetch } = useMeQuery()
-</script>
-```
-
-### Dynamic Refetching Query
-
-You can pass reactive variables (`ref`, `reactive`, `computed`) to the query. The hook will automatically refetch when variables change.
-
-```vue
-<script setup>
-import { ref, computed } from 'vue'
-import { useGetUserQuery } from './graphql/generated'
-
-const userId = ref('1')
-
-// Automatically refetches when userId changes
-const { result } = useGetUserQuery({ id: userId })
-
-// Or with computed
-const { result: otherResult } = useGetUserQuery({ id: computed(() => '2') })
-</script>
-```
-
-### Multple Queries
-
-The `useMultiQuery` composable allows you to combine multiple GraphQL queries into a single loading/error state.
-**Note**: Unlike the Nuxt version, you must pass the generated query hooks code map (or object containing them) if you want to use them by key, or pass the functions directly.
-
-```typescript
-import { useMultiQuery } from 'vue-apollo-client'
-import * as queries from './graphql/generated' // Import all generated hooks
-
-const { result, loading, error, refetch } = useMultiQuery(
-  queries,
-  ['useGetUserQuery', 'useMeQuery'], // Keys must match exported names
-  {
-    /* shared variables */
-  },
-  {
-    /* options */
-  }
-)
-
-const users = result.value?.getUser
-const me = result.value?.me
-```
-
-### Mutations
-
-```vue
-<script setup lang="ts">
-import { useDeletePostMutation } from './graphql/generated'
-
-const { mutate, loading, error, onDone, onError } = useDeletePostMutation()
-
-const handleDelete = async (id: string) => {
-  await mutate({ id })
-  // Handle successful deletion
-}
-</script>
-```
-
-## Configuration Options
-
-Pass these options to `createApollo()`:
-
-| Option             | Type                        | Description                                                                                      | Default                                        |
-| ------------------ | --------------------------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------- |
-| endPoints          | `Record<string, string>`    | GraphQL endpoint URLs                                                                            | `{ default: 'http://localhost:4000/graphql' }` |
-| tokenKey           | `string`                    | Key for storing the authentication token in cookies                                              | `'token'`                                      |
-| tokenExpiration    | `number/Date`               | When the token expires.                                                                          | 30 days                                        |
-| memoryConfig       | `InMemoryCacheConfig`       | Memory cache config for Apollo Client                                                            | `{}`                                           |
-| useGETForQueries   | `boolean`                   | Use GET for queries                                                                              | `false`                                        |
-| apolloClientConfig | `ApolloClientOptions<any>`  | Apollo Client config                                                                             | `null`                                         |
-| apolloUploadConfig | `ApolloUploadClientOptions` | Apollo Upload Client config                                                                      | `{}`                                           |
-| refetchOnUpdate    | `boolean`                   | Smartly Refetch queries on component, page, or route changes.                                    | `false`                                        |
-| refetchTimeout     | `number`                    | Time in milliseconds to wait before refetching a query after a component, page, or route change. | `10000`                                        |
-| allowOffline       | `boolean`                   | Queue mutations when offline and sync when online.                                               | `false`                                        |
-| setContext         | `function`                  | method to setup context                                                                          | `({operationName, variables, token}) => any`   |
-
-## Functions
-
-| Function           | Description                                                   | Syntax                                                           |
-| ------------------ | ------------------------------------------------------------- | ---------------------------------------------------------------- |
-| setToken           | Sets the token in the cookie                                  | `setToken(token)` or `setToken(token, key?, options?)`           |
-| getToken           | Gets the token from the cookie                                | `getToken(key?)`                                                 |
-| removeToken        | Removes the token from the cookie                             | `removeToken(key?, options?)`                                    |
-| loadApolloClients  | Initializes Apollo Clients for use outside components         | `loadApolloClients()`                                            |
-| useKeepCookieAlive | Keeps the auth token cookie alive by updating it periodically | `useKeepCookieAlive(debounceMs?: number)` (defaults to 10000 ms) |
-
-### Cookie Management & Security
-
-`vue-apollo-client` automatically sets secure defaults for cookies (`SameSite=None`, `Secure`, `Path=/`) when using `setToken`.
-
-```typescript
-import { setToken, useKeepCookieAlive } from 'vue-apollo-client'
-
-// Login
-setToken('jwt-token')
-
-// Monitor activity to keep session alive
-useKeepCookieAlive()
-```
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License.
+This file defines how the project MUST use these libraries.
 
 ---
 
-# vlite3
+# 1. GraphQL Layer — vue-apollo-client
 
-A lightweight Vue 3 UI component library built with Tailwind CSS.
+Purpose:
 
-## Installation
+- Typed queries/mutations
+- Auto code generation
+- Token handling (cookies)
+- SSR support
+- Offline mutation queue
+- Smart refetch
 
-### NPM
+Rules:
 
-```bash
-npm install vlite3
+- All operations live in `.graphql` files.
+- NEVER write raw Apollo queries in components.
+- ALWAYS use generated composables from `src/graphql/generated.ts`.
+
+Patterns:
+
+Query (SSR):
+await useMeQuery()
+
+Query (Client):
+useMeQuery()
+
+❌ Reactive variables auto-refetch, DO NOT use `ref` or `computed` for query variables.
+
+Mutation:
+const { mutate } = useLoginMutation()
+await mutate(payload)
+
+Offline support is enabled in this project.
+If the network is unavailable, mutations are queued and replayed when connection returns.
+
+Multi-query:
+useMultiQuery(queries, ['useQueryA', 'useQueryB'])
+
+Token utilities:
+
+- setToken()
+- getToken()
+- removeToken()
+- useKeepCookieAlive()
+
+Automatically refreshed when activity is detected
+
+Token is auto-attached to requests.
+
+---
+
+# 2. UI Layer — vlite3
+
+Purpose:
+
+- Tailwind-based components
+- Semantic theming
+- Dark mode
+- Schema-driven forms
+- Global upload registry
+
+Import pattern:
+import { Button, Input, Form } from 'vlite3'
+
+---
+
+# Theming System (Semantic Only)
+
+Never hardcode colors. Use semantic classes. vlite3 uses a semantic theming system inspired by **shadcn/ui** and compatible with **Tailwind CSS v4**. All colors are defined as CSS variables, making it easy to customize the look and feel of your application including Dark Mode support.
+
+## Core Classes
+
+- bg-background, bg-white → app background
+- text-foreground → main text
+- text-muted → secondary text
+- bg-card → surfaces
+- border → default borders with defined color.
+- rounded → global radius
+
+### Semantic Colors
+
+You can customize these colors in your CSS by overriding the variables in `:root` or `.dark` classes (if you are using a class-based dark mode switcher).
+
+| Variable                   | Class Name                    | Description             | Recommended Usage                                                           |
+| :------------------------- | :---------------------------- | :---------------------- | :-------------------------------------------------------------------------- |
+| `--background`             | `bg-background`               | Default page background | The main background color of your app.                                      |
+| `--foreground`             | `text-foreground`             | Default text color      | The primary text color for content.                                         |
+| `--card`                   | `bg-card`                     | Card background         | Little Gray Background for cards, containers, surfece, panels, and dialogs. |
+| `--primary`                | `bg-primary`                  | Primary brand color     | Used for main actions (buttons, active states).                             |
+| `--primary-foreground`     | `text-primary-foreground`     | Primary text color      | Text color for content on top of primary background.                        |
+| `--secondary`              | `bg-secondary`                | Secondary background    | Used for secondary actions or muted sections.                               |
+| `--secondary-foreground`   | `text-secondary-foreground`   | Secondary text color    | Text color for content on top of secondary background.                      |
+| `--muted`                  | `bg-muted`                    | Muted background        | Subtle backgrounds (e.g., table headers, disabled states).                  |
+| `--muted`                  | `text-muted`                  | Muted Text              | Secondary text, Unactive Link, description.                                 |
+| `--muted-foreground`       | `text-muted-foreground`       | Muted text color        | Secondary text, hints, placeholders.                                        |
+| `--accent`                 | `bg-accent`                   | Accent background       | Used for hover states, selection highlights.                                |
+| `--accent-foreground`      | `text-accent-foreground`      | Accent text color       | Text color on accent backgrounds.                                           |
+| `--destructive`            | `bg-destructive`              | Destructive color       | Used for error states and destructive actions.                              |
+| `--destructive-foreground` | `text-destructive-foreground` | Destructive text color  | Text color on destructive backgrounds.                                      |
+| `--border`                 | `border`                      | Default border color    | Borders for inputs, cards, and dividers.                                    |
+| `--input`                  | `border-input`                | Input border color      | Borders specifically for form inputs.                                       |
+| `--ring`                   | `ring-ring`                   | Focus ring color        | Outline color for focused elements.                                         |
+| `--radius`                 | `rounded`                     | Border radius           | Global border radius for components.                                        |
+
+### Extended Color Variants
+
+For more complex components, vlite3 provides extended variants for main semantic colors (`primary`, `danger`, `warning`, `info`, `success`). These are useful for building nuanced UIs with subtle backgrounds, hover states, and accessible text.
+
+| Base Color  | Variant Variables                                                                                       | Usage Description                                                                                                                                                                                           |
+| :---------- | :------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Primary** | `--color-primary-light`<br>`--color-primary-dark`<br>`--color-primary-fg`<br>`--color-primary-fg-light` | **Light**: Subtle background (e.g., 10% opacity).<br>**Dark**: Hover state for the main color.<br>**Fg**: Text color on top of the _main_ color.<br>**Fg-Light**: Text color on top of the _light_ variant. |
+| **Danger**  | `--color-danger-light`<br>`--color-danger-dark`<br>`--color-danger-fg`<br>`--color-danger-fg-light`     | **Light**: Error backgrounds (alerts).<br>**Dark**: Hover state for destructive buttons.<br>**Fg**: Text on destructive buttons.<br>**Fg-Light**: Text on error alerts.                                     |
+| **Warning** | `--color-warning-light`<br>`--color-warning-dark`<br>`--color-warning-fg`<br>`--color-warning-fg-light` | **Light**: Warning backgrounds.<br>**Dark**: Active/Determined warning states.<br>**Fg**: Text on warning badges.<br>**Fg-Light**: Text on warning backgrounds.                                             |
+| **Success** | `--color-success-light`<br>`--color-success-dark`<br>`--color-success-fg`<br>`--color-success-fg-light` | **Light**: Success backgrounds (toasts).<br>**Dark**: Hover/Active success actions.<br>**Fg**: Text on success buttons.<br>**Fg-Light**: Text on success backgrounds.                                       |
+| **Info**    | `--color-info-light`<br>`--color-info-dark`<br>`--color-info-fg`<br>`--color-info-fg-light`             | **Light**: Info backgrounds.<br>**Dark**: Hover/Active info actions.<br>**Fg**: Text on info buttons.<br>**Fg-Light**: Text on info backgrounds.                                                            |
+
+**Example Usage:**
+
+```html
+<!-- A success badge with subtle background and matching text -->
+<div class="bg-success-light text-success-fg-light border border-success/20">
+  Operation Completed
+</div>
+
+<!-- A danger button with hover effect -->
+<button class="bg-danger text-danger-fg hover:bg-danger-dark">Delete</button>
 ```
 
-### Yarn
+### Additional Colors
 
-```bash
-yarn add vlite3
-```
+vlite3 also provides additional utility colors for specific feedback states:
 
-## Configuration
+| Variable          | Class Name                   | Description                             |
+| :---------------- | :--------------------------- | :-------------------------------------- |
+| `--color-success` | `text-success`, `bg-success` | For success messages/badges.            |
+| `--color-warning` | `text-warning`, `bg-warning` | For warning messages/badges.            |
+| `--color-info`    | `text-info`, `bg-info`       | For informational messages/badges.      |
+| `--color-danger`  | `text-danger`, `bg-danger`   | Alias for destructive in some contexts. |
 
-### 1. Import Styles
+Dark mode:
+Override variables inside `.dark`.
 
-Import the library's base styles (for custom component styles) in your main entry file (e.g., `main.ts` or `App.vue`):
+---
 
-```ts
-import 'vlite3/style.css'
-```
+# Forms & Uploads
 
-### 2. Tailwind CSS Setup
+Form is schema-driven.
 
-This library relies on Tailwind CSS for utility classes. You must configure your project to scan the library's files so that the necessary classes are generated.
+File inputs automatically:
 
-#### Tailwind CSS v4
+- Use global `services.upload`
+- Upload in parallel
+- Replace File objects with returned URLs
+- Emit cleaned payload
 
-If you are using the new CSS-first configuration, add the source path:
+Upload service MUST return a URL string.
 
-```css
-@import 'tailwindcss';
-@layer theme, base, components, utilities;
-
-@import 'vlite3/style.css';
-@source "../node_modules/vlite3";
-```
-
-## Usage
+## 4. Usage
 
 Import components directly in your Vue files:
 
 ```vue
 <script setup>
-import { Button, Input } from 'vlite3'
+import { Button, Input, Form } from 'vlite3'
+
+// The form will automatically use the global upload service defined in main.ts
+const schema = [
+  {
+    name: 'avatar',
+    label: 'Profile Picture',
+    type: 'avatarUpload',
+  },
+  {
+    name: 'documents',
+    label: 'Attachments',
+    type: 'fileUploader',
+    props: { multiple: true },
+  },
+]
+
+const handleSubmit = (payload) => {
+  // payload.values.avatar will be a URL string (e.g., "https://api...")
+  // payload.values.documents will be an array of URL strings
+  console.log(payload.values)
+}
 </script>
 
 <template>
   <div class="p-4 space-y-4">
     <Button>Click Me</Button>
     <Input placeholder="Type here..." />
+
+    <Form :schema="schema" @onSubmit="handleSubmit" />
   </div>
 </template>
 ```
+
+---
+
+# Data Flow
+
+.graphql → auto composables → Vue component → vlite3 UI
+
+Upload:
+Form → upload service → URL → mutation
+
+Auth:
+Login → setToken() → cookie → auto attached to GraphQL
+
+---
+
+## ✅ Components
+
+- **Button**
+- **ButtonGroup**
+- **Icon**
+- **Label**
+- **Badge**
+- **Chip**
+- **Logo**
+- **Navbar**
+- **SidebarMenu**
+- **SidePanel**
+- **Masonry Grid**
+- **ThemeToggle**
+
+### Inputs & Forms
+
+- **Input**
+- **Textarea**
+- **CheckBox**
+- **Switch**
+- **ChoiceBox**
+- **Slider**
+- **OTPInput**
+- **DatePicker**
+- **ColorPicker**
+- **FilePicker**
+- **AvatarUploader**
+- **IconPicker**
+- **MultiSelect**
+- **Form**
+- **CustomFields**
+
+### Data Display
+
+- **Avatar**
+- **Accordion**
+- **Carousel**
+- **DataTable**
+- **Pagination**
+- **Timeline**
+- **Heatmap**
+- **PricingPlan**
+- **FileTree**
+- **Workbook**
+- **Tabes**
+
+### Feedback & Overlays
+
+- **Alert**
+- **Modal**
+- **ConfirmationModal**
+- **ToastNotification**
+- **Tooltip**
+- **Dropdown**
+
+# Hard Rules
+
+- No manual Apollo setup inside components.
+- No hardcoded colors.
+- All uploads via vlite3 registry.
+- All GraphQL via generated hooks only.
+- ❌ border-border | ✅ border
+- ❌ rounded-rounded | ✅ rounded
+
+End.
