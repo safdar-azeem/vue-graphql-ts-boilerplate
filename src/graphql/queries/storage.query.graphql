@@ -1,53 +1,52 @@
 query GetFiles($filter: FilesFilterInput, $pagination: PaginationInput) {
-	getFiles(filter: $filter, pagination: $pagination) {
-		items {
-			id
-			originalName
-			mimeType
-			size
-			url
-			updatedAt
-			isPublic
-		}
-		pageInfo {
-			totalItems
-			totalPages
-		}
-	}
+  getFiles(filter: $filter, pagination: $pagination) {
+    items {
+      id
+      originalName
+      mimeType
+      size
+      url
+      updatedAt
+      isPublic
+    }
+    pageInfo {
+      totalItems
+      totalPages
+    }
+  }
 }
 
 query GetFolders($filter: FolderFilterInput, $pagination: PaginationInput) {
-	getFolders(filter: $filter, pagination: $pagination) {
-		items {
-			id
-			name
-			path
-			updatedAt
-		}
-		pageInfo {
-			totalItems
-			totalPages
-		}
-	}
+  getFolders(filter: $filter, pagination: $pagination) {
+    items {
+      id
+      name
+      path
+      updatedAt
+    }
+    pageInfo {
+      totalItems
+      totalPages
+    }
+  }
 }
 
 query GetFileShareLinks($fileId: ID!) {
-	getFileShareLinks(fileId: $fileId) {
-		id
-		token
-		url
-		expiresAt
-		createdAt
-	}
+  getFileShareLinks(fileId: $fileId) {
+    id
+    token
+    url
+    expiresAt
+    createdAt
+  }
 }
 
 query GetFolderShareLinks($folderId: ID!) {
-	getFolderShareLinks(folderId: $folderId) {
-		id
-		token
-		url
-		expiresAt
-		createdAt
-	}
+  getFolderShareLinks(folderId: $folderId) {
+    id
+    token
+    url
+    expiresAt
+    createdAt
+  }
 }
-
