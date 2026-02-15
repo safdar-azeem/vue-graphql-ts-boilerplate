@@ -1,14 +1,14 @@
 query Me {
-	me {
-		id
-		email
-		username
-		createdAt
-		updatedAt
-		avatar
-		mfaSettings {
-			isEnabled
-			method
-		}
-	}
+  me {
+    id
+    email
+    username
+    createdAt
+    updatedAt
+    avatar
+    mfaSettings {
+      isEnabled
+      method
+    }
+  }
 }
