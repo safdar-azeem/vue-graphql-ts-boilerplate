@@ -13,6 +13,9 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "paths": {
+      "@/graphql": [
+        "./src/graphql/generated"
+      ],
       "@/*": [
         "./src/*"
       ]
