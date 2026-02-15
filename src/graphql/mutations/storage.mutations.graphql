@@ -1,27 +1,27 @@
 mutation CreateFolder($input: CreateFolderInput!) {
-	createFolder(input: $input) {
-		id
-		name
-	}
+  createFolder(input: $input) {
+    id
+    name
+  }
 }
 
 mutation DeleteFolder($id: ID!) {
-	deleteFolder(id: $id)
+  deleteFolder(id: $id)
 }
 
 mutation DeleteFiles($ids: [String!]!) {
-	deleteFiles(ids: $ids)
+  deleteFiles(ids: $ids)
 }
 
 mutation CreateShareLink($input: ShareLinkInput!) {
-	createShareLink(input: $input) {
-		id
-		token
-		url
-		expiresAt
-	}
+  createShareLink(input: $input) {
+    id
+    token
+    url
+    expiresAt
+  }
 }
 
 mutation DeleteShareLink($id: ID!) {
-	deleteShareLink(id: $id)
+  deleteShareLink(id: $id)
 }
