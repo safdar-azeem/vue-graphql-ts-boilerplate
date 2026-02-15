@@ -5,13 +5,13 @@ import { onMounted } from 'vue'
 const { configure } = useNotifications()
 
 onMounted(() => {
-	configure({
-		position: 'top-right',
-	})
+  configure({
+    position: 'top-right',
+  })
 })
 </script>
 
 <template>
-	<router-view />
-	<toast-notification />
+  <router-view />
+  <toast-notification />
 </template>
