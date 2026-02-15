@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Form, useNotifications } from 'vlite3'
-import { useCreateFolderMutation } from '@/graphql/generated'
+import { useCreateFolderMutation } from '@/graphql'
 
 interface Props {
 	parentId: string | null
