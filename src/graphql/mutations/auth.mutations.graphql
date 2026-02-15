@@ -1,61 +1,61 @@
 mutation Login($data: LoginInput!) {
-	login(data: $data) {
-		token
-		refreshToken
-		user {
-			id
-			username
-			email
-			mfaSettings {
-				isEnabled
-				method
-			}
-		}
-	}
+  login(data: $data) {
+    token
+    refreshToken
+    user {
+      id
+      username
+      email
+      mfaSettings {
+        isEnabled
+        method
+      }
+    }
+  }
 }
 
 mutation Signup($data: SignupInput!) {
-	signup(data: $data) {
-		token
-		user {
-			id
-			username
-			email
-		}
-	}
+  signup(data: $data) {
+    token
+    user {
+      id
+      username
+      email
+    }
+  }
 }
 
 mutation ForgotPassword($email: String!) {
-	forgotPassword(email: $email)
+  forgotPassword(email: $email)
 }
 
 mutation ResetPassword($token: String!, $password: String!) {
-	resetPassword(token: $token, password: $password)
+  resetPassword(token: $token, password: $password)
 }
 
 mutation Verify2FA($otp: String!, $token: String!) {
-	verify2FA(otp: $otp, token: $token) {
-		token
-		user {
-			id
-			username
-			email
-		}
-	}
+  verify2FA(otp: $otp, token: $token) {
+    token
+    user {
+      id
+      username
+      email
+    }
+  }
 }
 
 mutation Init2faEnrollment($method: TwoFactorMethod!) {
-	init2faEnrollment(method: $method) {
-		secret
-		qrCode
-		backupCodes
-	}
+  init2faEnrollment(method: $method) {
+    secret
+    qrCode
+    backupCodes
+  }
 }
 
 mutation Confirm2faEnrollment($otp: String!) {
-	confirm2faEnrollment(otp: $otp)
+  confirm2faEnrollment(otp: $otp)
 }
 
 mutation Disable2fa($password: String!) {
-	disable2fa(password: $password)
+  disable2fa(password: $password)
 }
