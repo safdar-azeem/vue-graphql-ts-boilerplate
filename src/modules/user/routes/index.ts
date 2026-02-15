@@ -3,16 +3,15 @@ import { ROUTES } from '@/constants/routes'
 import { getRelativeRoute } from '@/utils/route.utils'
 
 export const userRoutes: RouteRecordRaw[] = [
-	{
-		path: '/user',
-		component: () => import('@/layouts/MainLayout.vue'),
-		meta: { requiresAuth: true },
-		children: [
-			{
-				path: getRelativeRoute(ROUTES.USER.DASHBOARD, '/user/'),
-				component: () => import('../pages/DashboardPage.vue'),
-			},
-		],
-	},
+  {
+    path: '/user',
+    component: () => import('@/layouts/MainLayout.vue'),
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: getRelativeRoute(ROUTES.USER.DASHBOARD, '/user/'),
+        component: () => import('../pages/DashboardPage.vue'),
+      },
+    ],
+  },
 ]
-
