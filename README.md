@@ -224,5 +224,7 @@ Login → setToken() → cookie → auto attached to GraphQL
 
 - [llms.txt](/vue-graphql-ts-boilerplate//docs/llms.txt).
 - [llms-theming.txt](/vue-graphql-ts-boilerplate//docs/llms-theming.txt).
+- [llm-forms.txt](/vue-graphql-ts-boilerplate//docs/llm-forms.txt).
+- [llm-utility.txt](/vue-graphql-ts-boilerplate//docs/llm-utility.txt).
 - [llms-full.txt](/vue-graphql-ts-boilerplate//docs/llms-full.txt).
 - [llms-advance.txt](/vue-graphql-ts-boilerplate//docs/llms-advance.txt).
