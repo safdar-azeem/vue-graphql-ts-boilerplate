@@ -396,6 +396,13 @@ export type SignupMutationVariables = Exact<{
 
 export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'AuthPayload', token: string, user: { __typename?: 'User', id: string, username: string, email: string } } };
 
+export type GoogleLoginMutationVariables = Exact<{
+  token: Scalars['String']['input'];
+}>;
+
+
+export type GoogleLoginMutation = { __typename?: 'Mutation', googleLogin: { __typename?: 'AuthPayload', token: string, refreshToken: string, user: { __typename?: 'User', id: string, username: string, email: string, mfaSettings?: { __typename?: 'MfaSettings', isEnabled: boolean, method?: TwoFactorMethod | null } | null } } };
+
 export type ForgotPasswordMutationVariables = Exact<{
   email: Scalars['String']['input'];
 }>;
@@ -605,6 +612,45 @@ export function useSignupMutation(options: VueApolloComposable.UseMutationOption
   return VueApolloComposable.useMutation<SignupMutation, SignupMutationVariables>(SignupDocument, options);
 }
 export type SignupMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<SignupMutation, SignupMutationVariables>;
+export const GoogleLoginDocument = gql`
+    mutation GoogleLogin($token: String!) {
+  googleLogin(token: $token) {
+    token
+    refreshToken
+    user {
+      id
+      username
+      email
+      mfaSettings {
+        isEnabled
+        method
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGoogleLoginMutation__
+ *
+ * To run a mutation, you first call `useGoogleLoginMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useGoogleLoginMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useGoogleLoginMutation({
+ *   variables: {
+ *     token: // value for 'token'
+ *   },
+ * });
+ */
+export function useGoogleLoginMutation(options: VueApolloComposable.UseMutationOptions<GoogleLoginMutation, GoogleLoginMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<GoogleLoginMutation, GoogleLoginMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<GoogleLoginMutation, GoogleLoginMutationVariables>(GoogleLoginDocument, options);
+}
+export type GoogleLoginMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<GoogleLoginMutation, GoogleLoginMutationVariables>;
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
