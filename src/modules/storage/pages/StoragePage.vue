@@ -235,6 +235,7 @@ const formatSize = (bytes: number) => {
           :loading="filesLoading || foldersLoading"
           :search="searchQuery"
           :show-items-per-page="false"
+          pagination-position="end"
           selectable
           hoverable
           show-search
