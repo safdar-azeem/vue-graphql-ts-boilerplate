@@ -3946,12 +3946,14 @@ util-deprecate@^1.0.1:
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
-v-datepicker-lite@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.npmjs.org/v-datepicker-lite/-/v-datepicker-lite-0.1.3.tgz"
-  integrity sha512-ZeoAK2hA7ZXqfqcnKfbMuPA3ZrAmBIezjTLlYuurCKZkizDeJOMz+sDPdHzBIVZZyp/ssy7xs72qWigVSGGcWg==
+v-datepicker-lite@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/v-datepicker-lite/-/v-datepicker-lite-0.1.5.tgz#a8f754fae9688e5392a5a18f7956c6ea279b2224"
+  integrity sha512-XrX0eJYAr8LdkJ4fCNEDn1/zxHI5J2Sd3cnVhQKdi7m/J/XrmueS4XkO2cV7XD1tjZmMnoV4FWc8n+vXegTpYQ==
+  dependencies:
+    v-tooltip-lite "^0.1.0"
 
-v-tooltip-lite@^0.1.9:
+v-tooltip-lite@^0.1.0, v-tooltip-lite@^0.1.9:
   version "0.1.9"
   resolved "https://registry.npmjs.org/v-tooltip-lite/-/v-tooltip-lite-0.1.9.tgz"
   integrity sha512-j9XWxDiXHkHrN2Pt795XuBAMgbWXfWqXYPK7e7Tj0dJZMid7sSNfvVog2UN739JqeauNlETl7pIgljYGhZxanA==
@@ -3973,10 +3975,10 @@ vite@^7.2.4:
   optionalDependencies:
     fsevents "~2.3.3"
 
-vlite3@^0.1.10:
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/vlite3/-/vlite3-0.1.10.tgz#d69d33ba68ae2f579866128941d0af0dbf2790e5"
-  integrity sha512-SJxs+5Za22cxIJAzVqCoU7AJmqXBOG549rEn/gF/ePFSLKt6xukwH4YQw/0PZfkFEVXj6mhQyQlsf8z8scThYA==
+vlite3@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/vlite3/-/vlite3-0.2.1.tgz#28cdc58e245f468cd0e0e9b19db9b29d9a83d0f6"
+  integrity sha512-oiLxfG7khzvPoKfB+MMrrHELnSCOfoli0NO2oYlLkgS4YqoeEXzk10w+Ec4ELfJWKFbq8NFRx8ymR3XQm0BGGw==
   dependencies:
     "@formkit/drag-and-drop" "^0.5.3"
     "@iconify/vue" "5.0.0"
@@ -3985,9 +3987,10 @@ vlite3@^0.1.10:
     "@vueuse/core" "^14.1.0"
     iconify-icon-picker "^1.0.3"
     tailwindcss "^4.1.18"
-    v-datepicker-lite "^0.1.3"
+    v-datepicker-lite "^0.1.5"
     v-tooltip-lite "^0.1.9"
     vue-carousel-lite "^0.2.3"
+    vue3-google-login "^2.0.37"
 
 vscode-uri@^3.0.8:
   version "3.1.0"
@@ -4058,6 +4061,11 @@ vue-tsc@^3.1.4:
   dependencies:
     "@volar/typescript" "2.4.27"
     "@vue/language-core" "3.2.4"
+
+vue3-google-login@^2.0.37:
+  version "2.0.37"
+  resolved "https://registry.yarnpkg.com/vue3-google-login/-/vue3-google-login-2.0.37.tgz#33fca748b0361f63409af50dcb38eab1c5ad4c25"
+  integrity sha512-1seGaevhcMPi/dKO36KktpqYMkJdzt4s5U7XjLvHPd50e8sCBcC8/Pv3Mz+QrK12rSOmiduTtxCuPcH2ULYozw==
 
 vue@^3.5.24:
   version "3.5.27"
