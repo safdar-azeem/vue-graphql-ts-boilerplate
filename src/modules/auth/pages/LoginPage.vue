@@ -3,14 +3,14 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ROUTES } from '@/constants/routes'
 import { setToken } from 'vue-apollo-client'
-import { useLoginMutation, useGoogleLoginMutation } from '@/graphql'
-import { Form, Button, showToast, GoogleLogin } from 'vlite3'
 import VerifyOtp from '../components/VerifyOtp.vue'
 import { loginSchema } from '../schema/login.schema'
+import { Form, Button, showToast, GoogleLogin } from 'vlite3'
+import { useLoginMutation, useGoogleLoginMutation } from '@/graphql'
 
+const token = ref('')
 const router = useRouter()
 const showOTP = ref(false)
-const token = ref('')
 const { mutate: login, error, loading } = useLoginMutation()
 const { mutate: googleLoginMutate } = useGoogleLoginMutation()
 
@@ -41,7 +41,6 @@ const handleLogin = async (payload: any) => {
 
 const handleGoogleSuccess = async (response: any) => {
   try {
-    console.log('response :>> ', response)
     const { data } = await googleLoginMutate({ token: response.access_token })
 
     if (data?.googleLogin?.token) {
