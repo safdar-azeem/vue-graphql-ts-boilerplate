@@ -54,17 +54,6 @@ For more complex components, vlite3 provides extended variants for main semantic
 <button class="bg-danger text-danger-fg hover:bg-danger-dark">Delete</button>
 ```
 
-### Additional Colors
-
-vlite3 also provides additional utility colors for specific feedback states:
-
-| Variable          | Class Name                   | Description                             |
-| :---------------- | :--------------------------- | :-------------------------------------- |
-| `--color-success` | `text-success`, `bg-success` | For success messages/badges.            |
-| `--color-warning` | `text-warning`, `bg-warning` | For warning messages/badges.            |
-| `--color-info`    | `text-info`, `bg-info`       | For informational messages/badges.      |
-| `--color-danger`  | `text-danger`, `bg-danger`   | Alias for destructive in some contexts. |
-
 ---
 
 
