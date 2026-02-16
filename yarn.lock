@@ -1582,6 +1582,11 @@
   dependencies:
     undici-types "~7.16.0"
 
+"@types/scrollreveal@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@types/scrollreveal/-/scrollreveal-0.0.11.tgz#40e33ec9e269554c2b0c5f5b32ed176629bcd124"
+  integrity sha512-GDOESLkVNyd5FIS980N9rDtp45L7jfyvbDuumtaMXMPfJOFOk/7ADNvXaL/NBggXJHQJSgNNHsJBrQ2mTE7+cA==
+
 "@types/web-bluetooth@^0.0.21":
   version "0.0.21"
   resolved "https://registry.npmjs.org/@types/web-bluetooth/-/web-bluetooth-0.0.21.tgz"
@@ -2774,6 +2779,18 @@ is-arrayish@^0.2.1:
   resolved "https://registry.npmjs.org/is-arrayish/-/is-arrayish-0.2.1.tgz"
   integrity sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==
 
+is-dom-node-list@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/is-dom-node-list/-/is-dom-node-list-1.2.1.tgz#141ded0c66de759d0976800d21370bb908f2950f"
+  integrity sha512-P1H071iT5TGG8pAHslhrLDo/tQLYc8tGuWABVqhGU4l2mm7aDNb9cx2myQ2AujEQO6B2cAujcW4a0/+6UfXInw==
+  dependencies:
+    is-dom-node "^1.0.4"
+
+is-dom-node@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/is-dom-node/-/is-dom-node-1.0.4.tgz#abb18af7133f1e687610cfeb274da1ced342f1c5"
+  integrity sha512-NEnTHKCeyGJTL0cKdzATF8SWzyTMYf5CbNKWBvsXvyMxZG32g+a09qkeCbrfQNLTD85CbPeHb4YjIJCjyzF0yA==
+
 is-extglob@^2.1.1:
   version "2.1.1"
   resolved "https://registry.npmjs.org/is-extglob/-/is-extglob-2.1.1.tgz"
@@ -3129,6 +3146,11 @@ minimatch@^9.0.5:
   integrity sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==
   dependencies:
     brace-expansion "^2.0.1"
+
+miniraf@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/miniraf/-/miniraf-1.0.0.tgz#5d88e108bbdcb55b4a2ff3da337f24a13a3377e1"
+  integrity sha512-XpvhtJYzVrpXe+JoAthrT9E40NIrSDDMcdHEYL2M+lR/OCas0nadetcBBq/MWYqlgV5aDWVQ3mfAqd+fG6Y/EQ==
 
 mitt@^3.0.1:
   version "3.0.1"
@@ -3491,6 +3513,11 @@ relay-runtime@12.0.0:
     fbjs "^3.0.0"
     invariant "^2.2.4"
 
+rematrix@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/rematrix/-/rematrix-0.3.0.tgz#4f3f9156aa80ded8a8ca23785f48c6012b6dea4a"
+  integrity sha512-xB/9ZvJIKaDgXX0qkvV9/pLD8zK23A6TVV6F8Vhsl+SrxbBeVYutz5uszxgC6Rt3RP9LZiH8OXaYjr+x6WXWmQ==
+
 remedial@^1.0.7:
   version "1.0.8"
   resolved "https://registry.npmjs.org/remedial/-/remedial-1.0.8.tgz"
@@ -3606,6 +3633,15 @@ safe-buffer@~5.2.0:
   version "2.1.2"
   resolved "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
+
+scrollreveal@^4.0.9:
+  version "4.0.9"
+  resolved "https://registry.yarnpkg.com/scrollreveal/-/scrollreveal-4.0.9.tgz#47866e1967ff604e64bac28818fe0dcea44f2c8b"
+  integrity sha512-fefGvzVS8YbXbDK1+T0kvy2yqxaiBJZeGUhPeqajf+7sGqtX4xikbKGAlzQuPCpswAMswx94ZwhDjXKnRIqW1w==
+  dependencies:
+    miniraf "1.0.0"
+    rematrix "0.3.0"
+    tealight "0.3.6"
 
 scuid@^1.1.0:
   version "1.1.0"
@@ -3786,6 +3822,14 @@ tapable@^2.3.0:
   resolved "https://registry.npmjs.org/tapable/-/tapable-2.3.0.tgz"
   integrity sha512-g9ljZiwki/LfxmQADO3dEY1CbpmXT5Hm2fJ+QaGKwSXUylMybePR7/67YW7jOrrvjEgL1Fmz5kzyAjWVWLlucg==
 
+tealight@0.3.6:
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/tealight/-/tealight-0.3.6.tgz#14c8071ce3c188972a5cb7d8a5668ca2820b4292"
+  integrity sha512-Dys3N8jFBThD9pNVpPCyUiu6DfWcTBdqWQJIvnAuVaFkGEdrPBJ43070vVbn6sTlLvn2IQK2zFW4FrVIrTo8eQ==
+  dependencies:
+    is-dom-node "^1.0.4"
+    is-dom-node-list "^1.2.1"
+
 throttle-debounce@^5.0.0:
   version "5.0.2"
   resolved "https://registry.npmjs.org/throttle-debounce/-/throttle-debounce-5.0.2.tgz"
@@ -3946,10 +3990,10 @@ util-deprecate@^1.0.1:
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
-v-datepicker-lite@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/v-datepicker-lite/-/v-datepicker-lite-0.1.5.tgz#a8f754fae9688e5392a5a18f7956c6ea279b2224"
-  integrity sha512-XrX0eJYAr8LdkJ4fCNEDn1/zxHI5J2Sd3cnVhQKdi7m/J/XrmueS4XkO2cV7XD1tjZmMnoV4FWc8n+vXegTpYQ==
+v-datepicker-lite@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/v-datepicker-lite/-/v-datepicker-lite-0.1.6.tgz#7e4340650e91e851bdb39024bc4678b749369039"
+  integrity sha512-AzYexkzQr37o1pJmjAW+cu6M6S+SGwlJZJkfmIHsr34qa73Vi+Z5clTaWgujgT3Azg3mYZye611DNq12vv+Qjw==
   dependencies:
     v-tooltip-lite "^0.1.0"
 
@@ -3975,22 +4019,24 @@ vite@^7.2.4:
   optionalDependencies:
     fsevents "~2.3.3"
 
-vlite3@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/vlite3/-/vlite3-0.2.1.tgz#28cdc58e245f468cd0e0e9b19db9b29d9a83d0f6"
-  integrity sha512-oiLxfG7khzvPoKfB+MMrrHELnSCOfoli0NO2oYlLkgS4YqoeEXzk10w+Ec4ELfJWKFbq8NFRx8ymR3XQm0BGGw==
+vlite3@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/vlite3/-/vlite3-0.2.3.tgz#d8f42c1a3af1f44889bb544f7e3b11e271fa7d16"
+  integrity sha512-ElXwABYMiIJHiDRXgbALZ6FJV75CqGCTkg53j+040hLoaZ15CIPS+zzPXXqjGmzpLdsC+D48n2SW+4ED+b+55g==
   dependencies:
     "@formkit/drag-and-drop" "^0.5.3"
     "@iconify/vue" "5.0.0"
     "@jaames/iro" "^5.5.2"
     "@tailwindcss/vite" "^4.1.18"
+    "@types/scrollreveal" "^0.0.11"
     "@vueuse/core" "^14.1.0"
     iconify-icon-picker "^1.0.3"
+    scrollreveal "^4.0.9"
     tailwindcss "^4.1.18"
-    v-datepicker-lite "^0.1.5"
+    v-datepicker-lite "^0.1.6"
     v-tooltip-lite "^0.1.9"
     vue-carousel-lite "^0.2.3"
-    vue3-google-login "^2.0.37"
+    vue3-google-signin "^2.1.1"
 
 vscode-uri@^3.0.8:
   version "3.1.0"
@@ -4062,10 +4108,10 @@ vue-tsc@^3.1.4:
     "@volar/typescript" "2.4.27"
     "@vue/language-core" "3.2.4"
 
-vue3-google-login@^2.0.37:
-  version "2.0.37"
-  resolved "https://registry.yarnpkg.com/vue3-google-login/-/vue3-google-login-2.0.37.tgz#33fca748b0361f63409af50dcb38eab1c5ad4c25"
-  integrity sha512-1seGaevhcMPi/dKO36KktpqYMkJdzt4s5U7XjLvHPd50e8sCBcC8/Pv3Mz+QrK12rSOmiduTtxCuPcH2ULYozw==
+vue3-google-signin@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/vue3-google-signin/-/vue3-google-signin-2.1.1.tgz#8236e233388fde7e454b3cb563288473de0f1537"
+  integrity sha512-RwlwyeCv8+PZjK35C/UyJN4/9MH+Fsz4bJDO7IjtmRuOaTMrvmMmI6SP5qkJgD7w9MIKOCj5rYVFMAL7+NCM0A==
 
 vue@^3.5.24:
   version "3.5.27"
