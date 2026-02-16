@@ -44,6 +44,8 @@ const handleSubmit = async (payload: { values: any }) => {
   try {
     const { values } = payload
 
+    console.log('payload :>> ', payload)
+
     await updateProfile({
       data: {
         username: values.username,
