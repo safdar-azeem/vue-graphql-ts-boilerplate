@@ -41,7 +41,8 @@ const handleLogin = async (payload: any) => {
 
 const handleGoogleSuccess = async (response: any) => {
   try {
-    const { data } = await googleLoginMutate({ token: response.credential })
+    console.log('response :>> ', response)
+    const { data } = await googleLoginMutate({ token: response.access_token })
 
     if (data?.googleLogin?.token) {
       if (data.googleLogin.user.mfaSettings?.isEnabled) {
@@ -84,7 +85,6 @@ const handleGoogleSuccess = async (response: any) => {
 
     <div class="flex justify-center">
       <GoogleLogin
-        clientId="766388665578-j7egtr3luopctq39fpnuuo9cm7sc9g1s.apps.googleusercontent.com"
         buttonText="Sign in with Google"
         class="w-full"
         @success="handleGoogleSuccess"
