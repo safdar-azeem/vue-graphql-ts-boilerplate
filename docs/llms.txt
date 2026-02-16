@@ -1,227 +1,153 @@
-# vlite3
+# Vue Graphql TS Boilerplate
 
-A lightweight Vue 3 UI component library built with Tailwind CSS, created for personal projects and available for anyone to use.
+This file serves as a comprehensive guide for AI agents and developers working on the frontend project. It contains the project structure, architectural patterns, module creation guides, and the full source code of core UI components to ensure consistency when generating new code.
 
-## Installation
+## 1. Project Overview
 
-### NPM
+- **Framework**: Nuxt 3 (Vue 3)
+- **Styling**: Tailwind CSS
+- **State Management**: Vue 3 ref()
+- **API**: GraphQL (Apollo Client)
+- **Language**: TypeScript
 
-```bash
-npm install vlite3
-```
+### Directory Structure
 
-### Yarn
+- `/src/components/`: Core shared UI components.
+- `/src/modules/`: Feature modules (CRM, HRM, etc.).
+- `/src/composables/`: Shared logic (hooks).
+- `/src/utils/`: Shared utility functions.
+- `/src/graphql/`: GraphQL queries and mutations.
 
-```bash
-yarn add vlite3
-```
+---
 
-## 2. Tailwind CSS Setup (Tailwind v4)
+## 2. Module Architecture
 
-`vite.config.ts`
+Each feature is encapsulated in a directory within `modules/`.
 
-```ts
-import tailwindcss from '@tailwindcss/vite'
+### Structure of a Module (e.g., `src/modules/CRM/`)
 
-export default defineConfig({
-  plugins: [vue(), tailwindcss()],
-})
-```
+- `components/`: Module-specific components (Modals, Tables).
+- `pages/`: Page components (Views).
+- `routes/`: Route definitions.
+- `schema/`: Form and other schemas 
 
-`style.css`
+### How to Start a New Module
 
-```css
-@import 'tailwindcss';
-@layer theme, base, components, utilities;
+1. **Create Directory**: `modules/NewModule/`
+2. **Define Routes**: Create `modules/NewModule/routes/index.ts`.
 
-@import 'vlite3/style.css';
-@source "../node_modules/vlite3";
-```
+   ```typescript
+   import { AppRoutes } from '~/constants/routes.constants'
+   import ParentPage from '~/components/ParentPage.vue'
 
-## 3. Usage
+   export const newModuleRouter = [
+      {
+         path: '/new-module',
+         component: () => import('../pages/ListPage.vue'),
+      },
+   ]
+   ```
 
-Import components directly in your Vue files:
-
-```vue
-<script setup>
-import { Button, Input } from 'vlite3'
-</script>
-
-<template>
-  <div class="p-4 space-y-4">
-    <Button>Click Me</Button>
-    <Input placeholder="Type here..." />
-  </div>
-</template>
-```
+3. **Register Routes**:
+    Open `/src/routes/index.ts`.
+      - Import your router: `import { newModuleRouter } from '~/modules/NewModule/routes'`
+      - Add to children inside the `parentRoutes` children array.
 
 
-## Global Configuration (Registry System)
+### Data Fetching (GraphQL)
 
-vlite3 features a plugin-based architecture that allows you to register global services. This is particularly useful for dependency injection, such as defining how file uploads should be handled across all `Form` components in your app.
+- Queries and Mutations are generated in `graphql/generated`.
+- Use `useQueryName()` and `useMutationName()` hooks.
+- Example:
+   ```typescript
+   const { result, loading, refetch } = useGetContactsQuery({ pagination: { page: 1, limit: 10 } })
+   const { mutate, loading } = useCreateContactMutation({
+      refetchQueries: ['GetContacts'],
+   })
+   ```
 
-### Setting up the Plugin
+---
 
-In your `main.ts` or `main.js`, import `createVLite` and register your services:
+## 3. UI Components Reference & Source
 
-```typescript
-import { createApp } from 'vue'
-import App from './App.vue'
-import { createVLite } from 'vlite3'
+Use the field `type` in Form Schema to trigger these components.
 
-const app = createApp(App)
+### 3.1 Form System
 
-// Initialize VLite with custom configuration
-const vlite = createVLite({
-  services: {
-    /**
-     * Global File Upload Handler
-     *
-     * This function will be called automatically by:
-     * - useFileUpload() composable
-     * - Form components (when using 'file', 'fileUploader', or 'avatarUpload' types)
-     *
-     * @param file - The File object to upload
-     * @param folderId - (Optional) Folder ID passed from component props
-     * @returns Promise<string> - The public URL of the uploaded file
-     */
-    upload: async (file, folderId) => {
-      // Example: Upload to your own backend
-      const formData = new FormData()
-      formData.append('file', file)
-      if (folderId) formData.append('folder_id', folderId)
+The `Form` component is the heart of data entry. It renders fields based on a JSON-like schema.
 
-      // Replace with your actual API call (e.g., Axios, Fetch)
-      const response = await fetch(
-        '[https://api.yourdomain.com/v1/upload](https://api.yourdomain.com/v1/upload)',
-        {
-          method: 'POST',
-          body: formData,
-          headers: {
-            Authorization: 'Bearer ...',
-          },
-        }
-      )
-
-      if (!response.ok) throw new Error('Upload failed')
-
-      const data = await response.json()
-      return data.url // MUST return the file URL string
-    },
-  },
-})
-
-app.use(vlite)
-app.mount('#app')
-```
-
-### How it works
-
-Once registered, you don't need to pass upload handlers to individual components.
-
-1. **Automatic Injection**: The `Form` component detects input types like `file`, `avatarUpload`, or `fileUploader`.
-2. **Parallel Processing**: When the form is submitted, it automatically uploads all files in **parallel** using your registered `upload` service.
-3. **URL Replacement**: The File objects in your form data are replaced with the returned URLs before the final `onSubmit` event is triggered.
-
-## 4. Usage
-
-Import components directly in your Vue files:
+**Usage Example:**
 
 ```vue
 <script setup>
-import { Button, Input, Form } from 'vlite3'
+import { contactSchema } from '../schema/contactSchema'
 
-// The form will automatically use the global upload service defined in main.ts
-const schema = [
-  {
-    name: 'avatar',
-    label: 'Profile Picture',
-    type: 'avatarUpload',
-  },
-  {
-    name: 'documents',
-    label: 'Attachments',
-    type: 'fileUploader',
-    props: { multiple: true },
-  },
-]
+const props = defineProps<{
+   data?: any
+}>()
 
-const handleSubmit = (payload) => {
-  // payload.values.avatar will be a URL string (e.g., "https://api...")
-  // payload.values.documents will be an array of URL strings
-  console.log(payload.values)
+const handleSubmit = ({ values, handleClose, isUpdate }) => {
+   /* ... */
+   try {
+      if (!isUpdate) {
+         await createContact({ input: values })
+         toast.success($t('crm.contact.toast.created'))
+      } else {
+         await updateContact({ contactId: item._id, input: values })
+         toast.success($t('crm.contact.toast.update'))
+      }
+      handleClose()
+   } catch (error) {
+      showToast(error.message)
+   }
 }
 </script>
 
 <template>
-  <div class="p-4 space-y-4">
-    <Button>Click Me</Button>
-    <Input placeholder="Type here..." />
-
-    <Form :schema="schema" @onSubmit="handleSubmit" />
-  </div>
+  <Form
+    :schema="contactSchema"
+    @onSubmit="handleSubmit"
+    :isLoading="loading || updateLoading"    
+    :values="data" />
 </template>
 ```
 
+## 8. Best Practices & Guidelines
+
+1. **Strict Typing**
+   Define explicit types for all props, emits, function parameters, and return values. Avoid implicit `any`. Use shared interfaces and types where applicable.
+
+2. **Error Handling**
+   Wrap all asynchronous operations in `try/catch`. Surface meaningful error messages using `showToast(err.message)` or a centralized error handler. Avoid silent failures.
+
+3. **Modular Architecture**
+   Maintain a clean, modular structure.
+
+   * Split logic into focused, single-responsibility files.
+   * Use consistent naming conventions and folder prefixes.
+   * Group related logic within feature or domain modules.
+   * Avoid large, monolithic files.
+
+4. **Reusability**
+   If a component or utility is reused more than once, extract it into `components/` or the relevant module-level `components/` directory. Prefer composables or shared utilities for repeated logic.
+
+5. **Frontend Standards**
+
+   * Use semantic HTML elements.
+   * Ensure accessibility compliance.
+   * Optimize for SEO and performance.
+   * Maintain strong UX principles including responsiveness and clarity.
+
+6. **Code Cleanliness**
+
+   * Do not add unnecessary or trivial comments.
+   * Avoid comments that describe obvious changes such as added imports or removed lines.
+   * Keep the codebase concise and self-explanatory through clear naming and structure.
 
 
-## ✅ Components
+## Complete reference for AI agents and developers:
 
-- **Button**
-- **ButtonGroup**
-- **Icon**
-- **Label**
-- **Badge**
-- **Chip**
-- **Logo**
-- **Navbar**
-- **SidebarMenu**
-- **SidePanel**
-- **Masonry Grid**
-- **ThemeToggle**
-
-### Inputs & Forms
-
-- **Input**
-- **Textarea**
-- **CheckBox**
-- **Switch**
-- **ChoiceBox**
-- **Slider**
-- **OTPInput**
-- **DatePicker**
-- **ColorPicker**
-- **FilePicker**
-- **AvatarUploader**
-- **IconPicker**
-- **MultiSelect**
-- **Form**
-- **CustomFields**
-- **NumberInput**
-- **Google Login**
-
-### Data Display
-
-- **Avatar**
-- **Accordion**
-- **Carousel**
-- **DataTable**
-- **Pagination**
-- **Timeline**
-- **Heatmap**
-- **PricingPlan**
-- **FileTree**
-- **Workbook**
-- **Tabes**
-
-### Feedback & Overlays
-
-- **Alert**
-- **Modal**
-- **ConfirmationModal**
-- **ToastNotification**
-- **Tooltip**
-- **Dropdown**
-- **ProgressBar**
-- **Spinner**
-
+- [llms.txt](/vue-graphql-ts-boilerplate//docs/llms.txt).
+- [llms-theming.txt](/vue-graphql-ts-boilerplate//docs/llms-theming.txt).
+- [llms-full.txt](/vue-graphql-ts-boilerplate//docs/llms-full.txt).
+- [llms-advance.txt](/vue-graphql-ts-boilerplate//docs/llms-advance.txt).
