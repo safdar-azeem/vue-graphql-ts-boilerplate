@@ -7,6 +7,7 @@ const { configure } = useNotifications()
 onMounted(() => {
   configure({
     position: 'top-right',
+    variant: 'success',
   })
 })
 </script>
