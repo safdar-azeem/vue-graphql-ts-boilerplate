@@ -112,6 +112,44 @@ const handleSubmit = ({ values, handleClose, isUpdate }) => {
 </template>
 ```
 
+
+# ScrollReveal
+
+**Directive:** `v-scroll-reveal`
+
+### Description
+
+A custom directive wrapper around the `scrollreveal` library. It animates elements as they scroll into the viewport. It acts as a lightweight wrapper that handles instantiation and clean-up automatically. Crucially, it includes **SSR guards**, making it safe to use in Nuxt 3 or any Server-Side Rendering environment without causing window/document errors.
+
+### Props (Directive Binding)
+
+The directive accepts an object matching the `ScrollRevealObjectOptions` interface.
+
+| Option | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `delay` | `number` | `200` | Delay in milliseconds before animation starts. |
+| `distance` | `string` | `'50px'` | Distance the element moves (e.g., `'20px'`, `'5rem'`). |
+| `duration` | `number` | `800` | Duration of the animation in milliseconds. |
+| `origin` | `'bottom' \| 'top' \| 'left' \| 'right'` | `'bottom'` | Direction from which the element appears. |
+| `opacity` | `number` | `0` | Starting opacity (0 to 1). |
+| `scale` | `number` | `1` | Starting scale (e.g., `0.9` for zoom-in effect). |
+| `easing` | `string` | `'cubic-bezier(0.5, 0, 0, 1)'` | CSS easing function. |
+| `reset` | `boolean` | `false` | If `true`, animations repeat when scrolling up/down. |
+| `desktop` | `boolean` | `true` | Enable on desktop devices. |
+| `mobile` | `boolean` | `true` | Enable on mobile devices. |
+
+### Usage
+
+#### Basic Usage (Default Settings)
+Animates from the bottom with a 50px distance and small delay.
+
+```vue
+<div v-scroll-reveal>
+  <h1>Fade In Content</h1>
+</div>
+
+---
+
 ## 8. Best Practices & Guidelines
 
 1. **Strict Typing**
@@ -149,5 +187,7 @@ const handleSubmit = ({ values, handleClose, isUpdate }) => {
 
 - [llms.txt](/vue-graphql-ts-boilerplate//docs/llms.txt).
 - [llms-theming.txt](/vue-graphql-ts-boilerplate//docs/llms-theming.txt).
+- [llm-forms.txt](/vue-graphql-ts-boilerplate//docs/llm-forms.txt).
+- [llm-utility.txt](/vue-graphql-ts-boilerplate//docs/llm-utility.txt).
 - [llms-full.txt](/vue-graphql-ts-boilerplate//docs/llms-full.txt).
 - [llms-advance.txt](/vue-graphql-ts-boilerplate//docs/llms-advance.txt).
