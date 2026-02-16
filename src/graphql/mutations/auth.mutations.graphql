@@ -25,6 +25,22 @@ mutation Signup($data: SignupInput!) {
   }
 }
 
+mutation GoogleLogin($token: String!) {
+  googleLogin(token: $token) {
+    token
+    refreshToken
+    user {
+      id
+      username
+      email
+      mfaSettings {
+        isEnabled
+        method
+      }
+    }
+  }
+}
+
 mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
 }
