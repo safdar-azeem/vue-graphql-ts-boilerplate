@@ -37,7 +37,7 @@ const handleLogout = () => {
             class="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center shadow-sm">
             <Icon icon="lucide:box" class="w-5 h-5" />
           </div>
-          Builto
+          AppName
         </div>
       </template>
 
@@ -53,7 +53,7 @@ const handleLogout = () => {
         <div class="flex flex-col gap-2">
           <Button
             variant="ghost"
-            class="w-full justify-start text-gray-600 hover:text-red-600 hover:bg-red-50"
+            class="w-full justify-start"
             icon="lucide:log-out"
             @click="handleLogout">
             Logout
