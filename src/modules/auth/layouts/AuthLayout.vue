@@ -13,7 +13,7 @@ import { Icon } from 'vlite3'
             <Icon icon="lucide:box" class="h-5 w-5" />
           </div>
         </div>
-        <h2 class="text-2xl font-bold text-gray-900">Builto App</h2>
+        <h2 class="text-2xl font-bold text-gray-900">AppName</h2>
       </div>
 
       <div class="p-6">
