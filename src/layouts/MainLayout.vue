@@ -26,7 +26,7 @@ const handleLogout = () => {
 </script>
 
 <template>
-  <div class="flex max-md:flex-col h-screen overflow-hidden bg-gray-50">
+  <div class="flex max-md:flex-col h-screen overflow-hidden">
     <Navbar
       variant="sidebar"
       mobile-breakpoint="md"
