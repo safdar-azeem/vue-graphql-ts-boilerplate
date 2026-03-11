@@ -1,20 +1,22 @@
 <script setup lang="ts">
-import { ThemeToggle, ToastNotification, useNotifications } from 'vlite3'
+import { initializeTheme, ToastNotification, useNotifications } from 'vlite3'
 import { onMounted } from 'vue'
+import { useLanguage } from './composables/useLanguage'
 
 const { configure } = useNotifications()
+const { initLanguage } = useLanguage()
 
 onMounted(() => {
   configure({
     position: 'top-right',
     variant: 'success',
   })
+  initLanguage()
+  initializeTheme()
 })
 </script>
 
 <template>
-  <theme-toggle
-    class="justify-start fixed! bottom-4 right-4 w-11! h-11! max-w-11! z-9999 rounded-full!" />
   <router-view />
   <toast-notification />
 </template>
