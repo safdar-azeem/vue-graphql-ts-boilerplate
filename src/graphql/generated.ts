@@ -51,6 +51,20 @@ export type CreateFolderInput = {
   parentId?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type CreateRoleInput = {
+  name: Scalars['String']['input'];
+  permissions: Array<Permissions>;
+};
+
+export type CreateUserInput = {
+  customPermissions?: InputMaybe<Array<Permissions>>;
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  roleIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+  userType: UserType;
+  username: Scalars['String']['input'];
+};
+
 export type DateRangeInput = {
   from?: InputMaybe<Scalars['DateTime']['input']>;
   to?: InputMaybe<Scalars['DateTime']['input']>;
@@ -127,6 +141,26 @@ export type LoginInput = {
   password: Scalars['String']['input'];
 };
 
+export type ManagedUser = {
+  __typename?: 'ManagedUser';
+  avatar?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['DateTime']['output'];
+  customPermissions: Array<Scalars['String']['output']>;
+  email: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  ownerId?: Maybe<Scalars['String']['output']>;
+  roles: Array<Role>;
+  updatedAt: Scalars['DateTime']['output'];
+  userType: UserType;
+  username: Scalars['String']['output'];
+};
+
+export type ManagedUserConnection = {
+  __typename?: 'ManagedUserConnection';
+  items: Array<ManagedUser>;
+  pageInfo: PaginationInfo;
+};
+
 export type MfaSettings = {
   __typename?: 'MfaSettings';
   isEnabled: Scalars['Boolean']['output'];
@@ -135,14 +169,19 @@ export type MfaSettings = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  assignRolesToUser: ManagedUser;
   cancelUpload: Scalars['Boolean']['output'];
   confirm2faEnrollment: Scalars['Boolean']['output'];
   confirmUpload: File;
   createFolder: Folder;
+  createRole: Role;
   createShareLink: ResourceShareLink;
+  createUser: ManagedUser;
   deleteFiles: Scalars['String']['output'];
   deleteFolder: Scalars['Boolean']['output'];
+  deleteRole: Scalars['Boolean']['output'];
   deleteShareLink: Scalars['Boolean']['output'];
+  deleteUser: Scalars['Boolean']['output'];
   disable2fa: Scalars['Boolean']['output'];
   forgotPassword: Scalars['Boolean']['output'];
   googleLogin: AuthPayload;
@@ -152,13 +191,22 @@ export type Mutation = {
   logoutAll: Scalars['Boolean']['output'];
   moveFolder: Folder;
   refreshTokens: AuthPayload;
+  removeRolesFromUser: ManagedUser;
   renameFolder: Folder;
   requestUploadUrl: SignedUploadUrl;
   resetPassword: Scalars['Boolean']['output'];
   signup: AuthPayload;
   toggleFilePublic: File;
+  updateRole: Role;
+  updateUser: ManagedUser;
   updateUserProfile: User;
   verify2FA: AuthPayload;
+};
+
+
+export type MutationAssignRolesToUserArgs = {
+  roleIds: Array<Scalars['ID']['input']>;
+  userId: Scalars['ID']['input'];
 };
 
 
@@ -182,8 +230,18 @@ export type MutationCreateFolderArgs = {
 };
 
 
+export type MutationCreateRoleArgs = {
+  data: CreateRoleInput;
+};
+
+
 export type MutationCreateShareLinkArgs = {
   input: ShareLinkInput;
+};
+
+
+export type MutationCreateUserArgs = {
+  data: CreateUserInput;
 };
 
 
@@ -197,7 +255,17 @@ export type MutationDeleteFolderArgs = {
 };
 
 
+export type MutationDeleteRoleArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationDeleteShareLinkArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteUserArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -238,6 +306,12 @@ export type MutationRefreshTokensArgs = {
 };
 
 
+export type MutationRemoveRolesFromUserArgs = {
+  roleIds: Array<Scalars['ID']['input']>;
+  userId: Scalars['ID']['input'];
+};
+
+
 export type MutationRenameFolderArgs = {
   id: Scalars['ID']['input'];
   name: Scalars['String']['input'];
@@ -265,6 +339,18 @@ export type MutationToggleFilePublicArgs = {
 };
 
 
+export type MutationUpdateRoleArgs = {
+  data: UpdateRoleInput;
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateUserArgs = {
+  data: UpdateUserInput;
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationUpdateUserProfileArgs = {
   data: UpdateUserProfileInput;
 };
@@ -288,9 +374,14 @@ export type PaginationInput = {
 };
 
 export enum Permissions {
-  Delete = 'DELETE',
-  Read = 'READ',
-  Write = 'WRITE'
+  RoleCreate = 'ROLE_CREATE',
+  RoleDelete = 'ROLE_DELETE',
+  RoleUpdate = 'ROLE_UPDATE',
+  RoleView = 'ROLE_VIEW',
+  UserCreate = 'USER_CREATE',
+  UserDelete = 'USER_DELETE',
+  UserUpdate = 'USER_UPDATE',
+  UserView = 'USER_VIEW'
 }
 
 export type Query = {
@@ -302,6 +393,10 @@ export type Query = {
   getFolder?: Maybe<Folder>;
   getFolderShareLinks: Array<ResourceShareLink>;
   getFolders: FolderConnection;
+  getRole: Role;
+  getRoles: Array<Role>;
+  getUser: ManagedUser;
+  getUsers: ManagedUserConnection;
   me?: Maybe<User>;
 };
 
@@ -342,6 +437,22 @@ export type QueryGetFoldersArgs = {
   pagination?: InputMaybe<PaginationInput>;
 };
 
+
+export type QueryGetRoleArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetUserArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetUsersArgs = {
+  filter?: InputMaybe<UsersFilterInput>;
+  pagination?: InputMaybe<PaginationInput>;
+};
+
 export type RequestUploadInput = {
   filename: Scalars['String']['input'];
   folderId?: InputMaybe<Scalars['String']['input']>;
@@ -360,6 +471,16 @@ export type ResourceShareLink = {
   id: Scalars['ID']['output'];
   token: Scalars['String']['output'];
   url: Scalars['String']['output'];
+};
+
+export type Role = {
+  __typename?: 'Role';
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  ownerId: Scalars['String']['output'];
+  permissions: Array<Permissions>;
+  updatedAt: Scalars['DateTime']['output'];
 };
 
 export type ShareLinkInput = {
@@ -388,6 +509,18 @@ export enum TwoFactorMethod {
   Email = 'EMAIL'
 }
 
+export type UpdateRoleInput = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  permissions?: InputMaybe<Array<Permissions>>;
+};
+
+export type UpdateUserInput = {
+  avatar?: InputMaybe<Scalars['String']['input']>;
+  customPermissions?: InputMaybe<Array<Permissions>>;
+  roleIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type UpdateUserProfileInput = {
   avatar?: InputMaybe<Scalars['String']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
@@ -400,8 +533,22 @@ export type User = {
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   mfaSettings?: Maybe<MfaSettings>;
+  permissions: Array<Permissions>;
   updatedAt: Scalars['DateTime']['output'];
+  userType: UserType;
   username: Scalars['String']['output'];
+};
+
+export enum UserType {
+  Customer = 'CUSTOMER',
+  Employee = 'EMPLOYEE',
+  Owner = 'OWNER',
+  Supplier = 'SUPPLIER'
+}
+
+export type UsersFilterInput = {
+  search?: InputMaybe<Scalars['String']['input']>;
+  userType?: InputMaybe<UserType>;
 };
 
 export type LoginMutationVariables = Exact<{
