@@ -225,7 +225,6 @@ const formatSize = (bytes: number) => {
         </div>
       </div>
     </div>
-
     <div class="bg-white p-4 shadow-sm rounded">
       <div class="flex-1 overflow-x-auto">
         <DataTable
@@ -274,7 +273,7 @@ const formatSize = (bytes: number) => {
             </div>
           </template>
 
-          <template #name="{ value: row }">
+          <template #name="{ row }">
             <div
               class="flex items-center gap-3 cursor-pointer min-w-0"
               @click="row.type === 'folder' ? handleFolderClick(row) : null">
@@ -303,19 +302,19 @@ const formatSize = (bytes: number) => {
             </div>
           </template>
 
-          <template #size="{ value: row }">
+          <template #size="{ row }">
             <span class="text-gray-500 text-sm whitespace-nowrap">{{
-              row.type === 'folder' ? '-' : formatSize(row.size)
+              row?.type === 'folder' ? '-' : formatSize(row?.size)
             }}</span>
           </template>
 
-          <template #updatedAt="{ value: row }">
+          <template #updatedAt="{ row }">
             <span class="text-gray-500 text-sm whitespace-nowrap">{{
-              new Date(row.updatedAt).toLocaleDateString()
+              new Date(row?.updatedAt).toLocaleDateString()
             }}</span>
           </template>
 
-          <template #action="{ value: row }">
+          <template #action="{ row }">
             <div class="flex justify-end gap-1">
               <Modal
                 :body="ShareModal"
@@ -325,12 +324,12 @@ const formatSize = (bytes: number) => {
                 <Button variant="ghost" size="xs" icon="lucide:share-2" title="Share" />
               </Modal>
               <Button
-                v-if="row.type === 'file'"
+                v-if="row?.type === 'file'"
                 variant="ghost"
                 size="xs"
                 icon="lucide:download"
                 component="a"
-                :href="row.url"
+                :href="row?.url"
                 download />
               <ConfirmationModal
                 title="Delete Item"
