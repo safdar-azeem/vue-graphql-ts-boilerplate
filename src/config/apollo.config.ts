@@ -42,8 +42,6 @@ export const apollo = createApollo({
       return null
     }
 
-    console.log(data)
-
     const { token: newToken, refreshToken: newRefreshToken } = data.refreshTokens
 
     setToken({
