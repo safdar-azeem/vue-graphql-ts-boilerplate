@@ -101,7 +101,6 @@ export enum FileStatus {
 export type FilesFilterInput = {
   dateRange?: InputMaybe<DateRangeInput>;
   folderId?: InputMaybe<Scalars['String']['input']>;
-  search?: InputMaybe<Scalars['String']['input']>;
   uploadedBy?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -125,8 +124,8 @@ export type FolderConnection = {
 };
 
 export type FolderFilterInput = {
+  dateRange?: InputMaybe<DateRangeInput>;
   parentId?: InputMaybe<Scalars['String']['input']>;
-  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Init2faResponse = {
@@ -388,13 +387,13 @@ export type Query = {
   __typename?: 'Query';
   getFile?: Maybe<File>;
   getFileDownloadUrl: Scalars['String']['output'];
-  getFileShareLinks: Array<ResourceShareLink>;
+  getFileShareLinks: ResourceShareLinkConnection;
   getFiles: FileConnection;
   getFolder?: Maybe<Folder>;
-  getFolderShareLinks: Array<ResourceShareLink>;
+  getFolderShareLinks: ResourceShareLinkConnection;
   getFolders: FolderConnection;
   getRole: Role;
-  getRoles: Array<Role>;
+  getRoles: RoleConnection;
   getUser: ManagedUser;
   getUsers: ManagedUserConnection;
   me?: Maybe<User>;
@@ -413,12 +412,16 @@ export type QueryGetFileDownloadUrlArgs = {
 
 export type QueryGetFileShareLinksArgs = {
   fileId: Scalars['ID']['input'];
+  filter?: InputMaybe<ShareLinkFilterInput>;
+  pagination?: InputMaybe<PaginationInput>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type QueryGetFilesArgs = {
   filter?: InputMaybe<FilesFilterInput>;
   pagination?: InputMaybe<PaginationInput>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -428,18 +431,29 @@ export type QueryGetFolderArgs = {
 
 
 export type QueryGetFolderShareLinksArgs = {
+  filter?: InputMaybe<ShareLinkFilterInput>;
   folderId: Scalars['ID']['input'];
+  pagination?: InputMaybe<PaginationInput>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type QueryGetFoldersArgs = {
   filter?: InputMaybe<FolderFilterInput>;
   pagination?: InputMaybe<PaginationInput>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type QueryGetRoleArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetRolesArgs = {
+  filter?: InputMaybe<RoleFilterInput>;
+  pagination?: InputMaybe<PaginationInput>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -451,6 +465,7 @@ export type QueryGetUserArgs = {
 export type QueryGetUsersArgs = {
   filter?: InputMaybe<UsersFilterInput>;
   pagination?: InputMaybe<PaginationInput>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type RequestUploadInput = {
@@ -473,6 +488,12 @@ export type ResourceShareLink = {
   url: Scalars['String']['output'];
 };
 
+export type ResourceShareLinkConnection = {
+  __typename?: 'ResourceShareLinkConnection';
+  items: Array<ResourceShareLink>;
+  pageInfo: PaginationInfo;
+};
+
 export type Role = {
   __typename?: 'Role';
   createdAt: Scalars['DateTime']['output'];
@@ -481,6 +502,20 @@ export type Role = {
   ownerId: Scalars['String']['output'];
   permissions: Array<Permissions>;
   updatedAt: Scalars['DateTime']['output'];
+};
+
+export type RoleConnection = {
+  __typename?: 'RoleConnection';
+  items: Array<Role>;
+  pageInfo: PaginationInfo;
+};
+
+export type RoleFilterInput = {
+  dateRange?: InputMaybe<DateRangeInput>;
+};
+
+export type ShareLinkFilterInput = {
+  dateRange?: InputMaybe<DateRangeInput>;
 };
 
 export type ShareLinkInput = {
@@ -547,7 +582,7 @@ export enum UserType {
 }
 
 export type UsersFilterInput = {
-  search?: InputMaybe<Scalars['String']['input']>;
+  dateRange?: InputMaybe<DateRangeInput>;
   userType?: InputMaybe<UserType>;
 };
 
@@ -673,16 +708,18 @@ export type UpdateUserProfileMutationVariables = Exact<{
 export type UpdateUserProfileMutation = { __typename?: 'Mutation', updateUserProfile: { __typename?: 'User', id: string, username: string, avatar?: string | null, email: string } };
 
 export type GetFilesQueryVariables = Exact<{
-  filter?: InputMaybe<FilesFilterInput>;
   pagination?: InputMaybe<PaginationInput>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<FilesFilterInput>;
 }>;
 
 
 export type GetFilesQuery = { __typename?: 'Query', getFiles: { __typename?: 'FileConnection', items: Array<{ __typename?: 'File', id: string, originalName: string, mimeType: string, size: number, url?: string | null, updatedAt: any, isPublic: boolean }>, pageInfo: { __typename?: 'PaginationInfo', totalItems: number, totalPages: number, currentPage: number } } };
 
 export type GetFoldersQueryVariables = Exact<{
-  filter?: InputMaybe<FolderFilterInput>;
   pagination?: InputMaybe<PaginationInput>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<FolderFilterInput>;
 }>;
 
 
@@ -690,17 +727,23 @@ export type GetFoldersQuery = { __typename?: 'Query', getFolders: { __typename?:
 
 export type GetFileShareLinksQueryVariables = Exact<{
   fileId: Scalars['ID']['input'];
+  pagination?: InputMaybe<PaginationInput>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<ShareLinkFilterInput>;
 }>;
 
 
-export type GetFileShareLinksQuery = { __typename?: 'Query', getFileShareLinks: Array<{ __typename?: 'ResourceShareLink', id: string, token: string, url: string, expiresAt: any, createdAt: any }> };
+export type GetFileShareLinksQuery = { __typename?: 'Query', getFileShareLinks: { __typename?: 'ResourceShareLinkConnection', items: Array<{ __typename?: 'ResourceShareLink', id: string, token: string, url: string, expiresAt: any, createdAt: any }>, pageInfo: { __typename?: 'PaginationInfo', totalItems: number, totalPages: number, currentPage: number } } };
 
 export type GetFolderShareLinksQueryVariables = Exact<{
   folderId: Scalars['ID']['input'];
+  pagination?: InputMaybe<PaginationInput>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<ShareLinkFilterInput>;
 }>;
 
 
-export type GetFolderShareLinksQuery = { __typename?: 'Query', getFolderShareLinks: Array<{ __typename?: 'ResourceShareLink', id: string, token: string, url: string, expiresAt: any, createdAt: any }> };
+export type GetFolderShareLinksQuery = { __typename?: 'Query', getFolderShareLinks: { __typename?: 'ResourceShareLinkConnection', items: Array<{ __typename?: 'ResourceShareLink', id: string, token: string, url: string, expiresAt: any, createdAt: any }>, pageInfo: { __typename?: 'PaginationInfo', totalItems: number, totalPages: number, currentPage: number } } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1239,8 +1282,8 @@ export function useUpdateUserProfileMutation(options: VueApolloComposable.UseMut
 }
 export type UpdateUserProfileMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>;
 export const GetFilesDocument = gql`
-    query GetFiles($filter: FilesFilterInput, $pagination: PaginationInput) {
-  getFiles(filter: $filter, pagination: $pagination) {
+    query GetFiles($pagination: PaginationInput, $search: String, $filter: FilesFilterInput) {
+  getFiles(pagination: $pagination, search: $search, filter: $filter) {
     items {
       id
       originalName
@@ -1271,8 +1314,9 @@ export const GetFilesDocument = gql`
  *
  * @example
  * const { result, loading, error } = useGetFilesQuery({
- *   filter: // value for 'filter'
  *   pagination: // value for 'pagination'
+ *   search: // value for 'search'
+ *   filter: // value for 'filter'
  * });
  */
 export function useGetFilesQuery(variables: GetFilesQueryVariables | VueCompositionApi.Ref<GetFilesQueryVariables> | ReactiveFunction<GetFilesQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<GetFilesQuery, GetFilesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetFilesQuery, GetFilesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetFilesQuery, GetFilesQueryVariables>> = {}) {
@@ -1283,8 +1327,8 @@ export function useGetFilesLazyQuery(variables: GetFilesQueryVariables | VueComp
 }
 export type GetFilesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetFilesQuery, GetFilesQueryVariables>;
 export const GetFoldersDocument = gql`
-    query GetFolders($filter: FolderFilterInput, $pagination: PaginationInput) {
-  getFolders(filter: $filter, pagination: $pagination) {
+    query GetFolders($pagination: PaginationInput, $search: String, $filter: FolderFilterInput) {
+  getFolders(pagination: $pagination, search: $search, filter: $filter) {
     items {
       id
       name
@@ -1312,8 +1356,9 @@ export const GetFoldersDocument = gql`
  *
  * @example
  * const { result, loading, error } = useGetFoldersQuery({
- *   filter: // value for 'filter'
  *   pagination: // value for 'pagination'
+ *   search: // value for 'search'
+ *   filter: // value for 'filter'
  * });
  */
 export function useGetFoldersQuery(variables: GetFoldersQueryVariables | VueCompositionApi.Ref<GetFoldersQueryVariables> | ReactiveFunction<GetFoldersQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<GetFoldersQuery, GetFoldersQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetFoldersQuery, GetFoldersQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetFoldersQuery, GetFoldersQueryVariables>> = {}) {
@@ -1324,13 +1369,25 @@ export function useGetFoldersLazyQuery(variables: GetFoldersQueryVariables | Vue
 }
 export type GetFoldersQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetFoldersQuery, GetFoldersQueryVariables>;
 export const GetFileShareLinksDocument = gql`
-    query GetFileShareLinks($fileId: ID!) {
-  getFileShareLinks(fileId: $fileId) {
-    id
-    token
-    url
-    expiresAt
-    createdAt
+    query GetFileShareLinks($fileId: ID!, $pagination: PaginationInput, $search: String, $filter: ShareLinkFilterInput) {
+  getFileShareLinks(
+    fileId: $fileId
+    pagination: $pagination
+    search: $search
+    filter: $filter
+  ) {
+    items {
+      id
+      token
+      url
+      expiresAt
+      createdAt
+    }
+    pageInfo {
+      totalItems
+      totalPages
+      currentPage
+    }
   }
 }
     `;
@@ -1348,6 +1405,9 @@ export const GetFileShareLinksDocument = gql`
  * @example
  * const { result, loading, error } = useGetFileShareLinksQuery({
  *   fileId: // value for 'fileId'
+ *   pagination: // value for 'pagination'
+ *   search: // value for 'search'
+ *   filter: // value for 'filter'
  * });
  */
 export function useGetFileShareLinksQuery(variables: GetFileShareLinksQueryVariables | VueCompositionApi.Ref<GetFileShareLinksQueryVariables> | ReactiveFunction<GetFileShareLinksQueryVariables>, options: VueApolloComposable.UseQueryOptions<GetFileShareLinksQuery, GetFileShareLinksQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetFileShareLinksQuery, GetFileShareLinksQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetFileShareLinksQuery, GetFileShareLinksQueryVariables>> = {}) {
@@ -1358,13 +1418,25 @@ export function useGetFileShareLinksLazyQuery(variables?: GetFileShareLinksQuery
 }
 export type GetFileShareLinksQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetFileShareLinksQuery, GetFileShareLinksQueryVariables>;
 export const GetFolderShareLinksDocument = gql`
-    query GetFolderShareLinks($folderId: ID!) {
-  getFolderShareLinks(folderId: $folderId) {
-    id
-    token
-    url
-    expiresAt
-    createdAt
+    query GetFolderShareLinks($folderId: ID!, $pagination: PaginationInput, $search: String, $filter: ShareLinkFilterInput) {
+  getFolderShareLinks(
+    folderId: $folderId
+    pagination: $pagination
+    search: $search
+    filter: $filter
+  ) {
+    items {
+      id
+      token
+      url
+      expiresAt
+      createdAt
+    }
+    pageInfo {
+      totalItems
+      totalPages
+      currentPage
+    }
   }
 }
     `;
@@ -1382,6 +1454,9 @@ export const GetFolderShareLinksDocument = gql`
  * @example
  * const { result, loading, error } = useGetFolderShareLinksQuery({
  *   folderId: // value for 'folderId'
+ *   pagination: // value for 'pagination'
+ *   search: // value for 'search'
+ *   filter: // value for 'filter'
  * });
  */
 export function useGetFolderShareLinksQuery(variables: GetFolderShareLinksQueryVariables | VueCompositionApi.Ref<GetFolderShareLinksQueryVariables> | ReactiveFunction<GetFolderShareLinksQueryVariables>, options: VueApolloComposable.UseQueryOptions<GetFolderShareLinksQuery, GetFolderShareLinksQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetFolderShareLinksQuery, GetFolderShareLinksQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetFolderShareLinksQuery, GetFolderShareLinksQueryVariables>> = {}) {
