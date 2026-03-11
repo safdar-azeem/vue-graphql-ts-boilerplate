@@ -7,6 +7,7 @@ import { useSignupMutation, useGoogleLoginMutation } from '@/graphql'
 import { signupSchema } from '../schema/signup.schema'
 import { Button, Form, showToast, GoogleLogin } from 'vlite3'
 import VerifyOtp from '../components/VerifyOtp.vue'
+import { env } from '@/utils'
 
 const router = useRouter()
 const showOTP = ref(false)
@@ -75,7 +76,7 @@ const handleGoogleSuccess = async (response: any) => {
 
     <div class="flex justify-center">
       <GoogleLogin
-        :clientId="import.meta.env.VITE_GOOGLE_CLIENT_ID || ''"
+        :clientId="env.VITE_GOOGLE_CLIENT_ID || ''"
         buttonText="Sign up with Google"
         class="w-full"
         @success="handleGoogleSuccess"
