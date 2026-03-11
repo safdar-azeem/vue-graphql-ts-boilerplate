@@ -23,6 +23,21 @@ export type Scalars = {
   Upload: { input: any; output: any; }
 };
 
+export type AttachmentFile = {
+  __typename?: 'AttachmentFile';
+  fileName?: Maybe<Scalars['String']['output']>;
+  fileSize?: Maybe<Scalars['Float']['output']>;
+  fileType?: Maybe<Scalars['String']['output']>;
+  fileUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type AttachmentInput = {
+  fileName: Scalars['String']['input'];
+  fileSize?: InputMaybe<Scalars['Float']['input']>;
+  fileType: Scalars['String']['input'];
+  fileUrl: Scalars['String']['input'];
+};
+
 export type AuthPayload = {
   __typename?: 'AuthPayload';
   refreshToken: Scalars['String']['output'];
@@ -272,6 +287,12 @@ export type PaginationInput = {
   page?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export enum Permissions {
+  Delete = 'DELETE',
+  Read = 'READ',
+  Write = 'WRITE'
+}
+
 export type Query = {
   __typename?: 'Query';
   getFile?: Maybe<File>;
@@ -324,6 +345,7 @@ export type QueryGetFoldersArgs = {
 export type RequestUploadInput = {
   filename: Scalars['String']['input'];
   folderId?: InputMaybe<Scalars['String']['input']>;
+  folderName?: InputMaybe<Scalars['String']['input']>;
   isPublic?: InputMaybe<Scalars['Boolean']['input']>;
   mimeType: Scalars['String']['input'];
   size: Scalars['Int']['input'];
