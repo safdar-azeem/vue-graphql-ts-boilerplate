@@ -678,7 +678,7 @@ export type GetFilesQueryVariables = Exact<{
 }>;
 
 
-export type GetFilesQuery = { __typename?: 'Query', getFiles: { __typename?: 'FileConnection', items: Array<{ __typename?: 'File', id: string, originalName: string, mimeType: string, size: number, url?: string | null, updatedAt: any, isPublic: boolean }>, pageInfo: { __typename?: 'PaginationInfo', totalItems: number, totalPages: number } } };
+export type GetFilesQuery = { __typename?: 'Query', getFiles: { __typename?: 'FileConnection', items: Array<{ __typename?: 'File', id: string, originalName: string, mimeType: string, size: number, url?: string | null, updatedAt: any, isPublic: boolean }>, pageInfo: { __typename?: 'PaginationInfo', totalItems: number, totalPages: number, currentPage: number } } };
 
 export type GetFoldersQueryVariables = Exact<{
   filter?: InputMaybe<FolderFilterInput>;
@@ -686,7 +686,7 @@ export type GetFoldersQueryVariables = Exact<{
 }>;
 
 
-export type GetFoldersQuery = { __typename?: 'Query', getFolders: { __typename?: 'FolderConnection', items: Array<{ __typename?: 'Folder', id: string, name: string, path: string, updatedAt: any }>, pageInfo: { __typename?: 'PaginationInfo', totalItems: number, totalPages: number } } };
+export type GetFoldersQuery = { __typename?: 'Query', getFolders: { __typename?: 'FolderConnection', items: Array<{ __typename?: 'Folder', id: string, name: string, path: string, updatedAt: any }>, pageInfo: { __typename?: 'PaginationInfo', totalItems: number, totalPages: number, currentPage: number } } };
 
 export type GetFileShareLinksQueryVariables = Exact<{
   fileId: Scalars['ID']['input'];
@@ -1253,6 +1253,7 @@ export const GetFilesDocument = gql`
     pageInfo {
       totalItems
       totalPages
+      currentPage
     }
   }
 }
@@ -1293,6 +1294,7 @@ export const GetFoldersDocument = gql`
     pageInfo {
       totalItems
       totalPages
+      currentPage
     }
   }
 }
