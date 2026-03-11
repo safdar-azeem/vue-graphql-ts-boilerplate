@@ -30,8 +30,7 @@ const handleLogout = () => {
     <Navbar
       variant="sidebar"
       mobile-breakpoint="md"
-      width="w-56"
-      class="border-r border-gray-200 flex flex-col z-30 md:h-full">
+      class="border-r border-gray-200 flex flex-col z-30 md:h-full w-56">
       <template #logo>
         <div class="flex items-center gap-3 px-2 font-bold text-xl text-gray-900 tracking-tight">
           <div
