@@ -125,7 +125,7 @@ export interface AddBtnConfig {
 All props from the `Pagination` component are supported **except** `currentPage` and `totalPages`, which are controlled by `Screen` internally.
 
 ```ts
-export interface ScreenPaginationProps extends Omit<
+export interface ScreenPaginationProps extends Omit
   PaginationProps,
   'currentPage' | 'totalPages'
 > {}
@@ -144,15 +144,16 @@ export interface ScreenPaginationProps extends Omit<
 
 ### Slots
 
-| Slot            | Props Available | Description                                                                                    |
-| :-------------- | :-------------- | :--------------------------------------------------------------------------------------------- |
-| `title`         | —               | Replaces the rendered `<h1>` title element entirely.                                           |
-| `description`   | —               | Replaces the rendered `<p>` description element entirely.                                      |
-| `before-search` | —               | Injects content just before the search input, refresh, and filter buttons in the header row.   |
-| `actions`       | —               | Replaces the entire Add button / action area (overrides `addBtn`, `addComponent`, `canAdd`).   |
-| `after-add`     | —               | Injects content immediately after the Add button (e.g., for secondary action buttons).         |
-| `custom-header` | —               | Replaces the **entire** built-in header block. Requires `customHeader: true` prop to activate. |
-| `empty`         | —               | Replaces the default empty state UI when `data` is empty and not loading.                      |
+| Slot            | Props Available | Description                                                                                                     |
+| :-------------- | :-------------- | :-------------------------------------------------------------------------------------------------------------- |
+| `title`         | —               | Replaces the rendered `<h1>` title element entirely.                                                            |
+| `description`   | —               | Replaces the rendered `<p>` description element entirely.                                                       |
+| `before-search` | —               | Injects content just before the search input, refresh, and filter buttons in the header row.                    |
+| `actions`       | —               | Replaces the entire Add button / action area (overrides `addBtn`, `addComponent`, `canAdd`).                    |
+| `after-add`     | —               | Injects content immediately after the Add button (e.g., for secondary action buttons).                          |
+| `custom-header` | —               | Replaces the **entire** built-in header block. Requires `customHeader: true` prop to activate.                  |
+| `sub-header`    | —               | Injects content **between** the header and the table/grid/list. Ideal for tabs, stats bars, alerts, or banners. |
+| `empty`         | —               | Replaces the default empty state UI when `data` is empty and not loading.                                       |
 
 ---
 
@@ -384,7 +385,37 @@ const filters = [
 
 ---
 
-#### 5. Export and Import Integration
+#### 5. Sub-Header Slot — Between Header and Table/Grid
+
+Use `#sub-header` to inject tabs, stat bars, alerts, or any content between the page header and the data view.
+
+```vue
+<template>
+  <Screen title="Orders" :data="orders" :table="OrderTable">
+    <template #sub-header>
+      <!-- Example: status tab bar -->
+      <div class="flex gap-2 border-b border-border pb-3">
+        <button
+          v-for="tab in ['All', 'Pending', 'Completed', 'Cancelled']"
+          :key="tab"
+          class="px-4 py-1.5 rounded-full text-sm font-medium transition-colors"
+          :class="
+            activeTab === tab
+              ? 'bg-primary text-white'
+              : 'text-muted-foreground hover:text-foreground'
+          "
+          @click="activeTab = tab">
+          {{ tab }}
+        </button>
+      </div>
+    </template>
+  </Screen>
+</template>
+```
+
+---
+
+#### 6. Export and Import Integration
 
 ```vue
 <template>
@@ -415,7 +446,7 @@ const filters = [
 
 ---
 
-#### 6. Backend Export Mode
+#### 7. Backend Export Mode
 
 When `export-mode="backend"`, Screen delegates file generation to your server via `vliteConfig.services.exportApi`. The frontend does not process any data.
 
@@ -456,7 +487,7 @@ Your global vlite config must define:
 
 ---
 
-#### 7. Customizing the Empty State
+#### 8. Customizing the Empty State
 
 ```vue
 <template>
@@ -474,7 +505,7 @@ Your global vlite config must define:
 
 ---
 
-#### 8. Custom Header
+#### 9. Custom Header
 
 ```vue
 <template>
