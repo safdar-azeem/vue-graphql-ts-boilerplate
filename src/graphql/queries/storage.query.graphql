@@ -1,5 +1,5 @@
-query GetFiles($filter: FilesFilterInput, $pagination: PaginationInput) {
-  getFiles(filter: $filter, pagination: $pagination) {
+query GetFiles($pagination: PaginationInput, $search: String, $filter: FilesFilterInput) {
+  getFiles(pagination: $pagination, search: $search, filter: $filter) {
     items {
       id
       originalName
@@ -17,8 +17,8 @@ query GetFiles($filter: FilesFilterInput, $pagination: PaginationInput) {
   }
 }
 
-query GetFolders($filter: FolderFilterInput, $pagination: PaginationInput) {
-  getFolders(filter: $filter, pagination: $pagination) {
+query GetFolders($pagination: PaginationInput, $search: String, $filter: FolderFilterInput) {
+  getFolders(pagination: $pagination, search: $search, filter: $filter) {
     items {
       id
       name
@@ -33,22 +33,36 @@ query GetFolders($filter: FolderFilterInput, $pagination: PaginationInput) {
   }
 }
 
-query GetFileShareLinks($fileId: ID!) {
-  getFileShareLinks(fileId: $fileId) {
-    id
-    token
-    url
-    expiresAt
-    createdAt
+query GetFileShareLinks($fileId: ID!, $pagination: PaginationInput, $search: String, $filter: ShareLinkFilterInput) {
+  getFileShareLinks(fileId: $fileId, pagination: $pagination, search: $search, filter: $filter) {
+    items {
+      id
+      token
+      url
+      expiresAt
+      createdAt
+    }
+    pageInfo {
+      totalItems
+      totalPages
+      currentPage
+    }
   }
 }
 
-query GetFolderShareLinks($folderId: ID!) {
-  getFolderShareLinks(folderId: $folderId) {
-    id
-    token
-    url
-    expiresAt
-    createdAt
+query GetFolderShareLinks($folderId: ID!, $pagination: PaginationInput, $search: String, $filter: ShareLinkFilterInput) {
+  getFolderShareLinks(folderId: $folderId, pagination: $pagination, search: $search, filter: $filter) {
+    items {
+      id
+      token
+      url
+      expiresAt
+      createdAt
+    }
+    pageInfo {
+      totalItems
+      totalPages
+      currentPage
+    }
   }
 }
