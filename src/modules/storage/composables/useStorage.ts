@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { showToast } from 'vlite3'
 import {
   useGetFilesQuery,
@@ -9,7 +9,6 @@ import {
 import { useStorageBreadcrumb } from './useStorageBreadcrumb'
 
 export function useStorage() {
-  // --- Breadcrumb & folder navigation ---
   const { breadcrumbs, breadcrumbItems, currentFolderId, enterFolder, navigateTo } =
     useStorageBreadcrumb()
 
@@ -17,25 +16,29 @@ export function useStorage() {
     enterFolder(folder)
   }
 
-  // --- Queries ---
+  // Ensure initial queries include the current folder state
+  // so we fetch root nodes instead of globally fetching everything.
   const {
     result: filesResult,
     refetch: refetchFiles,
     loading: filesLoading,
-  } = useGetFilesQuery(() => ({}))
+  } = useGetFilesQuery(() => ({
+    filter: { folderId: currentFolderId.value },
+  }))
 
   const {
     result: foldersResult,
     refetch: refetchFolders,
     loading: foldersLoading,
-  } = useGetFoldersQuery(() => ({}))
+  } = useGetFoldersQuery(() => ({
+    filter: { parentId: currentFolderId.value },
+  }))
 
   const { mutate: deleteFolder } = useDeleteFolderMutation()
   const { mutate: deleteFiles } = useDeleteFilesMutation()
 
-  const isSearching = ref()
+  const isSearching = ref('')
 
-  // --- Merged rows: folders first, then files ---
   const items = computed(() => {
     const folders = (foldersResult.value?.getFolders?.items || []).map((f) => ({
       ...f,
@@ -50,7 +53,6 @@ export function useStorage() {
 
   const isLoading = computed(() => filesLoading.value || foldersLoading.value)
 
-  // --- Unified page info derived from both query results ---
   const pageInfo = computed(() => {
     const fInfo = filesResult.value?.getFiles?.pageInfo
     const dInfo = foldersResult.value?.getFolders?.pageInfo
@@ -68,20 +70,34 @@ export function useStorage() {
     }
   })
 
-  // --- Refresh both queries ---
-  const refreshData = (payload = {}) => {
-    refetchFiles(payload)
-    refetchFolders(payload)
+  const refreshData = (payload: any = {}) => {
+    const pagination = {
+      page: payload?.pagination?.page || 1,
+      limit: payload?.pagination?.limit || 10,
+    }
+    const search = payload.search || undefined
+
+    refetchFiles({
+      pagination,
+      search,
+      filter: { folderId: currentFolderId.value },
+    })
+    refetchFolders({
+      pagination,
+      search,
+      filter: { parentId: currentFolderId.value },
+    })
   }
 
-  // --- Screen refetch callback (search + pagination) ---
   const handleRefetch = (payload: any) => {
-    refreshData(payload)
-
     isSearching.value = payload.search
+    refreshData(payload)
   }
 
-  // --- Bulk / single item delete ---
+  watch(currentFolderId, () => {
+    refreshData({ search: isSearching.value })
+  })
+
   const handleDelete = async (itemsToDelete: any[]) => {
     const fileIds = itemsToDelete.filter((i) => i.type === 'file').map((i) => i.id)
     const folderIds = itemsToDelete.filter((i) => i.type === 'folder').map((i) => i.id)
@@ -91,26 +107,22 @@ export function useStorage() {
         await deleteFolder({ id: fid })
       }
       showToast('Deleted successfully', 'success')
-      refreshData()
+      refreshData({ search: isSearching.value })
     } catch (e: any) {
       showToast(e.message, 'error')
     }
   }
 
   return {
-    // breadcrumb
     breadcrumbs,
     breadcrumbItems,
     currentFolderId,
     navigateTo,
-    // folder click — must be provided in the page component setup
     handleFolderClick,
     pageInfo,
     isSearching,
-    // data
     items,
     isLoading,
-    // handlers
     refreshData,
     handleRefetch,
     handleDelete,
