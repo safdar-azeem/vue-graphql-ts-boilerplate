@@ -3,13 +3,16 @@ import { useRequestUploadUrlMutation, useConfirmUploadMutation } from '@/graphql
 
 export const uploadHandler = async (
   fileInput: File | { file: File; fileName?: string },
-  folderId?: string | null
+  folderIdentifier?: string | null
 ): Promise<string | null | undefined> => {
   const file = fileInput instanceof File ? fileInput : fileInput.file
 
   loadApolloClients()
 
   try {
+    const isId =
+      folderIdentifier && (folderIdentifier.length === 25 || folderIdentifier.length === 36)
+
     // 3. Step 1: Request Pre-signed URL
     const { mutate: requestURL } = useRequestUploadUrlMutation()
 
@@ -18,9 +21,10 @@ export const uploadHandler = async (
         filename: file.name,
         mimeType: file.type,
         size: file.size,
-        folderId: folderId || null,
+        folderId: isId ? folderIdentifier : null,
+        folderName: !isId && folderIdentifier ? folderIdentifier : null,
         isPublic: true, // Avatars are generally public
-      },
+      } as any,
     })
 
     if (!requestData?.requestUploadUrl) {
