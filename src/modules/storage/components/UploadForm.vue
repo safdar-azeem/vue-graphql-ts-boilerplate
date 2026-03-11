@@ -4,15 +4,15 @@ import { useNotifications, Form } from 'vlite3'
 interface Props {
   folderId: string | null
   refresh: () => void
+  close?: () => void
 }
 
 const props = defineProps<Props>()
 
 const { showToast } = useNotifications()
 
-const handleUpload = async (_, close) => {
+const handleUpload = async (_) => {
   try {
-    console.log('folderId :>> ', props.folderId)
     showToast('Files uploaded successfully', 'success')
     close?.()
     props?.refresh?.()
