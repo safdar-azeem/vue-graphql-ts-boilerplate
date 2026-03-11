@@ -12,6 +12,7 @@ query GetFiles($filter: FilesFilterInput, $pagination: PaginationInput) {
     pageInfo {
       totalItems
       totalPages
+      currentPage
     }
   }
 }
@@ -27,6 +28,7 @@ query GetFolders($filter: FolderFilterInput, $pagination: PaginationInput) {
     pageInfo {
       totalItems
       totalPages
+      currentPage
     }
   }
 }
