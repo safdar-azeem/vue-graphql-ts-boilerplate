@@ -30,7 +30,10 @@ const {
   refetch: refetchFileLinks,
   loading: fileLoading,
 } = useGetFileShareLinksQuery(
-  computed(() => ({ fileId: props.item?.id || '' })),
+  computed(() => ({ 
+    fileId: props.item?.id || '',
+    pagination: { page: 1, limit: 10 }
+  })),
   { enabled: fileLinksEnabled, fetchPolicy: 'network-only' }
 )
 
@@ -39,7 +42,10 @@ const {
   refetch: refetchFolderLinks,
   loading: folderLoading,
 } = useGetFolderShareLinksQuery(
-  computed(() => ({ folderId: props.item?.id || '' })),
+  computed(() => ({ 
+    folderId: props.item?.id || '',
+    pagination: { page: 1, limit: 10 }
+  })),
   { enabled: folderLinksEnabled, fetchPolicy: 'network-only' }
 )
 
@@ -47,8 +53,8 @@ const { mutate: createLink, loading: creating } = useCreateShareLinkMutation()
 const { mutate: deleteLink, loading: deleting } = useDeleteShareLinkMutation()
 
 const activeLinks = computed(() => {
-  if (props.item?.type === 'file') return fileLinksResult.value?.getFileShareLinks || []
-  if (props.item?.type === 'folder') return folderLinksResult.value?.getFolderShareLinks || []
+  if (props.item?.type === 'file') return fileLinksResult.value?.getFileShareLinks?.items || []
+  if (props.item?.type === 'folder') return folderLinksResult.value?.getFolderShareLinks?.items || []
   return []
 })
 
