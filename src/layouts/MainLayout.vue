@@ -3,6 +3,7 @@ import { Navbar, SidebarMenu, Button, Icon } from 'vlite3'
 import { useRouter } from 'vue-router'
 import { ROUTES } from '@/constants/routes'
 import { removeToken } from 'vue-apollo-client'
+import Logo from '@/components/Logo.vue'
 
 const router = useRouter()
 
@@ -27,22 +28,28 @@ const handleLogout = () => {
 
 <template>
   <div class="flex max-md:flex-col h-screen overflow-hidden">
-    <Navbar
-      variant="sidebar"
-      mobile-breakpoint="md"
-      class="border-r border-gray-200 flex flex-col z-30 md:h-full w-56">
+    <Navbar variant="sidebar" mobile-breakpoint="md" class="border-r border-gray-200 w-56">
       <template #logo>
-        <div class="flex items-center gap-3 px-2 font-bold text-xl text-gray-900 tracking-tight">
-          <div
-            class="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center shadow-sm">
-            <Icon icon="lucide:box" class="w-5 h-5" />
-          </div>
-          AppName
+        <Logo />
+      </template>
+
+      <template #header="{ toggle }">
+        <div class="flex justify-between py-4 px-2">
+          <Logo class="md:hidden" />
+          <!-- Mobile hamburger -->
+          <Button
+            icon="lucide:menu"
+            variant="ghost"
+            class="md:hidden"
+            icon-class="h-4! w-4!"
+            @click="toggle">
+          </Button>
         </div>
       </template>
 
       <template #default>
-        <div class="flex flex-col h-full">
+        <div class="flex flex-col h-full gap-4 md:py-4 md:px-2">
+          <Logo class="max-md:hidden" />
           <div class="flex-1 overflow-y-auto">
             <SidebarMenu :items="menuItems" />
           </div>
@@ -50,7 +57,7 @@ const handleLogout = () => {
       </template>
 
       <template #right>
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2 md:p-1.5">
           <Button
             variant="ghost"
             class="w-full justify-start"
@@ -60,19 +67,20 @@ const handleLogout = () => {
           </Button>
         </div>
       </template>
+      <template #main>
+        <main class="flex-1 flex flex-col min-w-0 overflow-hidden relative">
+          <div class="flex-1 overflow-y-auto w-full">
+            <div class="max-w-6xl mx-auto pb-20 px-4">
+              <router-view v-slot="{ Component }">
+                <transition name="fade" mode="out-in">
+                  <component :is="Component" />
+                </transition>
+              </router-view>
+            </div>
+          </div>
+        </main>
+      </template>
     </Navbar>
-
-    <main class="flex-1 flex flex-col min-w-0 overflow-hidden relative">
-      <div class="flex-1 overflow-y-auto w-full">
-        <div class="max-w-6xl mx-auto pt-6 pb-20">
-          <router-view v-slot="{ Component }">
-            <transition name="fade" mode="out-in">
-              <component :is="Component" />
-            </transition>
-          </router-view>
-        </div>
-      </div>
-    </main>
   </div>
 </template>
 
