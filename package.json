@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "v-file-preview": "^0.1.3",
-    "vlite3": "^1.5.12",
+    "vlite3": "1.5.13",
     "vue": "^3.5.24",
     "vue-apollo-client": "^1.1.0",
     "vue-i18n": "^11.3.0",
