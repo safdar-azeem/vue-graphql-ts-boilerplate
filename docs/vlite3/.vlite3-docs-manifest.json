@@ -1,0 +1,341 @@
+{
+  "managedBy": "vlite3",
+  "manifestVersion": 1,
+  "packageName": "vlite3",
+  "packageVersion": "1.5.13",
+  "generatedAt": "2026-08-06T03:36:41.928Z",
+  "files": {
+    "all-components.md": {
+      "sha256": "1b4ad911cfd95f0345ed6b05faf18239497405dc9055f8c1c589f01155ee0fce"
+    },
+    "component-index.md": {
+      "sha256": "13f0995aa9fae01f1e34071b635b0807bcbbfae902a8bcdf5969c5ffef32ca4c"
+    },
+    "components/accordion.md": {
+      "sha256": "c14c34f921eca707c57fdc38858f191ee06ac48840379c93e4fb162faac37ed4"
+    },
+    "components/alert.md": {
+      "sha256": "4600f3b731be8a10131e6a606c9ed1a9e93c4598ce8207492c3543f2fe2f9ee7"
+    },
+    "components/app-shell.md": {
+      "sha256": "11baa903b66b01ea5c7c9d5519b4b05d63c34feac37069785f1d8e855be64815"
+    },
+    "components/async-select.md": {
+      "sha256": "7b9cfe11e57327566a0c9d3c49869130afaa445f59d486889dde1d540e01c3c7"
+    },
+    "components/attachments-list.md": {
+      "sha256": "3a9c87015fc69b0299ffc77d69aef10ef426bb4abf4e4cd56dd9498e3405331d"
+    },
+    "components/avatar-group.md": {
+      "sha256": "2181365e4c790ef7a6b31499c86d1df265da3b285e0a2e67958e56b11a350331"
+    },
+    "components/avatar-uploader.md": {
+      "sha256": "cff1c57c475e79fc5ec61d0794b8932e1351cbe1657678118dc4a83de5931925"
+    },
+    "components/avatar.md": {
+      "sha256": "701e1a3caca9a648ad604c1acccbff24ead134e37d5732ffd065e19b3421606e"
+    },
+    "components/badge.md": {
+      "sha256": "7ac91591a0b75a872fb59c0671dc65991bb00bcc2d3546886c92ae3b9afac913"
+    },
+    "components/barcode.md": {
+      "sha256": "0ec92c9dfecf70a501137f6b46bf279c27a5c6effdfd44097a2d52c56288129b"
+    },
+    "components/beacon.md": {
+      "sha256": "cd9e78389ff57152ddc066453a8c58756717067805d24ddf7ef2e7b44f8e5dbe"
+    },
+    "components/breadcrumb.md": {
+      "sha256": "eebde86d01273052a74e1411f441e8b25aeef4d8d69e7513b018a80759394542"
+    },
+    "components/button-group.md": {
+      "sha256": "9b11dc73497050db3d93abb6b2c3577de2e2bc634a788bc145a23b3eaf8bd818"
+    },
+    "components/button.md": {
+      "sha256": "ef2693a52c8e2a00eebfb9af3d5183b429af2218c4dfb6a17abaaffce5553765"
+    },
+    "components/calendar.md": {
+      "sha256": "288f9882c93bff9868a20256b68aec86ff5dcf5525957b732b8072c94fecedca"
+    },
+    "components/carousel.md": {
+      "sha256": "328253acdb13efac6c052a156a7c668f73095404b15036a84b195ac06a6e9b3e"
+    },
+    "components/cart.md": {
+      "sha256": "7e6974a69b977132eb45afd3e1971ede3253fe2800796c0280d546c893a0d9e0"
+    },
+    "components/category-manager.md": {
+      "sha256": "ee79f59d07dbe86d868d695434765c466119ef6b2e2df1858d426dc0471efaf5"
+    },
+    "components/category-menu.md": {
+      "sha256": "7c8552d1f14426e93ea2dc026117f5c008e540cccbc3d860e152715fcb24e8a8"
+    },
+    "components/charts.md": {
+      "sha256": "dabd328823a509d131fb25bd9c0de30d280de65a99020a80b3dc8cbf74ffed91"
+    },
+    "components/chat.md": {
+      "sha256": "4f2e4b28cf4cc75917c1c27304090b3d201e38e3bbab6f1aa018103ac71f2a9d"
+    },
+    "components/checkbox.md": {
+      "sha256": "45c56b8b04d0ce158342955beb226177c998911082bb98d915a26ac84c667a14"
+    },
+    "components/chip.md": {
+      "sha256": "706369e12de7b6e8f6ddd7d3cdde28bb1b46dabfa548bc40f6c63425f9c4457b"
+    },
+    "components/choice-box.md": {
+      "sha256": "607528f4823da237ada21a9feddcfc39750ec3743f26c1a152543731af91d6a2"
+    },
+    "components/clipboard.md": {
+      "sha256": "489f87d25ae2c7510da8da37fc124af4581e6d1ff67dfc1a1a8c1e15ab41f581"
+    },
+    "components/clock.md": {
+      "sha256": "0a645275bb8df4468162a9bb15a80403941cbd5be256f32c7eb78b8586801675"
+    },
+    "components/color-picker.md": {
+      "sha256": "6f27d324998a1b42231e17b40cc10d8a6a1cf39e314855ae5a749f14431c64c2"
+    },
+    "components/command-palette.md": {
+      "sha256": "fae75b2225c5b0434f328d21416a5d7587c1cff507a8399df10212c27bd1717d"
+    },
+    "components/comment-thread.md": {
+      "sha256": "0d573578ebb30556b38d5c1d3fe23b603baaefffb6f5c27a8403d651a3e7e1cd"
+    },
+    "components/confirmation-modal.md": {
+      "sha256": "cf653d9f86af1918cb9b64ae8501f289b2ad7ae8a15a58ed845507abe249511a"
+    },
+    "components/custom-fields-display.md": {
+      "sha256": "15208071cd1180383ff361924213dc8e69b0daccbc756b21488f6ca56f516789"
+    },
+    "components/custom-fields.md": {
+      "sha256": "06543b8f95e920de72923cedb1069012119f442386c6545c2dca92ffa87b742c"
+    },
+    "components/data-list.md": {
+      "sha256": "48abbd409c6415dd34dd6cf7cc5f0e7f92e99ca61a23e052d839c40f094455b4"
+    },
+    "components/data-table.md": {
+      "sha256": "535f444420a5ea03a1cc6f5963627c8e44e70c978d13a82080288c03e04a6746"
+    },
+    "components/date-picker.md": {
+      "sha256": "8a90525f5dc6cd3cff1fbc7406336035cf5124a2cad4b4726d5ee221c99d863d"
+    },
+    "components/date-range-picker.md": {
+      "sha256": "9b33971bd1e522ed9df3961e30fbe7d162e40b20959e035da81300880a96d798"
+    },
+    "components/date-time.md": {
+      "sha256": "6197cb73220a3b724d9ce08eda423334a619adcb77d202dae767eb7597c65f9f"
+    },
+    "components/dropdown.md": {
+      "sha256": "ee3d943e7770d8ee15753ff126cda28636070a745b8ed1c765169e033f6e4a20"
+    },
+    "components/empty.md": {
+      "sha256": "18d668a55623a684013e9bcf5eadb8bdfd804fa62c1c3ca2dfbf44c60ab4efae"
+    },
+    "components/export-data.md": {
+      "sha256": "f0a3a1ec2144a2da61a7ad2128360a1e84b127591e4fd3bfb4c0caa670c551ed"
+    },
+    "components/file-picker.md": {
+      "sha256": "824b6f70a1d261d925ac3f070749ecab4b56f2eb3afc09967d1be019faaf422b"
+    },
+    "components/file-preview.md": {
+      "sha256": "6087e49ac775cfb892642fe54179e5f1b99cfa09c193bd0e7ad10a2cc0b3b9aa"
+    },
+    "components/file-tree.md": {
+      "sha256": "1ff5c422122a4b3ba85ab9e276b2e8d70ca582ba67412b67c1cd2045b2d19bdf"
+    },
+    "components/footer.md": {
+      "sha256": "731d6f1980ef4d9641633daab1cab59a1180553a2235cb1e9d6ae70318ff8a2d"
+    },
+    "components/forms.md": {
+      "sha256": "e23c2fa050f96cd3199eb6583f8ad8bc8d3c6f6e8811d76b53a678f4389a78e7"
+    },
+    "components/gantt-chart.md": {
+      "sha256": "ee3cb9f5a0e6dd4388cfb0ffdde60144509c78b0b0d4bb52b51af3bf71b16160"
+    },
+    "components/google-login.md": {
+      "sha256": "e03eecc921c179dfbdd3604882cc57489a031cac5c79078be5e900ccd702ec40"
+    },
+    "components/google-map.md": {
+      "sha256": "9efe270d23c616aeac595d64318a96dfedf90b1bf194ecb2f51daa0fc99a3f74"
+    },
+    "components/heatmap.md": {
+      "sha256": "f0ced06d9cb806ca3b75b16faaf756eecf1a70a764bc0699bff6292b533afcc1"
+    },
+    "components/icon-picker.md": {
+      "sha256": "c24191eda21ddb54883b9b7552812f02263826e9a22873b32ef265626d1f5564"
+    },
+    "components/icon.md": {
+      "sha256": "9c1794e6800d88500ffbc2a62754dab190b431515e75d67c34aeb6f4dea539be"
+    },
+    "components/image-comparison.md": {
+      "sha256": "e6f22fb1932cb7c470b0bb2395da63b41355714f41815a8ac7b6dfa0697b68c2"
+    },
+    "components/image-magnifier.md": {
+      "sha256": "fd6ab8c354c942036657efe5b2982787a6cdb647e6316b3b28496615f59696fe"
+    },
+    "components/import-data.md": {
+      "sha256": "75e5a77268e8e700b6c987ac1f0943c31c4615ae6d17a6a1fe20a8ac295b198c"
+    },
+    "components/input.md": {
+      "sha256": "bf07093e826f0f5e926b05926b2fd3fbfbbdf7736de8e18f79195756212df9ad"
+    },
+    "components/invoice.md": {
+      "sha256": "934af5683cc7a7cfc29d11bdf98866937d4949cf54fea290c00796bf76fe48dd"
+    },
+    "components/kanban.md": {
+      "sha256": "5d7152675f20fc37e1ad2556addaf0424868ded2aa9bbeccc5fa3a59c5d4fad6"
+    },
+    "components/label.md": {
+      "sha256": "ebe7d6a98be4555bf7da50c32ae5291e4685bbe9e2810c82ed29bbbc68c989d0"
+    },
+    "components/list.md": {
+      "sha256": "25d479120d7c972fa7355a14c730d21862818860545e46193a1e3c2d950a614e"
+    },
+    "components/masonry.md": {
+      "sha256": "d8b2515dae35d0ecbcca7245c6e90ef44d4f7016fc232fe2b30afc1ba61d6c20"
+    },
+    "components/modal.md": {
+      "sha256": "ae45b61eea33084ac389d11bcba7025d291ba020c87d797cd2c8aa18ba61e50f"
+    },
+    "components/multi-select.md": {
+      "sha256": "3e1c05a122f74ae54b1ddb08c4758a6397acd5ab76f5f3676ac10053d0643288"
+    },
+    "components/navbar.md": {
+      "sha256": "e443916475bc7899b318eb80b0acb9546b639583986a10645ad52c5a308fcafd"
+    },
+    "components/number-input.md": {
+      "sha256": "124507a38a7cfe9846b3a32b6dd791a951577183aea4647f16ba8ead9869e787"
+    },
+    "components/otp-input.md": {
+      "sha256": "733362d6e67ea6fa385e566bd60e63173dc89e1b37277d81fb7d8dc718212360"
+    },
+    "components/pagination.md": {
+      "sha256": "0d3fd5d0edadda9bdae9bc3988c7f968520c7b1703f4f83c399db76ed1a5d542"
+    },
+    "components/pan-zoom-viewport.md": {
+      "sha256": "c1118e6807911797573fce21f6b499e1d8199fa0c71284ac1a849c139c1956e2"
+    },
+    "components/permission-editor.md": {
+      "sha256": "7c455e6611ba04147b5833ad6f590c060c2d3ca74927e1eb8ef13e757a8b7a35"
+    },
+    "components/persona.md": {
+      "sha256": "277d7ec19889099eedc397add4b7977edd7c989794c8fe572e1fce874c1d77f1"
+    },
+    "components/price.md": {
+      "sha256": "829fada5f81f2688d436b7a1de7fa9f144bfa456a40151296b71161b7646332e"
+    },
+    "components/pricing-plan.md": {
+      "sha256": "d763035e8d0ca5bca468e764d2a4f3ccabfc3894e8701cdabb30a219f47fbcbe"
+    },
+    "components/progress-bar.md": {
+      "sha256": "86f9db4b5534c15253c24108ccc19997e2ea5c132a1b50758a35cc73ba28a2f4"
+    },
+    "components/qr-code.md": {
+      "sha256": "2da69cdfe3841d5210bced04ac432980ac16adfa4865d7630c5381ee3a9888ba"
+    },
+    "components/rating.md": {
+      "sha256": "ffee88baff10c80f98a481a92a5fc76b8448c12e27c16f35db5a2011955affb4"
+    },
+    "components/rich-text-editor.md": {
+      "sha256": "a1261c7eff1c7ea72c0e22d9fc08e36e65a0bf6d81fa8302f73f24c0a59f466f"
+    },
+    "components/scale-generator.md": {
+      "sha256": "6f7520262f3e543cf3e23d6d70b62fde82f077216c7b709ce3ff64bf35a50aa0"
+    },
+    "components/screen.md": {
+      "sha256": "d6f355061d35552dbfcebde53088bafdaaafbe9934ed3fc9286d39e60348b64b"
+    },
+    "components/seo-provider.md": {
+      "sha256": "ee4ef9991f025ddc6e6a11180d9acce6bbe87d86d5e746da70164260734b983e"
+    },
+    "components/side-panel.md": {
+      "sha256": "8f4810c868e6a8079dc1f314f2d4fb65d6f409417fcb01adfdcb48c58784949b"
+    },
+    "components/sidebar-menu.md": {
+      "sha256": "12931b413281e6944d84ec1c18f52902d51f8d3038b44db297cb2c92c22d5005"
+    },
+    "components/skeleton.md": {
+      "sha256": "15a371e804523e59b9562745622b5673f81f5788bfb5518d98af57f003a3a000"
+    },
+    "components/slider.md": {
+      "sha256": "48d35703f4dfb8bfcf3eed393b852669ceadf8d70679ddaaf906bf88e8275ffd"
+    },
+    "components/spinner.md": {
+      "sha256": "d01f75b61740c47db9212598c4687612d84699bc582bb723c7489bdbb734effb"
+    },
+    "components/splitter.md": {
+      "sha256": "fab383d841b2f3dba3e94b3f7c62011db35b9c04445e57367925a7eee542a3c3"
+    },
+    "components/stats.md": {
+      "sha256": "195c3405687565ee285f86fb5bc13a567500ff803213e78973d5133af06492c5"
+    },
+    "components/status-chip.md": {
+      "sha256": "661aefca17f71502b1dc5313bc1111fa17d7834a9e74f9e932b182bced25db56"
+    },
+    "components/switch.md": {
+      "sha256": "25a003334a872a2593674843aaec5dcf42d6f66df80166faccfbf06ecb6dc1e5"
+    },
+    "components/tabs.md": {
+      "sha256": "8ca5ca1763f283842ccd2ff4ca72ece54b332c50072ae0a35f9adc5be6a31705"
+    },
+    "components/tag-input.md": {
+      "sha256": "8f7a2b7b19008ef78779ec78d13872307b2ef5f39ea8350f077f7e88afaca0c1"
+    },
+    "components/textarea.md": {
+      "sha256": "d84ac3ae82e591cd97183ada1f157d8ab9f3032ccc19189bee2297f90c869108"
+    },
+    "components/theme-provider.md": {
+      "sha256": "9ad008be9068769ca96b6ae10f52d15b0e38c493a876c80335d43760e4d78070"
+    },
+    "components/theme-toggle.md": {
+      "sha256": "ca1243535b0c87fd30ac09e7756361da942470a029aa4b39fa30a694642c36e4"
+    },
+    "components/thumbnail-selector.md": {
+      "sha256": "f46e66621ff7f869b1ba42eb46528274c0c309dffe77a0395f676b1bde38e143"
+    },
+    "components/timeline.md": {
+      "sha256": "dd13a5de3ccc94746487392919be1ddfc09d9a03dd555f7b5ceae0d9e508de2e"
+    },
+    "components/toast-notification.md": {
+      "sha256": "29c6ccfe62932504cde5613fed44db4028a3a92cd6a11fcd7dfeba17727abb7a"
+    },
+    "components/tooltip.md": {
+      "sha256": "3fe6059f487632f943d6a276ea6150b2a7376440f4b9426a9f8394fc04495e3c"
+    },
+    "components/workbook.md": {
+      "sha256": "06caf6eb8b2ff5f4394f8dd32b03c765c3c8ba673ef22a7fa1f657835858935a"
+    },
+    "composables/use-theme.md": {
+      "sha256": "3d71553d62b4d812c9473608340abfb1f3a16c8fe4325fdebe3abbe30de13b7a"
+    },
+    "getting-started/setup.md": {
+      "sha256": "2baa57334d9502c9277c4e2c01943b18260432e5037f35bdbd0dc784e6cd3f88"
+    },
+    "guides/draggable.md": {
+      "sha256": "742f49be052b46b1061253187e9afaf0b3f1a024b2fb5e1e1d66eb0a82cbdf3a"
+    },
+    "guides/internationalization.md": {
+      "sha256": "71b00ad2011f93668ab30dbb73eef19c7887787c3b00c13388222a542c3829c5"
+    },
+    "guides/performance.md": {
+      "sha256": "48a3aae5b715a9cac57863d3a2d491483b5025db2f3da1086a2dfeb9fe977fce"
+    },
+    "guides/testing-forms.md": {
+      "sha256": "5da303e45dcc5151183a120ad52d8fb26860df3c54a51ce78b88252f578c8ce1"
+    },
+    "guides/testing-overlays.md": {
+      "sha256": "b0fe5fb681a20531346347a506c5bea7f02db9b088ee1c64b20c14e4442928f7"
+    },
+    "guides/theming.md": {
+      "sha256": "367028687180a4c989d770b8039ba0b40df7600c2dff03b46a4ef44dcf0d833a"
+    },
+    "README.md": {
+      "sha256": "857ac370211274364819c816e3542b4dce78ae404866d051a14615d759a483d8"
+    },
+    "utilities/search.md": {
+      "sha256": "a3e597b3d0a8da8e4ab3a8537231b19149cda48f204ad5cce36860988341e281"
+    },
+    "utilities/utilities.md": {
+      "sha256": "7ece0ff581b6a51d7f0e849ee14387699fd585f19c6fa9325a4c47dbb8aa8fb1"
+    }
+  },
+  "syncedAt": "2026-08-06T03:37:01.235Z",
+  "consumerRoot": "/Users/safdar/Projects/boilerplate/vue-graphql-ts-boilerplate"
+}
