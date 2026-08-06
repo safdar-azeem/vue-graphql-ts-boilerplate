@@ -18,6 +18,21 @@ export const signupSchema: IForm[] = [
     icon: 'lucide:mail',
   },
   {
+    name: 'workspaceName',
+    label: 'Workspace Name',
+    type: 'text',
+    placeholder: 'My Workspace',
+    required: true,
+    icon: 'lucide:building-2',
+    validation: ({ value }) => {
+      if (!value) return ''
+      const trimmed = value.trim()
+      if (trimmed.length < 2) return 'Workspace name must be at least 2 characters'
+      if (trimmed.length > 100) return 'Workspace name must be at most 100 characters'
+      return ''
+    },
+  },
+  {
     name: 'password',
     label: 'Password',
     type: 'password',
@@ -26,7 +41,7 @@ export const signupSchema: IForm[] = [
     icon: 'lucide:lock',
     validation: ({ value }) => {
       if (!value) return ''
-      if (value.length < 6) return 'Password must be at least 6 characters'
+      if (value.length < 8) return 'Password must be at least 8 characters'
       return ''
     },
   },
