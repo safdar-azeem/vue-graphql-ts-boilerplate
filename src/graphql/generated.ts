@@ -1,13 +1,15 @@
+// @ts-nocheck
+/* eslint-disable */
+
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import gql from 'graphql-tag';
 import * as VueApolloComposable from 'vue-apollo-client';
 import * as VueCompositionApi from 'vue';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 export type ReactiveFunction<TParam> = () => TParam;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -16,11 +18,11 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Any: { input: any; output: any; }
-  DateTime: { input: any; output: any; }
-  JSON: { input: any; output: any; }
-  ObjectId: { input: any; output: any; }
-  Upload: { input: any; output: any; }
+  Any: { input: unknown; output: unknown; }
+  DateTime: { input: unknown; output: unknown; }
+  JSON: { input: unknown; output: unknown; }
+  ObjectId: { input: unknown; output: unknown; }
+  Upload: { input: unknown; output: unknown; }
 };
 
 export type AttachmentFile = {
@@ -716,169 +718,243 @@ export enum WorkspaceStatus {
   Suspended = 'SUSPENDED'
 }
 
+export type CreateFolderInput = {
+  isPublic?: boolean | null | undefined;
+  name: string;
+  parentId?: string | null | undefined;
+};
+
+export type DateRangeInput = {
+  from?: unknown;
+  to?: unknown;
+};
+
+export type FileStatus =
+  | 'DELETED'
+  | 'FAILED'
+  | 'PENDING'
+  | 'UPLOADED';
+
+export type FilesFilterInput = {
+  dateRange?: DateRangeInput | null | undefined;
+  folderId?: string | null | undefined;
+  uploadedBy?: string | null | undefined;
+};
+
+export type FolderFilterInput = {
+  dateRange?: DateRangeInput | null | undefined;
+  parentId?: string | null | undefined;
+};
+
+export type LoginInput = {
+  email: string;
+  password: string;
+};
+
+export type PaginationInput = {
+  limit?: number | null | undefined;
+  page?: number | null | undefined;
+};
+
+export type RequestUploadInput = {
+  filename: string;
+  folderId?: string | null | undefined;
+  folderName?: string | null | undefined;
+  isPublic?: boolean | null | undefined;
+  mimeType: string;
+  size: number;
+};
+
+export type ShareLinkFilterInput = {
+  dateRange?: DateRangeInput | null | undefined;
+};
+
+export type ShareLinkInput = {
+  expiresInMinutes?: number | null | undefined;
+  fileId?: string | null | undefined;
+  folderId?: string | null | undefined;
+};
+
+export type SignupInput = {
+  email: string;
+  password: string;
+  username: string;
+  workspaceName: string;
+  workspaceSlug?: string | null | undefined;
+};
+
+export type TwoFactorMethod =
+  | 'AUTHENTICATOR'
+  | 'EMAIL';
+
+export type UpdateUserProfileInput = {
+  avatar?: string | null | undefined;
+  username?: string | null | undefined;
+};
+
 export type LoginMutationVariables = Exact<{
   data: LoginInput;
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'AuthPayload', token: string, refreshToken: string, user: { __typename?: 'User', id: string, username: string, email: string, mfaSettings?: { __typename?: 'MfaSettings', isEnabled: boolean, method?: TwoFactorMethod | null } | null } } };
+export type LoginMutation = { login: { token: string, refreshToken: string, user: { id: string, username: string, email: string, mfaSettings: { isEnabled: boolean, method: TwoFactorMethod | null } | null } } };
 
 export type SignupMutationVariables = Exact<{
   data: SignupInput;
 }>;
 
 
-export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'AuthPayload', token: string, refreshToken: string, user: { __typename?: 'User', id: string, username: string, email: string } } };
+export type SignupMutation = { signup: { token: string, refreshToken: string, user: { id: string, username: string, email: string } } };
 
 export type GoogleLoginMutationVariables = Exact<{
-  token: Scalars['String']['input'];
+  token: string;
 }>;
 
 
-export type GoogleLoginMutation = { __typename?: 'Mutation', googleLogin: { __typename?: 'AuthPayload', token: string, refreshToken: string, user: { __typename?: 'User', id: string, username: string, email: string, mfaSettings?: { __typename?: 'MfaSettings', isEnabled: boolean, method?: TwoFactorMethod | null } | null } } };
+export type GoogleLoginMutation = { googleLogin: { token: string, refreshToken: string, user: { id: string, username: string, email: string, mfaSettings: { isEnabled: boolean, method: TwoFactorMethod | null } | null } } };
 
 export type ForgotPasswordMutationVariables = Exact<{
-  email: Scalars['String']['input'];
+  email: string;
 }>;
 
 
-export type ForgotPasswordMutation = { __typename?: 'Mutation', forgotPassword: boolean };
+export type ForgotPasswordMutation = { forgotPassword: boolean };
 
 export type ResetPasswordMutationVariables = Exact<{
-  token: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+  token: string;
+  password: string;
 }>;
 
 
-export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: boolean };
+export type ResetPasswordMutation = { resetPassword: boolean };
 
 export type Verify2FaMutationVariables = Exact<{
-  otp: Scalars['String']['input'];
-  token: Scalars['String']['input'];
+  otp: string;
+  token: string;
 }>;
 
 
-export type Verify2FaMutation = { __typename?: 'Mutation', verify2FA: { __typename?: 'AuthPayload', token: string, user: { __typename?: 'User', id: string, username: string, email: string } } };
+export type Verify2FaMutation = { verify2FA: { token: string, user: { id: string, username: string, email: string } } };
 
 export type Init2faEnrollmentMutationVariables = Exact<{
   method: TwoFactorMethod;
 }>;
 
 
-export type Init2faEnrollmentMutation = { __typename?: 'Mutation', init2faEnrollment: { __typename?: 'Init2faResponse', secret: string, qrCode: string, backupCodes: Array<string> } };
+export type Init2faEnrollmentMutation = { init2faEnrollment: { secret: string, qrCode: string, backupCodes: Array<string> } };
 
 export type Confirm2faEnrollmentMutationVariables = Exact<{
-  otp: Scalars['String']['input'];
+  otp: string;
 }>;
 
 
-export type Confirm2faEnrollmentMutation = { __typename?: 'Mutation', confirm2faEnrollment: boolean };
+export type Confirm2faEnrollmentMutation = { confirm2faEnrollment: boolean };
 
 export type Disable2faMutationVariables = Exact<{
-  password: Scalars['String']['input'];
+  password: string;
 }>;
 
 
-export type Disable2faMutation = { __typename?: 'Mutation', disable2fa: boolean };
+export type Disable2faMutation = { disable2fa: boolean };
 
 export type CreateFolderMutationVariables = Exact<{
   input: CreateFolderInput;
 }>;
 
 
-export type CreateFolderMutation = { __typename?: 'Mutation', createFolder: { __typename?: 'Folder', id: string, name: string } };
+export type CreateFolderMutation = { createFolder: { id: string, name: string } };
 
 export type DeleteFolderMutationVariables = Exact<{
-  id: Scalars['ID']['input'];
+  id: string | number;
 }>;
 
 
-export type DeleteFolderMutation = { __typename?: 'Mutation', deleteFolder: boolean };
+export type DeleteFolderMutation = { deleteFolder: boolean };
 
 export type DeleteFilesMutationVariables = Exact<{
-  ids: Array<Scalars['String']['input']> | Scalars['String']['input'];
+  ids: Array<string> | string;
 }>;
 
 
-export type DeleteFilesMutation = { __typename?: 'Mutation', deleteFiles: string };
+export type DeleteFilesMutation = { deleteFiles: string };
 
 export type CreateShareLinkMutationVariables = Exact<{
   input: ShareLinkInput;
 }>;
 
 
-export type CreateShareLinkMutation = { __typename?: 'Mutation', createShareLink: { __typename?: 'ResourceShareLink', id: string, token: string, url: string, expiresAt: any } };
+export type CreateShareLinkMutation = { createShareLink: { id: string, token: string, url: string, expiresAt: unknown } };
 
 export type DeleteShareLinkMutationVariables = Exact<{
-  id: Scalars['ID']['input'];
+  id: string | number;
 }>;
 
 
-export type DeleteShareLinkMutation = { __typename?: 'Mutation', deleteShareLink: boolean };
+export type DeleteShareLinkMutation = { deleteShareLink: boolean };
 
 export type RequestUploadUrlMutationVariables = Exact<{
   input: RequestUploadInput;
 }>;
 
 
-export type RequestUploadUrlMutation = { __typename?: 'Mutation', requestUploadUrl: { __typename?: 'SignedUploadUrl', signedUrl: string, fileId: string, publicUrl: string, storageKey: string, expiresAt: any } };
+export type RequestUploadUrlMutation = { requestUploadUrl: { signedUrl: string, fileId: string, publicUrl: string, storageKey: string, expiresAt: unknown } };
 
 export type ConfirmUploadMutationVariables = Exact<{
-  fileId: Scalars['ID']['input'];
+  fileId: string | number;
 }>;
 
 
-export type ConfirmUploadMutation = { __typename?: 'Mutation', confirmUpload: { __typename?: 'File', id: string, filename: string, mimeType: string, size: number, status: FileStatus, url?: string | null, isPublic: boolean } };
+export type ConfirmUploadMutation = { confirmUpload: { id: string, filename: string, mimeType: string, size: number, status: FileStatus, url: string | null, isPublic: boolean } };
 
 export type UpdateUserProfileMutationVariables = Exact<{
   data: UpdateUserProfileInput;
 }>;
 
 
-export type UpdateUserProfileMutation = { __typename?: 'Mutation', updateUserProfile: { __typename?: 'User', id: string, username: string, avatar?: string | null, email: string } };
+export type UpdateUserProfileMutation = { updateUserProfile: { id: string, username: string, avatar: string | null, email: string } };
 
 export type GetFilesQueryVariables = Exact<{
-  pagination?: InputMaybe<PaginationInput>;
-  search?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<FilesFilterInput>;
+  pagination?: PaginationInput | null | undefined;
+  search?: string | null | undefined;
+  filter?: FilesFilterInput | null | undefined;
 }>;
 
 
-export type GetFilesQuery = { __typename?: 'Query', getFiles: { __typename?: 'FileConnection', items: Array<{ __typename?: 'File', id: string, originalName: string, mimeType: string, size: number, url?: string | null, updatedAt: any, isPublic: boolean }>, pageInfo: { __typename?: 'PaginationInfo', totalItems: number, totalPages: number, currentPage: number } } };
+export type GetFilesQuery = { getFiles: { items: Array<{ id: string, originalName: string, mimeType: string, size: number, url: string | null, updatedAt: unknown, isPublic: boolean }>, pageInfo: { totalItems: number, totalPages: number, currentPage: number } } };
 
 export type GetFoldersQueryVariables = Exact<{
-  pagination?: InputMaybe<PaginationInput>;
-  search?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<FolderFilterInput>;
+  pagination?: PaginationInput | null | undefined;
+  search?: string | null | undefined;
+  filter?: FolderFilterInput | null | undefined;
 }>;
 
 
-export type GetFoldersQuery = { __typename?: 'Query', getFolders: { __typename?: 'FolderConnection', items: Array<{ __typename?: 'Folder', id: string, name: string, path: string, updatedAt: any }>, pageInfo: { __typename?: 'PaginationInfo', totalItems: number, totalPages: number, currentPage: number } } };
+export type GetFoldersQuery = { getFolders: { items: Array<{ id: string, name: string, path: string, updatedAt: unknown }>, pageInfo: { totalItems: number, totalPages: number, currentPage: number } } };
 
 export type GetFileShareLinksQueryVariables = Exact<{
-  fileId: Scalars['ID']['input'];
-  pagination?: InputMaybe<PaginationInput>;
-  search?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<ShareLinkFilterInput>;
+  fileId: string | number;
+  pagination?: PaginationInput | null | undefined;
+  search?: string | null | undefined;
+  filter?: ShareLinkFilterInput | null | undefined;
 }>;
 
 
-export type GetFileShareLinksQuery = { __typename?: 'Query', getFileShareLinks: { __typename?: 'ResourceShareLinkConnection', items: Array<{ __typename?: 'ResourceShareLink', id: string, token: string, url: string, expiresAt: any, createdAt: any }>, pageInfo: { __typename?: 'PaginationInfo', totalItems: number, totalPages: number, currentPage: number } } };
+export type GetFileShareLinksQuery = { getFileShareLinks: { items: Array<{ id: string, token: string, url: string, expiresAt: unknown, createdAt: unknown }>, pageInfo: { totalItems: number, totalPages: number, currentPage: number } } };
 
 export type GetFolderShareLinksQueryVariables = Exact<{
-  folderId: Scalars['ID']['input'];
-  pagination?: InputMaybe<PaginationInput>;
-  search?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<ShareLinkFilterInput>;
+  folderId: string | number;
+  pagination?: PaginationInput | null | undefined;
+  search?: string | null | undefined;
+  filter?: ShareLinkFilterInput | null | undefined;
 }>;
 
 
-export type GetFolderShareLinksQuery = { __typename?: 'Query', getFolderShareLinks: { __typename?: 'ResourceShareLinkConnection', items: Array<{ __typename?: 'ResourceShareLink', id: string, token: string, url: string, expiresAt: any, createdAt: any }>, pageInfo: { __typename?: 'PaginationInfo', totalItems: number, totalPages: number, currentPage: number } } };
+export type GetFolderShareLinksQuery = { getFolderShareLinks: { items: Array<{ id: string, token: string, url: string, expiresAt: unknown, createdAt: unknown }>, pageInfo: { totalItems: number, totalPages: number, currentPage: number } } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, email: string, username: string, createdAt: any, updatedAt: any, avatar?: string | null, mfaSettings?: { __typename?: 'MfaSettings', isEnabled: boolean, method?: TwoFactorMethod | null } | null } | null };
+export type MeQuery = { me: { id: string, email: string, username: string, createdAt: unknown, updatedAt: unknown, avatar: string | null, mfaSettings: { isEnabled: boolean, method: TwoFactorMethod | null } | null } | null };
 
 
 export const LoginDocument = gql`
