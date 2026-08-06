@@ -17,6 +17,7 @@ mutation Login($data: LoginInput!) {
 mutation Signup($data: SignupInput!) {
   signup(data: $data) {
     token
+    refreshToken
     user {
       id
       username
