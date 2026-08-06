@@ -3932,10 +3932,10 @@ vite@^7.2.4:
   optionalDependencies:
     fsevents "~2.3.3"
 
-vlite3@^1.5.14:
-  version "1.5.14"
-  resolved "https://registry.yarnpkg.com/vlite3/-/vlite3-1.5.14.tgz#b1bbe931d186a9e4714e6dc90de7e59a0da056e6"
-  integrity sha512-LKgON/iCD/xIg47qZvZAn+/0dTcNx83J4lLDpXDqdDBsMLKtjcKFdUICwvJX/4eaSS2ky02FSE7ARhytLTAjgw==
+vlite3@1.5.15:
+  version "1.5.15"
+  resolved "https://registry.yarnpkg.com/vlite3/-/vlite3-1.5.15.tgz#fecea1ad76edb5b07a956f1bdbdd0b44253e12e3"
+  integrity sha512-s+gE/ADzvMEAU93Gdp7N0DCuP+jBLbnrfi9sAUCA0Wn0itv0ZWvGFLlcBTyHZBQ08RfdOdLeafxpMZKq8JVqZg==
   dependencies:
     "@iconify/vue" "^4.1.2 || ^5.0.0"
     "@jaames/iro" "^5.5.2"
