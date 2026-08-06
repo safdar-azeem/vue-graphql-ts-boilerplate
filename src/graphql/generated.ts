@@ -52,6 +52,7 @@ export type CreateFolderInput = {
 };
 
 export type CreateRoleInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   permissions: Array<Permissions>;
 };
@@ -61,7 +62,6 @@ export type CreateUserInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
   roleIds?: InputMaybe<Array<Scalars['ID']['input']>>;
-  userType: UserType;
   username: Scalars['String']['input'];
 };
 
@@ -144,14 +144,15 @@ export type ManagedUser = {
   __typename?: 'ManagedUser';
   avatar?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
-  customPermissions: Array<Scalars['String']['output']>;
+  customPermissions: Array<Permissions>;
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
-  ownerId?: Maybe<Scalars['String']['output']>;
   roles: Array<Role>;
+  status: UserStatus;
   updatedAt: Scalars['DateTime']['output'];
   userType: UserType;
   username: Scalars['String']['output'];
+  workspaceId: Scalars['String']['output'];
 };
 
 export type ManagedUserConnection = {
@@ -194,11 +195,16 @@ export type Mutation = {
   renameFolder: Folder;
   requestUploadUrl: SignedUploadUrl;
   resetPassword: Scalars['Boolean']['output'];
+  setUserPermissions: ManagedUser;
+  setUserRoles: ManagedUser;
   signup: AuthPayload;
   toggleFilePublic: File;
+  transferOwnership: Workspace;
   updateRole: Role;
   updateUser: ManagedUser;
   updateUserProfile: User;
+  updateUserStatus: ManagedUser;
+  updateWorkspace: Workspace;
   verify2FA: AuthPayload;
 };
 
@@ -294,6 +300,11 @@ export type MutationLoginArgs = {
 };
 
 
+export type MutationLogoutArgs = {
+  refreshToken?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type MutationMoveFolderArgs = {
   id: Scalars['ID']['input'];
   parentId?: InputMaybe<Scalars['String']['input']>;
@@ -328,6 +339,18 @@ export type MutationResetPasswordArgs = {
 };
 
 
+export type MutationSetUserPermissionsArgs = {
+  data: SetUserPermissionsInput;
+  userId: Scalars['ID']['input'];
+};
+
+
+export type MutationSetUserRolesArgs = {
+  data: SetUserRolesInput;
+  userId: Scalars['ID']['input'];
+};
+
+
 export type MutationSignupArgs = {
   data: SignupInput;
 };
@@ -335,6 +358,11 @@ export type MutationSignupArgs = {
 
 export type MutationToggleFilePublicArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationTransferOwnershipArgs = {
+  data: TransferOwnershipInput;
 };
 
 
@@ -352,6 +380,17 @@ export type MutationUpdateUserArgs = {
 
 export type MutationUpdateUserProfileArgs = {
   data: UpdateUserProfileInput;
+};
+
+
+export type MutationUpdateUserStatusArgs = {
+  data: UpdateUserStatusInput;
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateWorkspaceArgs = {
+  data: UpdateWorkspaceInput;
 };
 
 
@@ -373,14 +412,21 @@ export type PaginationInput = {
 };
 
 export enum Permissions {
-  RoleCreate = 'ROLE_CREATE',
-  RoleDelete = 'ROLE_DELETE',
-  RoleUpdate = 'ROLE_UPDATE',
-  RoleView = 'ROLE_VIEW',
-  UserCreate = 'USER_CREATE',
-  UserDelete = 'USER_DELETE',
-  UserUpdate = 'USER_UPDATE',
-  UserView = 'USER_VIEW'
+  AuditRead = 'AUDIT_READ',
+  RolesCreate = 'ROLES_CREATE',
+  RolesDelete = 'ROLES_DELETE',
+  RolesRead = 'ROLES_READ',
+  RolesUpdate = 'ROLES_UPDATE',
+  UsersCreate = 'USERS_CREATE',
+  UsersDelete = 'USERS_DELETE',
+  UsersManagePermissions = 'USERS_MANAGE_PERMISSIONS',
+  UsersManageRoles = 'USERS_MANAGE_ROLES',
+  UsersManageStatus = 'USERS_MANAGE_STATUS',
+  UsersRead = 'USERS_READ',
+  UsersUpdate = 'USERS_UPDATE',
+  WorkspaceRead = 'WORKSPACE_READ',
+  WorkspaceTransferOwnership = 'WORKSPACE_TRANSFER_OWNERSHIP',
+  WorkspaceUpdate = 'WORKSPACE_UPDATE'
 }
 
 export type Query = {
@@ -397,6 +443,7 @@ export type Query = {
   getUser: ManagedUser;
   getUsers: ManagedUserConnection;
   me?: Maybe<User>;
+  workspace: Workspace;
 };
 
 
@@ -454,6 +501,7 @@ export type QueryGetRolesArgs = {
   filter?: InputMaybe<RoleFilterInput>;
   pagination?: InputMaybe<PaginationInput>;
   search?: InputMaybe<Scalars['String']['input']>;
+  sort?: InputMaybe<RoleSortInput>;
 };
 
 
@@ -466,6 +514,7 @@ export type QueryGetUsersArgs = {
   filter?: InputMaybe<UsersFilterInput>;
   pagination?: InputMaybe<PaginationInput>;
   search?: InputMaybe<Scalars['String']['input']>;
+  sort?: InputMaybe<UserSortInput>;
 };
 
 export type RequestUploadInput = {
@@ -497,11 +546,13 @@ export type ResourceShareLinkConnection = {
 export type Role = {
   __typename?: 'Role';
   createdAt: Scalars['DateTime']['output'];
+  description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  isSystem: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
-  ownerId: Scalars['String']['output'];
   permissions: Array<Permissions>;
   updatedAt: Scalars['DateTime']['output'];
+  workspaceId: Scalars['String']['output'];
 };
 
 export type RoleConnection = {
@@ -512,6 +563,26 @@ export type RoleConnection = {
 
 export type RoleFilterInput = {
   dateRange?: InputMaybe<DateRangeInput>;
+  isSystem?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export enum RoleSortField {
+  CreatedAt = 'createdAt',
+  Name = 'name',
+  UpdatedAt = 'updatedAt'
+}
+
+export type RoleSortInput = {
+  direction?: InputMaybe<SortDirection>;
+  field?: InputMaybe<RoleSortField>;
+};
+
+export type SetUserPermissionsInput = {
+  customPermissions: Array<Permissions>;
+};
+
+export type SetUserRolesInput = {
+  roleIds: Array<Scalars['ID']['input']>;
 };
 
 export type ShareLinkFilterInput = {
@@ -537,6 +608,22 @@ export type SignupInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
   username: Scalars['String']['input'];
+  workspaceName: Scalars['String']['input'];
+  workspaceSlug?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum SortDirection {
+  Asc = 'ASC',
+  Desc = 'DESC'
+}
+
+export type SortInput = {
+  direction?: InputMaybe<SortDirection>;
+  field: Scalars['String']['input'];
+};
+
+export type TransferOwnershipInput = {
+  newOwnerUserId: Scalars['ID']['input'];
 };
 
 export enum TwoFactorMethod {
@@ -545,20 +632,28 @@ export enum TwoFactorMethod {
 }
 
 export type UpdateRoleInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   permissions?: InputMaybe<Array<Permissions>>;
 };
 
 export type UpdateUserInput = {
   avatar?: InputMaybe<Scalars['String']['input']>;
-  customPermissions?: InputMaybe<Array<Permissions>>;
-  roleIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateUserProfileInput = {
   avatar?: InputMaybe<Scalars['String']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateUserStatusInput = {
+  status: UserStatus;
+};
+
+export type UpdateWorkspaceInput = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type User = {
@@ -569,22 +664,57 @@ export type User = {
   id: Scalars['ID']['output'];
   mfaSettings?: Maybe<MfaSettings>;
   permissions: Array<Permissions>;
+  status: UserStatus;
   updatedAt: Scalars['DateTime']['output'];
   userType: UserType;
   username: Scalars['String']['output'];
+  workspaceId: Scalars['String']['output'];
 };
 
+export enum UserSortField {
+  CreatedAt = 'createdAt',
+  Email = 'email',
+  UpdatedAt = 'updatedAt',
+  Username = 'username'
+}
+
+export type UserSortInput = {
+  direction?: InputMaybe<SortDirection>;
+  field?: InputMaybe<UserSortField>;
+};
+
+export enum UserStatus {
+  Active = 'ACTIVE',
+  Invited = 'INVITED',
+  Suspended = 'SUSPENDED'
+}
+
 export enum UserType {
-  Customer = 'CUSTOMER',
-  Employee = 'EMPLOYEE',
-  Owner = 'OWNER',
-  Supplier = 'SUPPLIER'
+  Member = 'MEMBER',
+  Owner = 'OWNER'
 }
 
 export type UsersFilterInput = {
   dateRange?: InputMaybe<DateRangeInput>;
-  userType?: InputMaybe<UserType>;
+  status?: InputMaybe<UserStatus>;
 };
+
+export type Workspace = {
+  __typename?: 'Workspace';
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  ownerId?: Maybe<Scalars['String']['output']>;
+  slug: Scalars['String']['output'];
+  status: WorkspaceStatus;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export enum WorkspaceStatus {
+  Active = 'ACTIVE',
+  Archived = 'ARCHIVED',
+  Suspended = 'SUSPENDED'
+}
 
 export type LoginMutationVariables = Exact<{
   data: LoginInput;
