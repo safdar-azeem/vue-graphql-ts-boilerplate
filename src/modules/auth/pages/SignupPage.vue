@@ -16,18 +16,26 @@ const { mutate: signup, error, loading } = useSignupMutation()
 const { mutate: googleLoginMutate } = useGoogleLoginMutation()
 
 const handleSignup = async (payload: any) => {
-  const { data } = await signup({
-    data: {
-      username: payload.values.username,
-      email: payload.values.email,
-      password: payload.values.password,
-    },
-  })
+  try {
+    const { data } = await signup({
+      data: {
+        username: payload.values.username,
+        email: payload.values.email,
+        password: payload.values.password,
+        workspaceName: payload.values.workspaceName.trim(),
+      },
+    })
 
-  if (data?.signup?.token) {
-    setToken(data.signup.token)
-    showToast('Account Created..', 'success')
-    router.push(ROUTES.USER.DASHBOARD)
+    if (data?.signup?.token) {
+      setToken({
+        token: data.signup.token,
+        refreshToken: (data.signup as any).refreshToken,
+      })
+      showToast('Account Created..', 'success')
+      router.push(ROUTES.USER.DASHBOARD)
+    }
+  } catch (e: any) {
+    showToast(e.message || 'Signup failed', 'error')
   }
 }
 
