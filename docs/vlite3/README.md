@@ -13,5 +13,4 @@ npx vlite3-docs
 Entry points:
 
 - [Component index](./component-index.md)
-- [All components](./all-components.md)
 - [Setup](./getting-started/setup.md)
