@@ -1,6 +1,6 @@
 # vlite3 — Complete Component & Docs Index
 
-Single entry point for AI agents and developers. Find any vlite3 / ERP UI doc from this file — do not hunt folder by folder.
+Single entry point for AI agents and developers. Find any vlite3 UI doc from this file — do not hunt folder by folder.
 
 **Import pattern:**
 
@@ -20,8 +20,9 @@ import { Button, Input, Form } from 'vlite3'
 | Area | Path |
 | :--- | :--- |
 | Components | [`components/`](./components/) |
-| Testing guides | [`guides/`](./guides/) |
-| Platform / ERP docs | [`./`](./) (root of `docs/erp`) |
+| Guides | [`guides/`](./guides/) |
+| Utilities | [`utilities/`](./utilities/) |
+| Composables | [`composables/`](./composables/) |
 
 ---
 
@@ -32,7 +33,7 @@ import { Button, Input, Form } from 'vlite3'
 | Accordion | Core | Show/hide long content sections without leaving the page | [Accordion.md](./components/accordion.md) |
 | Alert | Core | Inline success/warning/error/info banners on a page or form | [Alert.md](./components/alert.md) |
 | AppShell | Advanced | Full app chrome: sidebar + header + content + mobile drawer | [AppShell.md](./components/app-shell.md) |
-| AsyncSelect | Core | Searchable dropdown that loads large lists from the API | [AsyncSelect.md](./components/async-select.md) · [1-Selects.md](./1-Selects.md) |
+| AsyncSelect | Core | Searchable dropdown that loads large lists from the API | [AsyncSelect.md](./components/async-select.md) |
 | AttachmentsList | Core | Show uploaded files with download + inline preview | [AttachmentsList.md](./components/attachments-list.md) |
 | Avatar | Core | Show a user’s photo or initials | [Avatar.md](./components/avatar.md) |
 | AvatarGroup | Core | Stack many people (team, assignees) with “+N” overflow | [AvatarGroup.md](./components/avatar-group.md) |
@@ -62,7 +63,7 @@ import { Button, Input, Form } from 'vlite3'
 | CustomFields | Core | Edit dynamic key/value or repeater field rows | [CustomFields.md](./components/custom-fields.md) |
 | CustomFieldsDisplay | Advanced | Read-only view of custom field values | [CustomFieldsDisplay.md](./components/custom-fields-display.md) |
 | DataList | Core | Card/list rendering of many items with slots | [DataList.md](./components/data-list.md) |
-| DataTable | Core | Enterprise tables: sort, filter, select, tree, pages | [DataTable.md](./components/data-table.md) |
+| DataTable | Core | Data tables: sort, filter, select, tree, pages | [DataTable.md](./components/data-table.md) |
 | DatePicker | Core | Pick a date (or week) in forms/filters | [DatePicker.md](./components/date-picker.md) |
 | DateRangePicker | Advanced | Pick a start–end date range (reports, filters) | [DateRangePicker.md](./components/date-range-picker.md) |
 | DateTime | Core | Format and display dates/times consistently | [DateTime.md](./components/date-time.md) |
@@ -111,7 +112,6 @@ import { Button, Input, Form } from 'vlite3'
 | Spinner | Core | Small loading indicator | [Spinner.md](./components/spinner.md) |
 | Splitter | Core | Resizable two-pane layouts (IDE-style) | [Splitter.md](./components/splitter.md) |
 | Stats | Core | KPI / metric cards on dashboards | [Stats.md](./components/stats.md) |
-| StatusActionMenu | ERP | Change status / approve / reject with optional form | [0-StatusActionMenu.md](./0-StatusActionMenu.md) |
 | StatusChip | Core | Map status strings → colored chips automatically | [StatusChip.md](./components/status-chip.md) |
 | Switch | Core | On/off settings toggles | [Switch.md](./components/switch.md) |
 | Tabes | Core | Switch views/modes with tabs | [Tabes.md](./components/tabs.md) |
@@ -134,7 +134,7 @@ import { Button, Input, Form } from 'vlite3'
 | :--- | :--- | :--- | :--- |
 | **Button** | Clickable action control with variants, icons, loading | Submitting forms, opening modals, navigation CTAs | [Button.md](./components/button.md) |
 | **ButtonGroup** | Visually groups related buttons as one unit | Export / print / more actions that belong together | [ButtonGroup.md](./components/button-group.md) |
-| **Breadcrumb** | Shows the path from home → current page | Deep modules (Inventory → Warehouses → Bin detail) | [Breadcrumb.md](./components/breadcrumb.md) |
+| **Breadcrumb** | Shows the path from home → current page | Nested pages and multi-level navigation | [Breadcrumb.md](./components/breadcrumb.md) |
 | **Clipboard** | Copies text and shows brief success feedback | Copying invoice #, tracking ID, API keys, share links | [Clipboard.md](./components/clipboard.md) |
 | **SidebarMenu** | Recursive left/top navigation tree | App modules, nested menus, badges for counts | [SidebarMenu.md](./components/sidebar-menu.md) |
 | **SidePanel** | Slide-over panel from the edge of the screen | Filters, quick edit, details without leaving the list | [SidePanel.md](./components/side-panel.md) |
@@ -214,7 +214,7 @@ import { Button, Input, Form } from 'vlite3'
 
 | Component | Purpose | Use when… | Doc |
 | :--- | :--- | :--- | :--- |
-| **Screen** | Standard ERP list/CRUD page shell | Almost every module list page (search, filters, add, empty) | [Screen.md](./components/screen.md) |
+| **Screen** | Standard list/CRUD page shell | List pages with search, filters, add actions, and empty states | [Screen.md](./components/screen.md) |
 | **Splitter** | User-resizable side-by-side panels | Master-detail, code+preview, map+list | [Splitter.md](./components/splitter.md) |
 | **Chat** | Flat messaging UI with attachments & edit/delete | Support chat, internal messaging, AI assistants | [Chat.md](./components/chat.md) |
 | **CommentThread** | Nested reply trees (not flat chat) | Tickets, PRs, document review discussions | [CommentThread.md](./components/comment-thread.md) |
@@ -228,7 +228,7 @@ import { Button, Input, Form } from 'vlite3'
 | **AppShell** | Orchestrates whole-app layout (sidebar, header, content, mobile drawer) | Building the authenticated app frame once | [AppShell.md](./components/app-shell.md) |
 | **Navbar** | Horizontal top navigation only | Landing pages, simple dashboards (prefer AppShell for full apps) | [Navbar.md](./components/navbar.md) |
 | **Footer** | Data-driven site footer | Marketing sites, public portals, help centers | [Footer.md](./components/footer.md) |
-| **CommandPalette** | Keyboard-first search to jump to pages/actions | Power-user navigation across a large ERP | [CommandPalette.md](./components/command-palette.md) |
+| **CommandPalette** | Keyboard-first search to jump to pages/actions | Power-user navigation across a large application | [CommandPalette.md](./components/command-palette.md) |
 | **Calendar** | Event calendar with month/week/day + drag-drop | Appointments, leave, production schedules | [Calendar.md](./components/calendar.md) |
 | **Cart** | Cart with line items, quantities, totals (e‑com + POS variants) | Checkout, POS selling, quote builders | [Cart.md](./components/cart.md) |
 | **CategoryManager** | Admin UI to CRUD nested categories | Product categories, chart of accounts folders, menus | [CategoryManager.md](./components/category-manager.md) |
@@ -264,21 +264,18 @@ import { Button, Input, Form } from 'vlite3'
 
 ---
 
-## 4. Platform, utilities & ERP docs
+## 4. Guides, utilities & composables
 
 | Doc | Purpose | Use when… | Link |
 | :--- | :--- | :--- | :--- |
-| **ERP Web** | Frontend architecture, modules, patterns for agents | Starting any new ERP frontend feature | [0-erp-web.md](./0-erp-web.md) |
-| **Apollo / GraphQL** | vue-apollo-client setup (typed ops, tokens, SSR) | Queries, mutations, auth cookies | [0-Apollo-setup.md](./0-Apollo-setup.md), [0-Apollo.md](./0-Apollo.md) |
-| **StatusActionMenu** | Standardized status / approve / reject menu (ERP) | Row actions that change workflow status | [0-StatusActionMenu.md](./0-StatusActionMenu.md) |
-| **Selects** | Deep dive for AsyncSelect patterns | Building customer/product async dropdowns | [1-Selects.md](./1-Selects.md) |
-| **Theming** | Design tokens, Tailwind v4, dark mode | Changing brand colors / theme behavior | [2-theming.md](./guides/theming.md) |
-| **Utility / Composables** | Shared composables (`useKeyStroke`, etc.) | Keyboard shortcuts and reusable logic | [5-utility.md](./utilities/utilities.md) |
-| **Performance** | Strict Vue 3 performance rules for this repo | Writing or reviewing Vue code | [6-performance.md](./guides/performance.md) |
-| **i18n** | Register a translation handler for vlite3 | Multi-language apps | [7-i18n-setup.md](./7-i18n-setup.md), [7-i18n.md](./guides/internationalization.md) |
-| **Search util** | Fast typed `search` / `lazySearch` utilities | Client-side search indexes | [8-search-util.md](./utilities/search.md) |
-| **Draggable** | Vue draggable patterns | Sortable lists, Kanban-like reorder | [9-draggable.md](./guides/draggable.md) |
-| **Design** | Design-system tokens | Visual consistency / token reference | [Design.md](./Design.md) |
+| **Theming** | Design tokens, Tailwind v4, dark mode | Changing brand colors / theme behavior | [theming.md](./guides/theming.md) |
+| **Utility / Composables** | Shared composables (`useKeyStroke`, etc.) | Keyboard shortcuts and reusable logic | [utilities.md](./utilities/utilities.md) |
+| **useTheme** | Theme state and helpers | Reading or toggling light/dark theme | [use-theme.md](./composables/use-theme.md) |
+| **Performance** | Vue 3 performance guidance for vlite3 apps | Writing or reviewing Vue code | [performance.md](./guides/performance.md) |
+| **i18n** | Register a translation handler for vlite3 | Multi-language apps | [internationalization.md](./guides/internationalization.md) |
+| **Search util** | Fast typed `search` / `lazySearch` utilities | Client-side search indexes | [search.md](./utilities/search.md) |
+| **Draggable** | Vue draggable patterns | Sortable lists, Kanban-like reorder | [draggable.md](./guides/draggable.md) |
+| **Setup** | Install and configure vlite3 | Starting a new project with vlite3 | [setup.md](./getting-started/setup.md) |
 
 ---
 
@@ -289,12 +286,12 @@ import { Button, Input, Form } from 'vlite3'
 | Full authenticated app chrome | [AppShell](./components/app-shell.md) | [Navbar](./components/navbar.md), [SidebarMenu](./components/sidebar-menu.md), [SidePanel](./components/side-panel.md) |
 | Standard list / CRUD page | [Screen](./components/screen.md) | [DataTable](./components/data-table.md), [Empty](./components/empty.md) |
 | Create/edit record form | [Forms](./components/forms.md) | [CustomFields](./components/custom-fields.md), [Testing-Forms](./guides/testing-forms.md) |
-| Large API-backed dropdown | [AsyncSelect](./components/async-select.md) | [1-Selects.md](./1-Selects.md), [Dropdown](./components/dropdown.md) |
+| Large API-backed dropdown | [AsyncSelect](./components/async-select.md) | [Dropdown](./components/dropdown.md), [MultiSelect](./components/multi-select.md) |
 | Edit categories vs browse them | [CategoryManager](./components/category-manager.md) | [CategoryMenu](./components/category-menu.md) |
 | Edit custom fields vs show them | [CustomFields](./components/custom-fields.md) | [CustomFieldsDisplay](./components/custom-fields-display.md) |
 | Bulk import vs export | [ImportData](./components/import-data.md) | [ExportData](./components/export-data.md) |
 | Flat chat vs nested discussion | [Chat](./components/chat.md) | [CommentThread](./components/comment-thread.md) |
-| Show status vs change status | [StatusChip](./components/status-chip.md) | [StatusActionMenu](./0-StatusActionMenu.md) |
+| Show status labels | [StatusChip](./components/status-chip.md) | [Chip](./components/chip.md), [Badge](./components/badge.md) |
 | Overlay testing | [Testing-Overlays](./guides/testing-overlays.md) | [Modal](./components/modal.md), [ConfirmationModal](./components/confirmation-modal.md) |
 
 ---
@@ -306,8 +303,8 @@ import { Button, Input, Form } from 'vlite3'
 | Core components | 66 |
 | Advanced components | 27 |
 | Guides | 2 |
-| Platform / utilities | 11 |
-| **Total linked from this index** | **106** |
+| Guides, utilities & composables | 8 |
+| **Total linked from this index** | **103** |
 
 # Usage for agents
 open the file to discover component.
