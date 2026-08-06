@@ -728,7 +728,7 @@ export type SignupMutationVariables = Exact<{
 }>;
 
 
-export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'AuthPayload', token: string, user: { __typename?: 'User', id: string, username: string, email: string } } };
+export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'AuthPayload', token: string, refreshToken: string, user: { __typename?: 'User', id: string, username: string, email: string } } };
 
 export type GoogleLoginMutationVariables = Exact<{
   token: Scalars['String']['input'];
@@ -924,6 +924,7 @@ export const SignupDocument = gql`
     mutation Signup($data: SignupInput!) {
   signup(data: $data) {
     token
+    refreshToken
     user {
       id
       username
