@@ -2,11 +2,11 @@
   "managedBy": "vlite3",
   "manifestVersion": 1,
   "packageName": "vlite3",
-  "packageVersion": "1.5.14",
-  "generatedAt": "2026-08-06T03:50:06.415Z",
+  "packageVersion": "1.5.15",
+  "generatedAt": "2026-08-06T03:58:23.678Z",
   "files": {
     "component-index.md": {
-      "sha256": "13f0995aa9fae01f1e34071b635b0807bcbbfae902a8bcdf5969c5ffef32ca4c"
+      "sha256": "13d14dd2b8c0384eb7e6d59d994bd02e8b402a14ae2340b759faa13651665dbd"
     },
     "components/accordion.md": {
       "sha256": "c14c34f921eca707c57fdc38858f191ee06ac48840379c93e4fb162faac37ed4"
@@ -333,6 +333,6 @@
       "sha256": "7ece0ff581b6a51d7f0e849ee14387699fd585f19c6fa9325a4c47dbb8aa8fb1"
     }
   },
-  "syncedAt": "2026-08-06T03:53:12.940Z",
+  "syncedAt": "2026-08-06T03:58:54.627Z",
   "consumerRoot": "/Users/safdar/Projects/boilerplate/vue-graphql-ts-boilerplate"
 }
