@@ -1,2 +1,9 @@
 @import 'vlite3/style.css';
 @source "../node_modules/vlite3";
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
