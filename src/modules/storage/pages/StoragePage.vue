@@ -63,23 +63,25 @@ provide('storage:folderClick', handleFolderClick)
 
     <!-- Action buttons replacing the default Add button -->
     <template #actions>
-      <Modal
-        :body="CreateFolder"
-        title="Create New Folder"
-        max-width="max-w-md"
-        :parentId="currentFolderId">
-        <Button variant="outline" icon="lucide:folder-plus">New Folder</Button>
-      </Modal>
+      <div class="flex gap-3">
+        <Modal
+          :body="CreateFolder"
+          title="Create New Folder"
+          max-width="max-w-md"
+          :parentId="currentFolderId">
+          <Button variant="outline" icon="lucide:folder-plus">New Folder</Button>
+        </Modal>
 
-      <Modal
-        :body="UploadForm"
-        max-width="max-w-md"
-        title="Upload Files"
-        :folderId="currentFolderId"
-        :refresh="refreshData"
-        :parentId="currentFolderId">
-        <Button variant="primary" icon="lucide:upload">Upload</Button>
-      </Modal>
+        <Modal
+          :body="UploadForm"
+          max-width="max-w-md"
+          title="Upload Files"
+          :folderId="currentFolderId"
+          :refresh="refreshData"
+          :parentId="currentFolderId">
+          <Button variant="primary" icon="lucide:upload">Upload</Button>
+        </Modal>
+      </div>
     </template>
   </Screen>
 </template>
