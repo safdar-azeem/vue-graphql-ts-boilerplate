@@ -158,7 +158,7 @@ const cancelEnrollment = () => {
             <option :value="TwoFactorMethod.Email">Email Verification</option>
           </select>
         </div>
-        <Button @click="startEnrollment" :loading="initLoading" class="w-full sm:w-auto sm:mt-5"
+        <Button @click="startEnrollment" :loading="initLoading" class="w-full sm:w-auto! sm:mt-5"
           >Set Up 2FA</Button
         >
       </div>
