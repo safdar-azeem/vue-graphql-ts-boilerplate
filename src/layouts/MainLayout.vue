@@ -27,7 +27,7 @@ const handleLogout = () => {
 </script>
 
 <template>
-  <AppShell variant="sidebar" layout-mode="variant1" mobile-breakpoint="md">
+  <AppShell variant="sidebar" layout-mode="variant1" mobile-breakpoint="md" class="w-56">
     <template #sidebar-header>
       <div class="p-4">
         <Logo />
